@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100px;
   border-radius: 16px;
-  background: linear-gradient(-69deg, #0068b4 0%, #3aacff 99.06%);
+  background: linear-gradient(45deg, #0068b4 0%, #3aacff 99.06%);
   padding: 6px;
   display: grid;
   align-items: center;
@@ -38,4 +38,6 @@ export const BillDescription = styled.div`
   font-weight: 500;
 `;
 
-export const TrafficContent = styled.div``;
+export const TrafficContent = styled.div`
+  margin-left: 16px;
+`;

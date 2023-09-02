@@ -13,7 +13,7 @@ export default {
     colors: {
       darkBlue: "#0E4369",
       lightBlue: "#3aacff",
-      lightBlueTr: "#CBE9FF",
+      lightBlueTr: "#dbf0ff",
     },
     fontFamily: {
       sans: ["Montserrat", "sans-serif"],
@@ -25,11 +25,15 @@ export default {
       themes: {
         light: {
           colors: {
-            primary: "#0068b4",
+            primary: {
+              DEFAULT: "#0068b4",
+              foreground: "#dbf0ff",
+            },
+            secondary: {
+              DEFAULT: "#3aacff",
+              foreground: "#dbf0ff",
+            },
           },
-        },
-        dark: {
-          colors: {},
         },
       },
     }),
