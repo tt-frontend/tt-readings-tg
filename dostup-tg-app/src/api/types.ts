@@ -40,12 +40,12 @@ export interface PayResponse {
 
 /** @format int32 */
 export enum PayType {
-  NewPersonal = NewPersonal,
-  NewFamily = NewFamily,
-  Gift = Gift,
-  RenewPersonal = RenewPersonal,
-  RenewFamily = RenewFamily,
-  ForFun = ForFun,
+  NewPersonal = "NewPersonal",
+  NewFamily = "NewFamily",
+  Gift = "Gift",
+  RenewPersonal = "RenewPersonal",
+  RenewFamily = "RenewFamily",
+  ForFun = "ForFun",
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";

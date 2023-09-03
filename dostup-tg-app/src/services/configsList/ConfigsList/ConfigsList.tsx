@@ -5,8 +5,6 @@ import {
   LogoImage,
   NoConfigsWrapper,
   QRImage,
-  Traffic,
-  TrafficWrapper,
 } from "./ConfigsList.styled";
 import { ConfigsListTypes } from "./ConfigsList.types";
 import {
@@ -22,7 +20,7 @@ import {
   Skeleton,
 } from "@nextui-org/react";
 import dayjs from "dayjs";
-import { Download, QrCode, Upload } from "react-bootstrap-icons";
+import { Download, QrCode } from "react-bootstrap-icons";
 import { api } from "@/api";
 import { ConfigResponse } from "@/api/types";
 import vkQr from "@vkontakte/vk-qr";
