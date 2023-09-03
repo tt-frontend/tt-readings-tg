@@ -5,6 +5,8 @@ import {
   LogoImage,
   NoConfigsWrapper,
   QRImage,
+  Traffic,
+  TrafficWrapper,
 } from "./ConfigsList.styled";
 import { ConfigsListTypes } from "./ConfigsList.types";
 import {
@@ -20,7 +22,7 @@ import {
   Skeleton,
 } from "@nextui-org/react";
 import dayjs from "dayjs";
-import { Download, QrCode } from "react-bootstrap-icons";
+import { Download, QrCode, Upload } from "react-bootstrap-icons";
 import { api } from "@/api";
 import { ConfigResponse } from "@/api/types";
 import vkQr from "@vkontakte/vk-qr";
@@ -123,12 +125,25 @@ export const ConfigsList: FC<ConfigsListTypes> = ({ isLoading, configs }) => {
       )}
       {configs.map((elem) => (
         <Card className="w-[100%]" radius="lg" key={elem.id}>
-          <CardHeader className="flex justify-between">
+          <CardHeader className="flex justify-between items-start">
             <div className="font-medium">{elem.name}</div>
+
             <ExpiredAt>
               осталось {dayjs(elem.expiresAt).diff(dayjs(), "day")} дней
             </ExpiredAt>
           </CardHeader>
+          {/* <CardBody>
+            <TrafficWrapper>
+              <Traffic>
+                <Download />
+                {elem.tx}
+              </Traffic>
+              <Traffic>
+                <Upload />
+                {elem.rx}
+              </Traffic>
+            </TrafficWrapper>
+          </CardBody> */}
           <CardBody className="p-2 flex-col">
             <ButtonGroup>
               <Button

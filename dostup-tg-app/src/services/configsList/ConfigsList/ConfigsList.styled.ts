@@ -31,6 +31,7 @@ export const QRImage = styled.img`
   width: 100%;
   height: auto;
 `;
+
 export const LogoImage = styled.img`
   width: 40px;
   height: 40px;
@@ -38,4 +39,17 @@ export const LogoImage = styled.img`
   top: calc(50%);
   left: calc(50%);
   transform: translate(-23px, -22px);
+`;
+
+export const TrafficWrapper = styled.div`
+  margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+`;
+
+export const Traffic = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
