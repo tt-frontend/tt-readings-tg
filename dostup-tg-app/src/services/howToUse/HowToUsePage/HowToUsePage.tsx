@@ -1,8 +1,10 @@
 import { Logo } from "@/components/Logo";
-import slide1 from "./assets/slide_1.png";
-import slide2 from "./assets/slide_2.png";
-import slide3 from "./assets/slide_3.png";
 import { useEffect, useState } from "react";
+import {
+  ArrowLeftCircleFill,
+  ArrowRightCircleFill,
+} from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 import {
   CurrentSlideIndex,
   SlideArrow,
@@ -12,11 +14,9 @@ import {
   SlideWrapper,
   XSc,
 } from "./HowToUsePage.styled";
-import {
-  ArrowLeftCircleFill,
-  ArrowRightCircleFill,
-} from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import slide1 from "./assets/slide_1.png";
+import slide2 from "./assets/slide_2.png";
+import slide3 from "./assets/slide_3.png";
 
 export const HowToUsePage = () => {
   const navigate = useNavigate();
@@ -37,6 +37,12 @@ export const HowToUsePage = () => {
   useEffect(() => {
     Telegram.WebApp.expand();
   }, []);
+
+  useEffect(() => {
+    if (slideIndex === 2) {
+      localStorage.setItem("is_how_to_use_done", "true");
+    }
+  }, [slideIndex]);
 
   return (
     <div>

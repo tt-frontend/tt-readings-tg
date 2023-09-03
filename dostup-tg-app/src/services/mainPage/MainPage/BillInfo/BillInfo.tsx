@@ -17,7 +17,7 @@ export const BillInfo = () => {
         </div>
       </BillInfoWrapper> */}
       <TrafficContent>
-        <BillCount>321.3 gb </BillCount>
+        <BillCount>321.3 gb</BillCount>
         <BillDescription>трафик за март</BillDescription>
       </TrafficContent>
     </Wrapper>

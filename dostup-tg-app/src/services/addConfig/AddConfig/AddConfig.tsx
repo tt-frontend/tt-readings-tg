@@ -1,20 +1,32 @@
 import { Header } from "@/components/Header/Header";
-import { InputSC } from "./AddConfig.styled";
-import { useEffect, useState } from "react";
+import { ButtonWrapper, InputSC } from "./AddConfig.styled";
+import { useCallback, useState } from "react";
+import { api } from "@/api";
+import { PayType } from "@/api/types";
+import { Button } from "@nextui-org/react";
 
 export const AddConfig = () => {
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const mainButton = Telegram.WebApp.MainButton;
+  const handleCreateConfig = useCallback(async () => {
+    try {
+      const payload = {
+        peerName: name,
+        telegramId: Telegram.WebApp.initDataUnsafe.user?.id,
+        type: PayType.NewPersonal,
+      };
 
-    if (name && !mainButton.isVisible) {
-      mainButton.setText("Создать доступ");
-      mainButton.show();
-    }
+      setIsLoading(true);
 
-    if (mainButton.isVisible && !name) {
-      mainButton.hide();
+      const { data } = await api.configBuyConfigCreate(payload);
+
+      setIsLoading(false);
+
+      if (data.paymentUri) window.location.assign(data.paymentUri);
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e);
     }
   }, [name]);
 
@@ -32,6 +44,19 @@ export const AddConfig = () => {
           size="lg"
         />
       </div>
+      {name && (
+        <ButtonWrapper>
+          <Button
+            onClick={handleCreateConfig}
+            color="secondary"
+            fullWidth
+            size="lg"
+            isDisabled={isLoading}
+          >
+            Создать доступ
+          </Button>
+        </ButtonWrapper>
+      )}
     </div>
   );
 };

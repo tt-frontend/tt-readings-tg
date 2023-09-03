@@ -2,15 +2,18 @@ import { AddConfigIcon } from "@/components/icons/AddConfigIcon";
 import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "@/components/Logo";
-import { BillInfo } from "./BillInfo";
-import { Infoicon } from "@/components/icons/InfoIcon";
 import { HowToUseConfigBadge } from "./HowToUseConfigBadge";
+import { ConfigsListContainer } from "@/services/configsList";
+import { InfoCircleFillSC } from "./MainPage.styled";
 
 export const MainPage = () => {
   const navigate = useNavigate();
 
+  const isHowToUsePassed =
+    localStorage.getItem("is_how_to_use_done") === "true";
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 pb-2">
       <div className="flex items-center justify-between">
         <Logo />
         <Button
@@ -19,26 +22,31 @@ export const MainPage = () => {
           color="secondary"
           aria-label="Like"
           size="sm"
+          onClick={() => navigate("/howToUse")}
         >
-          <Infoicon />
+          <InfoCircleFillSC />
         </Button>
       </div>
-      <BillInfo />
+      {/* <BillInfo /> */}
       <div className="flex items-center justify-between">
-        <div className="text-darkBlue font-medium">Мои доступы</div>
+        {/* <div className="text-darkBlue font-medium">Мои доступы</div> */}
         <Button
-          size="sm"
-          radius="full"
+          fullWidth
+          size="md"
+          radius="md"
           color="primary"
           variant="flat"
           className="font-bold bg-lightBlueTr text-darkBlue"
           startContent={<AddConfigIcon />}
-          onClick={() => navigate("/addConfig")}
+          onClick={() => {
+            navigate("/addConfig");
+          }}
         >
           Создать доступ
         </Button>
       </div>
-      <HowToUseConfigBadge />
+      <ConfigsListContainer />
+      {!isHowToUsePassed && <HowToUseConfigBadge />}
     </div>
   );
 };
