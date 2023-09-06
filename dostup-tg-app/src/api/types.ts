@@ -38,7 +38,6 @@ export interface PayResponse {
   paymentUri?: string | null;
 }
 
-/** @format int32 */
 export enum PayType {
   NewPersonal = "NewPersonal",
   NewFamily = "NewFamily",
