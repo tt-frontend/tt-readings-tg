@@ -5,6 +5,8 @@ import {
   LogoImage,
   NoConfigsWrapper,
   QRImage,
+  Traffic,
+  TrafficWrapper,
 } from "./ConfigsList.styled";
 import { ConfigsListTypes } from "./ConfigsList.types";
 import {
@@ -20,7 +22,12 @@ import {
   Skeleton,
 } from "@nextui-org/react";
 import dayjs from "dayjs";
-import { Download, QrCode } from "react-bootstrap-icons";
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  Download,
+  QrCode,
+} from "react-bootstrap-icons";
 import { api } from "@/api";
 import { ConfigResponse } from "@/api/types";
 import vkQr from "@vkontakte/vk-qr";
@@ -130,18 +137,24 @@ export const ConfigsList: FC<ConfigsListTypes> = ({ isLoading, configs }) => {
               осталось {dayjs(elem.expiresAt).diff(dayjs(), "day")} дней
             </ExpiredAt>
           </CardHeader>
-          {/* <CardBody>
+          <CardBody>
             <TrafficWrapper>
               <Traffic>
-                <Download />
-                {elem.tx}
+                <ArrowDownCircle />
+                <div>
+                  <strong>{((elem.tx || 0) / 1024 / 1024).toFixed(2)}</strong>{" "}
+                  <span style={{ fontSize: "12px" }}>MiB</span>
+                </div>
               </Traffic>
               <Traffic>
-                <Upload />
-                {elem.rx}
+                <ArrowUpCircle />
+                <div>
+                  <strong>{((elem.rx || 0) / 1024 / 1024).toFixed(2)} </strong>
+                  <span style={{ fontSize: "12px" }}>MiB</span>
+                </div>
               </Traffic>
             </TrafficWrapper>
-          </CardBody> */}
+          </CardBody>
           <CardBody className="p-2 flex-col">
             <ButtonGroup>
               <Button
