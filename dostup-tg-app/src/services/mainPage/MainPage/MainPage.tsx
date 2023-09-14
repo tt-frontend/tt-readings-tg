@@ -1,52 +1,36 @@
-import { AddConfigIcon } from "@/components/icons/AddConfigIcon";
-import { Button } from "@nextui-org/react";
-import { useNavigate } from "react-router-dom";
-import { Logo } from "@/components/Logo";
-import { HowToUseConfigBadge } from "./HowToUseConfigBadge";
-import { ConfigsListContainer } from "@/services/configsList";
-import { InfoCircleFillSC } from "./MainPage.styled";
+import { LinkInfoPanel } from "@/components/LinkInfoPanel";
+import { Building } from "@/components/icons/Building";
+import { Bag } from "@/components/icons/Bag";
+import { InfoLinksWrapper, Wrapper } from "./MainPage.styled";
+import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPanel";
+import { useState } from "react";
 
 export const MainPage = () => {
-  const navigate = useNavigate();
-
-  const isHowToUsePassed =
-    localStorage.getItem("is_how_to_use_done") === "true";
+  const [selectedPersonalNumber, setSelectedPersonalNumber] = useState(1);
 
   return (
-    <div className="flex flex-col gap-6 pb-2">
-      <div className="flex items-center justify-between">
-        <Logo />
-        <Button
-          radius="full"
-          isIconOnly
-          color="secondary"
-          aria-label="Like"
-          size="sm"
-          onClick={() => navigate("/howToUse")}
-        >
-          <InfoCircleFillSC />
-        </Button>
-      </div>
-      {/* <BillInfo /> */}
-      <div className="flex items-center justify-between">
-        {/* <div className="text-darkBlue font-medium">Мои доступы</div> */}
-        <Button
-          fullWidth
-          size="md"
-          radius="md"
-          color="primary"
-          variant="flat"
-          className="font-bold bg-lightBlueTr text-darkBlue"
-          startContent={<AddConfigIcon />}
-          onClick={() => {
-            navigate("/addConfig");
-          }}
-        >
-          Создать доступ
-        </Button>
-      </div>
-      <ConfigsListContainer />
-      {!isHowToUsePassed && <HowToUseConfigBadge />}
-    </div>
+    <Wrapper>
+      <PersonalNumbersPanel
+        selectedNumber={selectedPersonalNumber}
+        handleSelect={setSelectedPersonalNumber}
+        personalNumbers={[
+          {
+            id: 1,
+            number: "1298391381",
+          },
+          {
+            id: 2,
+            number: "72834792320",
+          },
+        ]}
+      />
+      <InfoLinksWrapper>
+        <LinkInfoPanel
+          icon={<Building />}
+          title="Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
+        />
+        <LinkInfoPanel icon={<Bag />} title="УК “Добрый дом”" />
+      </InfoLinksWrapper>
+    </Wrapper>
   );
 };

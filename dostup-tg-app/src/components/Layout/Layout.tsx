@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
+import { Wrapper } from "./Layout.styled";
 
 export const Layout = () => {
   return (
-    <div className="mx-6 my-4">
+    <Wrapper>
       <Outlet />
-    </div>
+    </Wrapper>
   );
 };

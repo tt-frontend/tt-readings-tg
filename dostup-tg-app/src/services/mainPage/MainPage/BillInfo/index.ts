@@ -1,1 +1,0 @@
-export { BillInfo } from "./BillInfo";

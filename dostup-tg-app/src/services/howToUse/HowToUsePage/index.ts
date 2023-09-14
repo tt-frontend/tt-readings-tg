@@ -1,1 +1,0 @@
-export { HowToUsePage } from "./HowToUsePage";

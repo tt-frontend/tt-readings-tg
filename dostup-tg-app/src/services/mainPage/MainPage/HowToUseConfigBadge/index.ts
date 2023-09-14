@@ -1,1 +1,0 @@
-export { HowToUseConfigBadge } from "./HowToUseConfigBadge";
