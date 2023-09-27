@@ -1,7 +1,7 @@
 import { Telegraf } from "telegraf";
 
-const token: string = "6669772925:AAE58dVurI0DlI0HRsW6CuzgLfcG9HNGRSY";
-const WEB_APP_URL = "https://1e58-94-180-223-140.ngrok-free.app";
+const token: string = "6244421311:AAEPUnvTISRF6U20IEfYkHZ3514kRzNqj7k";
+const WEB_APP_URL = "https://27fe-89-19-213-24.ngrok-free.app";
 
 const bot = new Telegraf(token);
 
