@@ -1,12 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(Link)`
   border-radius: 16px;
   background: #fff;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
   display: flex;
   padding: 16px;
-  /* align-items: center; */
   gap: 12px;
   cursor: pointer;
 `;

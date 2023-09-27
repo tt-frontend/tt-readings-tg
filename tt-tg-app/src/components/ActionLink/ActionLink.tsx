@@ -8,9 +8,13 @@ import {
 } from "./ActionLink.styled";
 import { ChevronRightWhite } from "../icons/ChevronRightWhite";
 
-export const ActionLink: FC<ActionLinkProps> = ({ title, description }) => {
+export const ActionLink: FC<ActionLinkProps> = ({
+  title,
+  description,
+  path,
+}) => {
   return (
-    <Wrapper>
+    <Wrapper to={path}>
       <Title>
         {title}
         {description && <Description>{description}</Description>}

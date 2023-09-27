@@ -18,3 +18,7 @@ body {
   --light-blue: #3aacff;
   --secondary-blue: #e6f4fe;
 }
+
+a {
+  text-decoration: none;
+}

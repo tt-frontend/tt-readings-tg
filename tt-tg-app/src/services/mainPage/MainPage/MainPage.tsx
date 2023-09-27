@@ -39,12 +39,13 @@ export const MainPage = () => {
       </InfoLinksWrapper>
       <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
       <ActionsWrapper>
-        <ActionLink title="Ввести показания счетчиков" />
-        <ActionLink title="Отправить заявку на опломбировку" />
-        <ActionLink title="Отправить заявку на проверку" />
+        <ActionLink title="Ввести показания счетчиков" path="/inputReadings" />
+        <ActionLink title="Отправить заявку на опломбировку" path="" />
+        <ActionLink title="Отправить заявку на проверку" path="" />
         <ActionLink
           title="Заявить о проблеме"
           description="Если прорвало трубу, перегорела лампочка или нет электричества"
+          path=""
         />
       </ActionsWrapper>
     </Wrapper>
