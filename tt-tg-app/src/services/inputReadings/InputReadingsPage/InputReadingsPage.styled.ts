@@ -23,3 +23,10 @@ export const ResourceSectionTitle = styled.div`
   font-weight: 400;
   line-height: 24px;
 `;
+
+export const DevicesWrapper = styled.div`
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;

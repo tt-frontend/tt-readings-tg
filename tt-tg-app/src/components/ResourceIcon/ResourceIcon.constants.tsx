@@ -24,3 +24,10 @@ export const ResourceNamesLookup = {
   [EResourceType.Electricity]: "Электричество",
   [EResourceType.Heat]: "Отопление",
 };
+
+export const ResourceSummaryUnits: { [key in EResourceType]: string } = {
+  [EResourceType.ColdWaterSupply]: "м³",
+  [EResourceType.HotWaterSupply]: "м³",
+  [EResourceType.Electricity]: "кВт/ч",
+  [EResourceType.Heat]: "Гкал",
+};
