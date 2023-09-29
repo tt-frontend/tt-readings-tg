@@ -1,3 +1,5 @@
+import { InputReadingsPage } from "./InputReadingsPage/InputReadingsPage";
+
 export const InputReadingsContainer = () => {
-  return <>Ввод показаний</>;
+  return <InputReadingsPage />;
 };
