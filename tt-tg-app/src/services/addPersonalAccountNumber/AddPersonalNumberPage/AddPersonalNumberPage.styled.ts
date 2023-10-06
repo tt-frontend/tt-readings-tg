@@ -12,6 +12,9 @@ export const WindowWrapper = styled.div`
   background-color: rgba(24, 158, 233, 0.16);
   border-radius: 16px;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 export const Title = styled.div`
@@ -20,19 +23,4 @@ export const Title = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
-`;
-
-export const Select = styled.select`
-  margin-top: 16px;
-  width: 100%;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 16px;
-  outline: none;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: white;
-  color: black;
 `;

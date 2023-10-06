@@ -1,10 +1,11 @@
 import { useState } from "react";
 import {
   PageWrapper,
-  Select,
   Title,
   WindowWrapper,
 } from "./AddPersonalNumberPage.styled";
+import { Select } from "@/components/Select";
+import { Button } from "antd";
 
 const cities = ["Казань", "Москва", "Ильназвильск"];
 
@@ -16,17 +17,16 @@ export const AddPersonalNumberPage = () => {
       <WindowWrapper>
         <Title>Выберите город</Title>
         <Select
-          value={selectedCity || undefined}
+          value={selectedCity}
           placeholder="город"
-          onChange={(e) => setSelectedCity(e.target.value)}
+          onChange={(value) => setSelectedCity(value)}
+          allowClear
         >
-          <option value="город" style={{ color: "lightgray" }}>
-            Город
-          </option>
           {cities.map((city) => (
-            <option value={city}>{city}</option>
+            <Select.Option value={city}>{city}</Select.Option>
           ))}
         </Select>
+        <Button>Продолжить</Button>
       </WindowWrapper>
     </PageWrapper>
   );

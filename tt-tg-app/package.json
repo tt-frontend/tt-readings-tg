@@ -11,6 +11,7 @@
     "apigen": "npx swagger-typescript-api -p https://fop.k8s.transparent-technology.ru/openapi/site/ttm_api.json -o ./src/api -n types.ts"
   },
   "dependencies": {
+    "antd": "^5.9.4",
     "axios": "^1.5.0",
     "dayjs": "^1.11.9",
     "lodash": "^4.17.21",
