@@ -5,7 +5,7 @@ import {
   WindowWrapper,
 } from "./AddPersonalNumberPage.styled";
 import { Select } from "@/components/Select";
-import { Button } from "antd";
+import { Button } from "@/components/Button";
 
 const cities = ["Казань", "Москва", "Ильназвильск"];
 
@@ -26,7 +26,7 @@ export const AddPersonalNumberPage = () => {
             <Select.Option value={city}>{city}</Select.Option>
           ))}
         </Select>
-        <Button>Продолжить</Button>
+        <Button type="primary">Продолжить</Button>
       </WindowWrapper>
     </PageWrapper>
   );
