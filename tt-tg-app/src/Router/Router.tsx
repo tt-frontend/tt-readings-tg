@@ -6,9 +6,9 @@ import { useBackButton } from "@/hooks/useBackButton";
 export const Router = () => {
   useBackButton();
 
-  const params = useSearchParams();
+  const [params] = useSearchParams();
 
-  console.log(params);
+  console.log(params.get("token"));
 
   const routes = useMemo(() => getRoutes(), []);
 
