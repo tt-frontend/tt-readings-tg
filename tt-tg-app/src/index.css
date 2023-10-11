@@ -7,7 +7,7 @@ body {
 }
 
 :root {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
   font-synthesis: none;
   background: white;
   text-rendering: optimizeLegibility;
@@ -21,4 +21,8 @@ body {
 
 a {
   text-decoration: none;
+}
+
+* {
+  font-family: "Montserrat", sans-serif !important;
 }
