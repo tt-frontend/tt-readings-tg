@@ -17,7 +17,7 @@ export const LimbContainer = () => {
   useEffect(() => {
     const secret = params.get("token");
 
-    if (secret) handleSecretRecieved(secret);
+    if (secret && secret !== "null") handleSecretRecieved(secret);
   }, [handleSecretRecieved, params]);
 
   useEffect(() => {

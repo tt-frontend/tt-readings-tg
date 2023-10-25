@@ -15,7 +15,8 @@ const $personalNumbers = createStore<HomeownerAccountListResponse[] | null>(
 const $isLoading = fetchPersonalNumbersFx.pending;
 
 sample({
-  source: authService.outputs.$authToken,
+  clock: authService.outputs.$isAuth,
+  filter: Boolean,
   target: fetchPersonalNumbersFx,
 });
 

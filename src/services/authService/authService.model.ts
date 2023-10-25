@@ -11,11 +11,14 @@ const fetchAuthTokenFx = createEffect<string, LoginResponse, AxiosError>(
 
 const $authToken = createStore<null | string>(null).on(
   fetchAuthTokenFx.doneData,
-  (_, { token }) => token
+  (_, data) => {
+    return data.token;
+  }
 );
 
 sample({
   clock: handleSecretRecieved,
+  filter: Boolean,
   target: fetchAuthTokenFx,
 });
 
@@ -25,9 +28,9 @@ fetchAuthTokenFx.failData.watch((e) => {
   if (isForbidden) Telegram.WebApp.sendData(JSON.stringify({ Command: 1 }));
 });
 
-const handleTokenRecieved = fetchAuthTokenFx.doneData;
+const $isAuth = $authToken.map(Boolean);
 
 export const authService = {
-  inputs: { handleSecretRecieved, handleTokenRecieved },
-  outputs: { $authToken },
+  inputs: { handleSecretRecieved },
+  outputs: { $authToken, $isAuth },
 };

@@ -2,17 +2,21 @@ import { useEffect, useMemo } from "react";
 import { useNavigate, useRoutes, useSearchParams } from "react-router-dom";
 import { getRoutes } from "./Routes.constants";
 import { useBackButton } from "@/hooks/useBackButton";
+import { useUnit } from "effector-react";
+import { authService } from "@/services/authService";
 
 export const Router = () => {
   useBackButton();
+
+  const isAuth = useUnit(authService.outputs.$isAuth);
 
   const navigate = useNavigate();
 
   const [params] = useSearchParams();
 
   useEffect(() => {
-    navigate(`/limb?token=${params.get("token")}`);
-  }, [navigate, params]);
+    if (!isAuth) navigate(`/limb?token=${params.get("token")}`);
+  }, [navigate, params, isAuth]);
 
   const routes = useMemo(() => getRoutes(), []);
 

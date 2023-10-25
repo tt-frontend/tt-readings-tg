@@ -9,4 +9,8 @@ axios.interceptors.request.use((req) => {
   return req;
 });
 
+axios.interceptors.response.use(({ data }) => {
+  return data;
+});
+
 export const api = axios;
