@@ -12,6 +12,7 @@ import { Input } from "@/components/Input";
 import { FormItem } from "@/components/FormItem";
 import { LinkInfoPanel } from "@/components/LinkInfoPanel";
 import { Building } from "@/components/icons/Building";
+import { useNavigate } from "react-router-dom";
 
 const cities = ["Казань", "Москва", "Ильназвильск"];
 
@@ -27,6 +28,8 @@ export const AddPersonalNumberPage = () => {
   const back = useCallback(() => {
     setCurrentTab((prev) => prev - 1);
   }, [setCurrentTab]);
+
+  const navigate = useNavigate();
 
   return (
     <PageWrapper>
@@ -78,7 +81,9 @@ export const AddPersonalNumberPage = () => {
             title="Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
           />
           <ButtonsWrapper>
-            <Button type="primary">Все верно</Button>
+            <Button type="primary" onClick={() => navigate("/")}>
+              Все верно
+            </Button>
             <Button type="primary" ghost onClick={back}>
               Вернуться назад
             </Button>
