@@ -8,7 +8,7 @@ export function useBackButton() {
   const backButton = Telegram.WebApp.BackButton;
 
   useEffect(() => {
-    if (location.pathname !== "/") {
+    if (!["/", "/limb"].includes(location.pathname)) {
       backButton.show();
     } else {
       backButton.hide();

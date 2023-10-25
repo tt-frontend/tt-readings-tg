@@ -1,8 +1,12 @@
+import { authService } from "@/services/authService";
 import axios from "axios";
 
-const apiInstance = new axios.Axios();
+axios.defaults.baseURL = "https://stage.k8s.transparent-technology.ru/api/tg";
 
-apiInstance.defaults.baseURL =
-  "https://stage.k8s.transparent-technology.ru/api/tg";
+axios.interceptors.request.use((req) => {
+  req.headers.Authorization = `Bearer ${authService.outputs.$authToken.getState()}`;
+  req.headers["x-user-path"] = window.location.pathname || "none";
+  return req;
+});
 
-export const api = apiInstance;
+export const api = axios;
