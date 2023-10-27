@@ -3,6 +3,7 @@ import { authService } from "../authService";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { personalNumbersAcccountsService } from "../personalNumberAccounts/personalNumberAccounts.model";
+import { Skeleton } from "antd";
 
 export const LimbContainer = () => {
   const { handleSecretRecieved, personalNumbers } = useUnit({
@@ -32,5 +33,5 @@ export const LimbContainer = () => {
     navigate("/");
   }, [navigate, personalNumbers]);
 
-  return <>загрузка</>;
+  return <Skeleton active />;
 };

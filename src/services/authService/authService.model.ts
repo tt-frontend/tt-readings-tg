@@ -25,7 +25,7 @@ sample({
 });
 
 fetchAuthTokenFx.failData.watch((e) => {
-  const isForbidden = e.response?.status === 403;
+  const isForbidden = e.response?.status === 403 || e.response?.status === 401;
 
   if (isForbidden) Telegram.WebApp.close();
 });

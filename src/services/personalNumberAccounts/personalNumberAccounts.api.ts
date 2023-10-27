@@ -1,5 +1,12 @@
-import { HomeownerAccountListResponse } from "@/api/types";
-import axios from "axios";
+import { api } from "@/api";
+import {
+  HomeownerAccountListResponse,
+  HomeownerAccountResponse,
+} from "@/api/types";
 
 export const getPersonalNumbers = (): Promise<HomeownerAccountListResponse[]> =>
-  axios.get("HomeownerAccounts");
+  api.get("HomeownerAccounts");
+
+export const getHomeownerAccount = (
+  accId: string
+): Promise<HomeownerAccountResponse> => api.get(`HomeownerAccounts/${accId}`);

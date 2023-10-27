@@ -1,35 +1,33 @@
 import { useUnit } from "effector-react";
 import { MainPage } from "./MainPage";
 import { personalNumbersAcccountsService } from "../personalNumberAccounts/personalNumberAccounts.model";
-import { useEffect, useState } from "react";
 
 export const MainPageContainer = () => {
-  const [selectedPersonalNumber, setSelectedPersonalNumber] = useState<
-    string | null
-  >(null);
-  const { homeownerAccounts } = useUnit({
+  const {
+    homeownerAccounts,
+    handleSelectHomeownerAccount,
+    selectedHomeownerAccountId,
+    currentHomeownerAccount,
+    isLoadingHomeownerAccount,
+  } = useUnit({
     homeownerAccounts: personalNumbersAcccountsService.outputs.$personalNumbers,
+    handleSelectHomeownerAccount:
+      personalNumbersAcccountsService.inputs.handleSelectHomeownerAccount,
+    selectedHomeownerAccountId:
+      personalNumbersAcccountsService.outputs.$selectedHomeownerAccountId,
+    currentHomeownerAccount:
+      personalNumbersAcccountsService.outputs.$currentHomeownerAccount,
+    isLoadingHomeownerAccount:
+      personalNumbersAcccountsService.outputs.$isLoadingHomeownerAccount,
   });
-
-  useEffect(() => {
-    if (!homeownerAccounts?.length) return;
-
-    const defaultAcc = homeownerAccounts.find((elem) => elem.isDefault);
-
-    if (defaultAcc) {
-      setSelectedPersonalNumber(defaultAcc.accountId);
-
-      return;
-    }
-
-    setSelectedPersonalNumber(homeownerAccounts[0].accountId);
-  }, [homeownerAccounts]);
 
   return (
     <MainPage
       homeownerAccounts={homeownerAccounts}
-      selectedPersonalNumber={selectedPersonalNumber}
-      setSelectedPersonalNumber={setSelectedPersonalNumber}
+      selectedPersonalNumber={selectedHomeownerAccountId}
+      setSelectedPersonalNumber={handleSelectHomeownerAccount}
+      currentHomeownerAccount={currentHomeownerAccount}
+      isLoadingHomeownerAccount={isLoadingHomeownerAccount}
     />
   );
 };

@@ -11,11 +11,15 @@ import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPane
 import { ActionLink } from "@/components/ActionLink";
 import { FC } from "react";
 import { MainPageProps } from "./MainPage.types";
+import { getAddressString } from "@/utils/getAddressString";
+import { Skeleton } from "antd";
 
 export const MainPage: FC<MainPageProps> = ({
   selectedPersonalNumber,
   setSelectedPersonalNumber,
   homeownerAccounts,
+  currentHomeownerAccount,
+  isLoadingHomeownerAccount,
 }) => {
   return (
     <Wrapper>
@@ -24,24 +28,37 @@ export const MainPage: FC<MainPageProps> = ({
         handleSelect={setSelectedPersonalNumber}
         personalNumbers={homeownerAccounts || []}
       />
-      <InfoLinksWrapper>
-        <LinkInfoPanel
-          icon={<Building />}
-          title="Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
-        />
-        <LinkInfoPanel icon={<Bag />} title="УК “Добрый дом”" />
-      </InfoLinksWrapper>
-      <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
-      <ActionsWrapper>
-        <ActionLink title="Ввести показания счетчиков" path="/inputReadings" />
-        <ActionLink title="Отправить заявку на опломбировку" path="" />
-        <ActionLink title="Отправить заявку на проверку" path="" />
-        <ActionLink
-          title="Заявить о проблеме"
-          description="Если прорвало трубу, перегорела лампочка или нет электричества"
-          path=""
-        />
-      </ActionsWrapper>
+      {isLoadingHomeownerAccount && <Skeleton active />}
+      {currentHomeownerAccount && !isLoadingHomeownerAccount && (
+        <>
+          <InfoLinksWrapper>
+            <LinkInfoPanel
+              icon={<Building />}
+              title={getAddressString(currentHomeownerAccount.address)}
+            />
+            <LinkInfoPanel
+              icon={<Bag />}
+              title={
+                currentHomeownerAccount.managementFirmTitle || "Нет данных"
+              }
+            />
+          </InfoLinksWrapper>
+          <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
+          <ActionsWrapper>
+            <ActionLink
+              title="Ввести показания счетчиков"
+              path="/inputReadings"
+            />
+            <ActionLink title="Отправить заявку на опломбировку" path="" />
+            <ActionLink title="Отправить заявку на проверку" path="" />
+            <ActionLink
+              title="Заявить о проблеме"
+              description="Если прорвало трубу, перегорела лампочка или нет электричества"
+              path=""
+            />
+          </ActionsWrapper>
+        </>
+      )}
     </Wrapper>
   );
 };
