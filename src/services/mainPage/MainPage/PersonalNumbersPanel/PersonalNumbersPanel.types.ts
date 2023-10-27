@@ -1,10 +1,7 @@
-type PersonalNumber = {
-  id: number;
-  number: string;
-};
+import { HomeownerAccountListResponse } from "@/api/types";
 
 export type PersonalNumbersPanelProps = {
-  personalNumbers: PersonalNumber[];
-  selectedNumber?: number;
-  handleSelect: (id: number) => void;
+  personalNumbers: HomeownerAccountListResponse[];
+  selectedNumber: string | null;
+  handleSelect: (id: string) => void;
 };

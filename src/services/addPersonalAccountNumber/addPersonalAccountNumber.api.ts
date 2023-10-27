@@ -8,4 +8,4 @@ export const findHomeownerAccount = (
   api.get("HomeownerAccounts/Find", { params });
 
 export const linkHomeownerAccount = (accId: string) =>
-  api.post("HomeownerAccounts/Link", { params: { accId } });
+  api.post("HomeownerAccounts/Link", null, { params: { accId } });

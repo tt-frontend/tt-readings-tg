@@ -8,27 +8,21 @@ import {
   Wrapper,
 } from "./MainPage.styled";
 import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPanel";
-import { useState } from "react";
 import { ActionLink } from "@/components/ActionLink";
+import { FC } from "react";
+import { MainPageProps } from "./MainPage.types";
 
-export const MainPage = () => {
-  const [selectedPersonalNumber, setSelectedPersonalNumber] = useState(1);
-
+export const MainPage: FC<MainPageProps> = ({
+  selectedPersonalNumber,
+  setSelectedPersonalNumber,
+  homeownerAccounts,
+}) => {
   return (
     <Wrapper>
       <PersonalNumbersPanel
         selectedNumber={selectedPersonalNumber}
         handleSelect={setSelectedPersonalNumber}
-        personalNumbers={[
-          {
-            id: 1,
-            number: "1298391381",
-          },
-          {
-            id: 2,
-            number: "72834792320",
-          },
-        ]}
+        personalNumbers={homeownerAccounts || []}
       />
       <InfoLinksWrapper>
         <LinkInfoPanel

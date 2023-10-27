@@ -17,8 +17,10 @@ const $authToken = createStore<null | string>(null).on(
 );
 
 sample({
+  source: $authToken,
   clock: handleSecretRecieved,
-  filter: Boolean,
+  filter: (token, secret) => !token && Boolean(secret),
+  fn: (_, secret) => secret,
   target: fetchAuthTokenFx,
 });
 

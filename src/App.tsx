@@ -4,7 +4,7 @@ import { Router } from "./Router";
 
 function App() {
   useEffect(() => {
-    Telegram.WebApp.enableClosingConfirmation;
+    Telegram.WebApp.enableClosingConfirmation();
   }, []);
 
   return (

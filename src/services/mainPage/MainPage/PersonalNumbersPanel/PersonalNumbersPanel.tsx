@@ -21,12 +21,12 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
     <Wrapper>
       {personalNumbers.map((elem) => (
         <PersonalNumber
-          onClick={() => handleSelect(elem.id)}
-          key={elem.id}
-          isActive={elem.id === selectedNumber}
+          onClick={() => handleSelect(elem.accountId)}
+          key={elem.accountId}
+          isActive={elem.accountId === selectedNumber}
         >
-          {elem.number}
-          {elem.id === selectedNumber && (
+          {elem.accountNumber}
+          {elem.accountId === selectedNumber && (
             <CheckCircle>
               <Check />
             </CheckCircle>
