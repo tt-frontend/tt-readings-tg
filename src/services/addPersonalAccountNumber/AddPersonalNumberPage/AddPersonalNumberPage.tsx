@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import {
   ButtonsWrapper,
   Description,
@@ -13,10 +13,11 @@ import { FormItem } from "@/components/FormItem";
 import { LinkInfoPanel } from "@/components/LinkInfoPanel";
 import { Building } from "@/components/icons/Building";
 import { useNavigate } from "react-router-dom";
+import { AddPersonalNumberPageProps } from "./AddPersonalNumnerPage.types";
 
-const cities = ["Казань", "Москва", "Ильназвильск"];
-
-export const AddPersonalNumberPage = () => {
+export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
+  existingCities,
+}) => {
   const [currentTab, setCurrentTab] = useState(0);
 
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
@@ -42,11 +43,11 @@ export const AddPersonalNumberPage = () => {
             onChange={(value) => setSelectedCity(value)}
             allowClear
           >
-            {cities.map((city) => (
+            {existingCities?.map((city) => (
               <Select.Option value={city}>{city}</Select.Option>
             ))}
           </Select>
-          <Button type="primary" onClick={next}>
+          <Button type="primary" onClick={next} disabled>
             Продолжить
           </Button>
         </WindowWrapper>
