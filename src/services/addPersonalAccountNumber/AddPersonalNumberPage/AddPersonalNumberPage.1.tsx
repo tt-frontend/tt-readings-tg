@@ -15,7 +15,6 @@ import { Building } from "@/components/icons/Building";
 import { useNavigate } from "react-router-dom";
 import { AddPersonalNumberPageProps } from "./AddPersonalNumnerPage.types";
 import { useFormik } from "formik";
-import { getAddressString } from "@/utils/getAddressString";
 
 export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
   existingCities,
@@ -110,7 +109,7 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
           </ButtonsWrapper>
         </WindowWrapper>
       )}
-      {currentTab === 2 && homeownerAccount && (
+      {currentTab === 2 && (
         <WindowWrapper>
           <div>
             <Title>Мы нашли адрес!</Title>
@@ -118,11 +117,7 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
           </div>
           <LinkInfoPanel
             icon={<Building />}
-            title={
-              (homeownerAccount.address &&
-                getAddressString(homeownerAccount.address)) ||
-              ""
-            } //"Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
+            title={getAddressString} //"Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
           />
           <ButtonsWrapper>
             <Button type="primary" onClick={() => navigate("/")}>
