@@ -12,7 +12,6 @@ import { Input } from "@/components/Input";
 import { FormItem } from "@/components/FormItem";
 import { LinkInfoPanel } from "@/components/LinkInfoPanel";
 import { Building } from "@/components/icons/Building";
-import { useNavigate } from "react-router-dom";
 import { AddPersonalNumberPageProps } from "./AddPersonalNumnerPage.types";
 import { useFormik } from "formik";
 import { getAddressString } from "@/utils/getAddressString";
@@ -22,6 +21,7 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
   handleFindAccount,
   homeownerAccount,
   isLoading,
+  handleLinkAccount,
 }) => {
   const [currentTab, setCurrentTab] = useState(0);
 
@@ -53,8 +53,6 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
   useEffect(() => {
     if (homeownerAccount) setCurrentTab(2);
   }, [homeownerAccount]);
-
-  const navigate = useNavigate();
 
   return (
     <PageWrapper>
@@ -118,14 +116,13 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
           </div>
           <LinkInfoPanel
             icon={<Building />}
-            title={
-              (homeownerAccount.address &&
-                getAddressString(homeownerAccount.address)) ||
-              ""
-            } //"Санкт-Петербург, улица Чайковского, дом 79, квартира 75"
+            title={getAddressString(homeownerAccount.address)}
           />
           <ButtonsWrapper>
-            <Button type="primary" onClick={() => navigate("/")}>
+            <Button
+              type="primary"
+              onClick={() => handleLinkAccount(homeownerAccount.accountId)}
+            >
               Все верно
             </Button>
             <Button type="primary" ghost onClick={back}>

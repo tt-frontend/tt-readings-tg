@@ -6,3 +6,6 @@ export const findHomeownerAccount = (
   params: FindHomeownerAccountRequest
 ): Promise<HomeownerAccountResponse | null> =>
   api.get("HomeownerAccounts/Find", { params });
+
+export const linkHomeownerAccount = (accId: string) =>
+  api.post("HomeownerAccounts/Link", { params: { accId } });

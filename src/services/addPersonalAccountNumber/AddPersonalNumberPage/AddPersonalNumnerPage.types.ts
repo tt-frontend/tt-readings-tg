@@ -6,4 +6,5 @@ export type AddPersonalNumberPageProps = {
   handleFindAccount: (payload: FindHomeownerAccountRequest) => void;
   homeownerAccount: HomeownerAccountResponse | null;
   isLoading: boolean;
+  handleLinkAccount: (payload: string) => void;
 };

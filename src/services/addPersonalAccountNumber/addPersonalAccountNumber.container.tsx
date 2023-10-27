@@ -2,6 +2,8 @@ import { useUnit } from "effector-react";
 import { filtersService } from "../filtersService";
 import { AddPersonalNumberPage } from "./AddPersonalNumberPage";
 import { addPersonalAccountNumberService } from "./addPersonalAccountNumber.model";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const {
   gates: { ExistingCitiesGate },
@@ -14,13 +16,25 @@ const {
 } = addPersonalAccountNumberService;
 
 export const AddPersonalAccountNumberContainer = () => {
-  const { existingCities, handleFindAccount, homeownerAccount, isLoading } =
-    useUnit({
-      existingCities: filtersService.outputs.$existingCities,
-      handleFindAccount: inputs.handleFindAccount,
-      homeownerAccount: outputs.$homeownerAccount,
-      isLoading: outputs.$isLoading,
-    });
+  const {
+    existingCities,
+    handleFindAccount,
+    homeownerAccount,
+    isLoading,
+    handleLinkAccount,
+  } = useUnit({
+    existingCities: filtersService.outputs.$existingCities,
+    handleFindAccount: inputs.handleFindAccount,
+    handleLinkAccount: inputs.handleLinkAccount,
+    homeownerAccount: outputs.$homeownerAccount,
+    isLoading: outputs.$isLoading,
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    return inputs.handleSuccessLink.watch(() => navigate("/")).unsubscribe;
+  }, [navigate]);
 
   return (
     <>
@@ -31,6 +45,7 @@ export const AddPersonalAccountNumberContainer = () => {
         homeownerAccount={homeownerAccount}
         existingCities={existingCities}
         isLoading={isLoading}
+        handleLinkAccount={handleLinkAccount}
       />
     </>
   );
