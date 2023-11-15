@@ -48,8 +48,8 @@ export const LastReading = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px; /* 133.333% */
-  letter-spacing: -0.408px;
+  line-height: 16px;
+  letter-spacing: -0.4px;
 `;
 
 export const DeviceSerialNumber = styled.div`
@@ -60,4 +60,17 @@ export const DeviceSerialNumber = styled.div`
 
 export const ResourceWrapper = styled.div`
   transform: scale(0.9);
+`;
+
+export const DeviceReadingsInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+export const ReadingsConsumption = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
 `;

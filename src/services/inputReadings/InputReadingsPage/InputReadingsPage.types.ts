@@ -1,7 +1,7 @@
-import { IndividualDeviceListItemResponse } from "@/api/types";
+import { IndividualDeviceForReadingResponse } from "@/api/types";
 
 export type InputReadingsPageProps = {
-  individualDevicesList: IndividualDeviceListItemResponse[] | null;
+  individualDevicesList: IndividualDeviceForReadingResponse[] | null;
   isLoadingDevices: boolean;
 };
 

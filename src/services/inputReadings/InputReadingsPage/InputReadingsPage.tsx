@@ -8,14 +8,16 @@ import {
   Title,
 } from "./InputReadingsPage.styled";
 import { groupBy } from "lodash";
-import { EResourceType, IndividualDeviceListItemResponse } from "@/api/types";
+import { EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
 import { FC, useEffect, useMemo, useState } from "react";
 import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
+import { Skeleton } from "antd";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
+  isLoadingDevices,
 }) => {
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
@@ -37,6 +39,10 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
 
     return () => btn.hide();
   }, []);
+
+  if (isLoadingDevices) {
+    return <Skeleton active />
+  }
 
   return (
     <div>
@@ -68,7 +74,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
           <DevicesWrapper>
             {devices.map((device) => (
               <DeviceReadingInput
-                device={device as IndividualDeviceListItemResponse}
+                device={device}
                 groupType={groupType}
               />
             ))}

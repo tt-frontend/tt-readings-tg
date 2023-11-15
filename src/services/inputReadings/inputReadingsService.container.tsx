@@ -8,15 +8,14 @@ const {
 } = inputReadingsService;
 
 export const InputReadingsContainer = () => {
-  const { data: individualDevicesList, pending: isLoadingDevices } = useUnit(
-    individualDevicesQuery
-  );
+  const { data: individualDevicesReadingsData, pending: isLoadingDevices } =
+    useUnit(individualDevicesQuery);
 
   return (
     <>
       <IndividualDevicesGate />
       <InputReadingsPage
-        individualDevicesList={individualDevicesList}
+        individualDevicesList={individualDevicesReadingsData?.devices || []}
         isLoadingDevices={isLoadingDevices}
       />
     </>

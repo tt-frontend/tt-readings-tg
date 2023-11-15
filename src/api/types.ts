@@ -94,8 +94,6 @@ export interface IndividualDeviceForReadingResponse {
 }
 
 export interface IndividualDeviceListItemResponse {
-  readings: any;
-  deviceMountPlace: any;
   /** @format int32 */
   id: number;
   model: string | null;
