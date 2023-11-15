@@ -11,6 +11,7 @@
     "apigen": "npx swagger-typescript-api -p https://stage.k8s.transparent-technology.ru/openapi/telegram/ttm_api.json -o ./src/api -n types.ts"
   },
   "dependencies": {
+    "@farfetched/core": "^0.10.5",
     "antd": "^5.9.4",
     "axios": "^1.5.0",
     "dayjs": "^1.11.9",

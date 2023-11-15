@@ -2,20 +2,32 @@ import { ResourceIcon } from "@/components/ResourceIcon";
 import {
   DevicesWrapper,
   ResourceSection,
-  ResourceSectionTitle,
+  SectionTitle,
+  SegmentedSC,
+  SegmentedWrapper,
   Title,
 } from "./InputReadingsPage.styled";
-import { mockData } from "./inputReadingsPage.constants";
 import { groupBy } from "lodash";
 import { EResourceType, IndividualDeviceListItemResponse } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
-import { useEffect } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
+import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
 
-export const InputReadingsPage = () => {
-  const devices = mockData.items.filter((elem) => elem.closingDate === null);
+export const InputReadingsPage: FC<InputReadingsPageProps> = ({
+  individualDevicesList,
+}) => {
+  const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
-  const groups = groupBy(devices, (device) => device.resource);
+  const groups = useMemo(
+    () =>
+      groupBy(individualDevicesList, (device) =>
+        groupType === EGroupType.ByResource
+          ? device.resource
+          : device.mountPlace
+      ),
+    [groupType, individualDevicesList]
+  );
 
   useEffect(() => {
     const btn = Telegram.WebApp.MainButton;
@@ -29,16 +41,35 @@ export const InputReadingsPage = () => {
   return (
     <div>
       <Title>Введите показания</Title>
-      {Object.entries(groups).map(([resource, devices]) => (
+      <SegmentedWrapper>
+        <SegmentedSC
+          block
+          value={groupType}
+          onChange={(value) => setGroupType(value as EGroupType)}
+          options={[
+            { label: "По ресурсу", value: EGroupType.ByResource },
+            { label: "По расположению", value: EGroupType.ByMountPlace },
+          ]}
+        />
+      </SegmentedWrapper>
+      {Object.entries(groups).map(([dataKey, devices]) => (
         <ResourceSection>
-          <ResourceSectionTitle>
-            <ResourceIcon resource={resource as EResourceType} />
-            <div>{ResourceNamesLookup[resource as EResourceType]}</div>
-          </ResourceSectionTitle>
+          {groupType === EGroupType.ByResource && (
+            <SectionTitle>
+              <ResourceIcon resource={dataKey as EResourceType} />
+              <div>{ResourceNamesLookup[dataKey as EResourceType]}</div>
+            </SectionTitle>
+          )}
+          {groupType === EGroupType.ByMountPlace && (
+            <SectionTitle>
+              {dataKey !== "null" ? dataKey : "Не указано"}
+            </SectionTitle>
+          )}
           <DevicesWrapper>
             {devices.map((device) => (
               <DeviceReadingInput
                 device={device as IndividualDeviceListItemResponse}
+                groupType={groupType}
               />
             ))}
           </DevicesWrapper>

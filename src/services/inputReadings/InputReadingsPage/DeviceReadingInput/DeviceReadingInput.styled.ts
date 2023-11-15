@@ -51,3 +51,13 @@ export const LastReading = styled.div`
   line-height: 16px; /* 133.333% */
   letter-spacing: -0.408px;
 `;
+
+export const DeviceSerialNumber = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const ResourceWrapper = styled.div`
+  transform: scale(0.9);
+`;

@@ -1,3 +1,4 @@
+import { Segmented } from "antd";
 import { styled } from "styled-components";
 
 export const Title = styled.div`
@@ -12,7 +13,7 @@ export const ResourceSection = styled.div`
   margin-top: 16px;
 `;
 
-export const ResourceSectionTitle = styled.div`
+export const SectionTitle = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -29,4 +30,28 @@ export const DevicesWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`;
+
+export const SegmentedWrapper = styled.div`
+  margin: 24px 0;
+`;
+
+export const SegmentedSC = styled(Segmented)`
+  height: 44px;
+  border-radius: 12px;
+  transition: 0.2s;
+  padding: 4px;
+  background-color: #eeeff0;
+
+  .ant-segmented-item {
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-segmented-item-selected {
+    font-weight: 600;
+  }
 `;
