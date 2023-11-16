@@ -9,6 +9,8 @@ export type InputReadingsPageProps = {
   isLoadingDevices: boolean;
   createReadingsPayload: CreateReadingsRequestPayload;
   setReadingPayloadField: (payload: SetReadingPayload) => void;
+  isCreateReadingsLoading: boolean;
+  handleSubmitReadings: () => void;
 };
 
 export enum EGroupType {

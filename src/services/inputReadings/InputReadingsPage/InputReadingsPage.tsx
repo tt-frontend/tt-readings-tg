@@ -20,6 +20,8 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   isLoadingDevices,
   createReadingsPayload,
   setReadingPayloadField,
+  handleSubmitReadings,
+  isCreateReadingsLoading,
 }) => {
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
@@ -38,9 +40,25 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
     btn.text = "Отправить";
     btn.color = "#007AFF";
     btn.show();
+    btn.onClick(handleSubmitReadings);
 
-    return () => btn.hide();
-  }, []);
+    return () => {
+      btn.hide();
+      btn.offClick(handleSubmitReadings);
+    };
+  }, [handleSubmitReadings]);
+
+  useEffect(() => {
+    const btn = Telegram.WebApp.MainButton;
+
+    if (isCreateReadingsLoading) {
+      btn.showProgress(false);
+    } else {
+      btn.hideProgress();
+    }
+
+    return () => btn.hideProgress();
+  }, [isCreateReadingsLoading]);
 
   if (isLoadingDevices) {
     return <Skeleton active />;

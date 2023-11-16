@@ -1,6 +1,9 @@
 import { useUnit } from "effector-react";
 import { InputReadingsPage } from "./InputReadingsPage/InputReadingsPage";
-import { individualDevicesQuery } from "./inputReadingsService.api";
+import {
+  individualDevicesCreateReadingsMutation,
+  individualDevicesQuery,
+} from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
 
 const {
@@ -13,9 +16,18 @@ export const InputReadingsContainer = () => {
   const { data: individualDevicesReadingsData, pending: isLoadingDevices } =
     useUnit(individualDevicesQuery);
 
-  const { setReadingPayloadField, createReadingsPayload } = useUnit({
+  const { pending: isCreateReadingsLoading } = useUnit(
+    individualDevicesCreateReadingsMutation
+  );
+
+  const {
+    setReadingPayloadField,
+    createReadingsPayload,
+    handleSubmitReadings,
+  } = useUnit({
     setReadingPayloadField: inputs.setReadingPayloadField,
     createReadingsPayload: outputs.$createReadingsPayload,
+    handleSubmitReadings: inputs.handleSubmitReadings,
   });
 
   return (
@@ -26,6 +38,8 @@ export const InputReadingsContainer = () => {
         isLoadingDevices={isLoadingDevices}
         createReadingsPayload={createReadingsPayload}
         setReadingPayloadField={setReadingPayloadField}
+        isCreateReadingsLoading={isCreateReadingsLoading}
+        handleSubmitReadings={handleSubmitReadings}
       />
     </>
   );

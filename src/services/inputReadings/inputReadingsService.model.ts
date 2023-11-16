@@ -1,6 +1,9 @@
 import { createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
-import { individualDevicesQuery } from "./inputReadingsService.api";
+import {
+  individualDevicesCreateReadingsMutation,
+  individualDevicesQuery,
+} from "./inputReadingsService.api";
 import {
   CreateReadingsRequestPayload,
   SetReadingPayload,
@@ -9,6 +12,8 @@ import {
 const IndividualDevicesGate = createGate();
 
 const setReadingPayloadField = createEvent<SetReadingPayload>();
+
+const handleSubmitReadings = createEvent();
 
 const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   .on(individualDevicesQuery.finished.success, (prev, data) => {
@@ -52,8 +57,14 @@ sample({
   target: individualDevicesQuery.start,
 });
 
+sample({
+  source: $createReadingsPayload,
+  clock: handleSubmitReadings,
+  target: individualDevicesCreateReadingsMutation.start,
+});
+
 export const inputReadingsService = {
-  inputs: { setReadingPayloadField },
+  inputs: { setReadingPayloadField, handleSubmitReadings },
   outputs: { $createReadingsPayload },
   gates: { IndividualDevicesGate },
 };
