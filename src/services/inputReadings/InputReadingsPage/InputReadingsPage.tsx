@@ -18,6 +18,8 @@ import { Skeleton } from "antd";
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
   isLoadingDevices,
+  createReadingsPayload,
+  setReadingPayloadField,
 }) => {
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
@@ -41,7 +43,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   }, []);
 
   if (isLoadingDevices) {
-    return <Skeleton active />
+    return <Skeleton active />;
   }
 
   return (
@@ -74,6 +76,10 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
           <DevicesWrapper>
             {devices.map((device) => (
               <DeviceReadingInput
+                createReadingPayload={createReadingsPayload[device.id] || null}
+                setReadingPayloadField={(values) =>
+                  setReadingPayloadField({ id: device.id, ...values })
+                }
                 device={device}
                 groupType={groupType}
               />

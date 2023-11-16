@@ -35,6 +35,12 @@ export interface ConsumptionRateResponse {
   maximumConsumptionRate: number | null;
 }
 
+export enum EIndividualDeviceRateType {
+  OneZone = "OneZone",
+  TwoZone = "TwoZone",
+  ThreeZone = "ThreeZone",
+}
+
 export enum EResourceType {
   Heat = "Heat",
   HotWaterSupply = "HotWaterSupply",
@@ -88,6 +94,7 @@ export interface IndividualDeviceForReadingResponse {
   mountPlace: string | null;
   /** @format int32 */
   bitDepth: number | null;
+  rateType: EIndividualDeviceRateType;
   resource: EResourceType;
   currentReading: ReadingResponse | null;
   previousReading: ReadingResponse | null;
@@ -108,6 +115,7 @@ export interface IndividualDeviceResponse {
   model: string | null;
   serialNumber: string | null;
   mountPlace: string | null;
+  rateType: EIndividualDeviceRateType;
   /** @format date-time */
   futureCheckingDate: string;
   resource: EResourceType;

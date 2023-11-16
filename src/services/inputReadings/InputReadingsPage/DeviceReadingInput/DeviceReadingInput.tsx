@@ -16,12 +16,15 @@ import "dayjs/locale/ru";
 import { EGroupType } from "../InputReadingsPage.types";
 import { ResourceIcon } from "@/components/ResourceIcon";
 import { ResourceSummaryUnits } from "@/components/ResourceIcon/ResourceIcon.constants";
+import { EIndividualDeviceRateType } from "@/api/types";
 
 dayjs.locale("ru");
 
 export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
   device,
   groupType,
+  createReadingPayload,
+  setReadingPayloadField,
 }) => {
   return (
     <DeviceCard>
@@ -39,12 +42,37 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
         )}
       </Header>
       <ReadingInput
+        value={createReadingPayload?.value1 || ""}
+        onChange={(e) =>
+          setReadingPayloadField({
+            value1: e.target.value ? Number(e.target.value) : null,
+          })
+        }
         placeholder={
           device.currentReading?.value1
             ? String(device.currentReading?.value1)
             : "000000,00"
         }
       />
+      {device.rateType === EIndividualDeviceRateType.TwoZone && (
+        <ReadingInput
+          value={createReadingPayload?.value2 || ""}
+          onChange={(e) =>
+            setReadingPayloadField({
+              value2: e.target.value ? Number(e.target.value) : null,
+            })
+          }
+          placeholder={
+            typeof createReadingPayload?.value2 === "number"
+              ? createReadingPayload?.value2
+                ? String(createReadingPayload?.value2)
+                : "000000,00"
+              : device.currentReading?.value2
+              ? String(device.currentReading?.value2)
+              : "000000,00"
+          }
+        />
+      )}
       {device.previousReading && (
         <DeviceReadingsInfoWrapper>
           <LastReading>
