@@ -8,6 +8,7 @@ import {
   CreateReadingsRequestPayload,
   SetReadingPayload,
 } from "./inputReadingsService.types";
+import { message } from "antd";
 
 const IndividualDevicesGate = createGate();
 
@@ -53,7 +54,10 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   });
 
 sample({
-  clock: IndividualDevicesGate.open,
+  clock: [
+    IndividualDevicesGate.open,
+    individualDevicesCreateReadingsMutation.finished.finally,
+  ],
   target: individualDevicesQuery.start,
 });
 
@@ -62,6 +66,10 @@ sample({
   clock: handleSubmitReadings,
   target: individualDevicesCreateReadingsMutation.start,
 });
+
+individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
+  message.success("Показания успешно занесены")
+);
 
 export const inputReadingsService = {
   inputs: { setReadingPayloadField, handleSubmitReadings },
