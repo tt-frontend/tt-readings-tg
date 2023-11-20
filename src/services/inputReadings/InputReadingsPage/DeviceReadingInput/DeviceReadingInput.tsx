@@ -14,7 +14,6 @@ import { ResourceSummaryUnits } from "@/components/ResourceIcon/ResourceIcon.con
 import { EIndividualDeviceRateType } from "@/api/types";
 import { DeviceReadingInputProps } from "./DeviceReadingInput.types";
 import { ReadingInput } from "./ReadingInput";
-import { getReadingInputPlaceholder } from "./DeviceReadingInput.utils";
 
 dayjs.locale("ru");
 
@@ -49,10 +48,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
             value1: value,
           })
         }
-        placeholder={getReadingInputPlaceholder(
-          createReadingPayload?.value1,
-          device.currentReading?.value1
-        )}
+        placeholder="T1"
         unit={unit}
         prevReadingDate={device.previousReading?.readingDate}
         prevReadingValue={device.previousReading?.value1}
@@ -66,10 +62,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
               value2: value,
             })
           }
-          placeholder={getReadingInputPlaceholder(
-            createReadingPayload?.value2,
-            device.currentReading?.value2
-          )}
+          placeholder="T2"
           unit={unit}
           prevReadingDate={device.previousReading?.readingDate}
           prevReadingValue={device.previousReading?.value2}

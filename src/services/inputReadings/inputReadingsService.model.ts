@@ -41,14 +41,8 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
     return {
       ...prev,
       [data.id]: {
-        value1:
-          typeof data.value1 === "number"
-            ? data.value1
-            : prev[data.id]?.value1 || null,
-        value2:
-          typeof data.value2 === "number"
-            ? data.value2
-            : prev[data.id]?.value2 || null,
+        ...(prev[data.id] || {}),
+        ...data.values,
       },
     };
   });

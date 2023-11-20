@@ -96,7 +96,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
               <DeviceReadingInput
                 createReadingPayload={createReadingsPayload[device.id] || null}
                 setReadingPayloadField={(values) =>
-                  setReadingPayloadField({ id: device.id, ...values })
+                  setReadingPayloadField({ id: device.id, values })
                 }
                 device={device}
                 groupType={groupType}

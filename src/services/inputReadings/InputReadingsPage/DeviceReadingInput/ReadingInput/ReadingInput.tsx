@@ -17,12 +17,16 @@ export const ReadingInput: FC<Props> = ({
   prevReadingValue,
   unit,
 }) => {
+  console.log(value);
+
   return (
     <Wrapper>
       <Input
         value={value === null ? "" : value}
         onChange={(e) => {
           const value = Number(e.target.value);
+
+          console.log(value, Number.isNaN(value));
           handleCange(Number.isNaN(value) ? null : value);
         }}
         placeholder={placeholder}
