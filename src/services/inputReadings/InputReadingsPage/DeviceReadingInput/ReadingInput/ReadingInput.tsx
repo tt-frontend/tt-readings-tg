@@ -17,7 +17,6 @@ export const ReadingInput: FC<Props> = ({
   prevReadingValue,
   unit,
 }) => {
-  console.log(value);
   return (
     <Wrapper>
       <Input
