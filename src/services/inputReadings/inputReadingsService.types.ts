@@ -4,6 +4,7 @@ export type CreateReadingsRequestPayload = {
   [deviceId: number]: ReadingValues;
 };
 
-export interface SetReadingPayload extends ReadingValues {
+export interface SetReadingPayload {
   id: number;
+  values: ReadingValues;
 }

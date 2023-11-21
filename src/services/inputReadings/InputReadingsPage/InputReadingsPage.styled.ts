@@ -43,6 +43,10 @@ export const SegmentedSC = styled(Segmented)`
   padding: 4px;
   background-color: #eeeff0;
 
+  * {
+    border-radius: 8px !important;
+  }
+
   .ant-segmented-item {
     border-radius: 8px;
     font-size: 16px;
@@ -53,5 +57,10 @@ export const SegmentedSC = styled(Segmented)`
 
   .ant-segmented-item-selected {
     font-weight: 600;
+    background-color: white !important;
   }
+`;
+
+export const NoDeviceButton = styled.div`
+  margin-top: 16px;
 `;

@@ -1,6 +1,7 @@
 import { ResourceIcon } from "@/components/ResourceIcon";
 import {
   DevicesWrapper,
+  NoDeviceButton,
   ResourceSection,
   SectionTitle,
   SegmentedSC,
@@ -14,6 +15,7 @@ import { DeviceReadingInput } from "./DeviceReadingInput";
 import { FC, useEffect, useMemo, useState } from "react";
 import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
 import { Skeleton } from "antd";
+import { Button } from "@/components/Button";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -96,7 +98,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
               <DeviceReadingInput
                 createReadingPayload={createReadingsPayload[device.id] || null}
                 setReadingPayloadField={(values) =>
-                  setReadingPayloadField({ id: device.id, ...values })
+                  setReadingPayloadField({ id: device.id, values })
                 }
                 device={device}
                 groupType={groupType}
@@ -105,6 +107,11 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
           </DevicesWrapper>
         </ResourceSection>
       ))}
+      <NoDeviceButton>
+        <Button type="default" block>
+          Моего прибора здесь нет
+        </Button>
+      </NoDeviceButton>
     </div>
   );
 };
