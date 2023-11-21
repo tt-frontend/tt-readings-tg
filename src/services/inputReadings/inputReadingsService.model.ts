@@ -1,4 +1,4 @@
-import { createEvent, createStore, sample } from "effector";
+import { combine, createEvent, createStore, sample } from "effector";
 import { createGate } from "effector-react";
 import {
   individualDevicesCreateReadingsMutation,
@@ -9,6 +9,7 @@ import {
   SetReadingPayload,
 } from "./inputReadingsService.types";
 import { message } from "antd";
+import { getDevicesReadings } from "./inputReadingsService.utils";
 
 const IndividualDevicesGate = createGate();
 
@@ -26,16 +27,7 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
 
     if (!devices) return prev;
 
-    return devices?.reduce(
-      (acc, elem) => ({
-        ...acc,
-        [elem.id]: {
-          value1: elem.currentReading?.value1,
-          value2: elem.currentReading?.value2,
-        },
-      }),
-      {}
-    );
+    return getDevicesReadings(devices);
   })
   .on(setReadingPayloadField, (prev, data) => {
     return {
@@ -56,8 +48,33 @@ sample({
 });
 
 sample({
-  source: $createReadingsPayload,
+  source: combine(
+    $createReadingsPayload,
+    individualDevicesQuery.$data,
+    (payload, devicesResponse) => ({ payload, devicesResponse })
+  ),
   clock: handleSubmitReadings,
+  fn: ({ payload, devicesResponse }) => {
+    const devices = getDevicesReadings(devicesResponse?.devices || []);
+
+    const payloadsList = Object.entries(payload).map(([id, readings]) => ({
+      id: Number(id),
+      readings,
+    }));
+
+    if (!devices) return [];
+
+    return payloadsList.filter((readingPayloadItem) => {
+      const initialPayload = devices[readingPayloadItem.id];
+
+      if (!initialPayload) return false;
+
+      return (
+        JSON.stringify(initialPayload) !==
+        JSON.stringify(readingPayloadItem.readings)
+      );
+    });
+  },
   target: individualDevicesCreateReadingsMutation.start,
 });
 

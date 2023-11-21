@@ -1,7 +1,7 @@
 import { api } from "@/api";
 import { GetAllForReadingAddedResponce } from "@/api/types";
 import { createQuery } from "@farfetched/core";
-import { CreateReadingsRequestPayload } from "./inputReadingsService.types";
+import { ReadingValues } from "./inputReadingsService.types";
 
 export const individualDevicesQuery = createQuery<
   void,
@@ -11,15 +11,13 @@ export const individualDevicesQuery = createQuery<
 });
 
 export const individualDevicesCreateReadingsMutation = createQuery<
-  CreateReadingsRequestPayload,
+  { id: number; readings: ReadingValues }[],
   void
 >({
-  handler: (data) => {
-    const payloadsList = Object.entries(data);
-
+  handler: (payloadsList) => {
     return Promise.all(
-      payloadsList.map(([id, values]) =>
-        api.post(`IndividualDevices/${id}`, values)
+      payloadsList.map(({ id, readings }) =>
+        api.post(`IndividualDevices/${id}`, readings)
       )
     ) as unknown as Promise<void>;
   },
