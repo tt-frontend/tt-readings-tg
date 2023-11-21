@@ -17,14 +17,17 @@ export const ReadingInput: FC<Props> = ({
   prevReadingValue,
   unit,
 }) => {
+  console.log(value);
   return (
     <Wrapper>
       <Input
-        value={value === null ? "" : value}
+        value={value === null ? "" : String(value)}
         onChange={(e) => {
           const value = Number(e.target.value);
 
-          handleCange(Number.isNaN(value) ? null : value);
+          handleCange(
+            Number.isNaN(value) || e.target.value === "" ? null : value
+          );
         }}
         placeholder={placeholder}
       />
@@ -33,9 +36,9 @@ export const ReadingInput: FC<Props> = ({
           {dayjs(prevReadingDate).format("MMMM YYYY")}: {prevReadingValue}{" "}
           {unit}
         </LastReading>
-        {value && prevReadingValue && (
+        {Boolean(value) && prevReadingValue && (
           <ReadingsConsumption>
-            Расход: {value - Number(prevReadingValue)} {unit}
+            Расход: {(value || 0) - Number(prevReadingValue)} {unit}
           </ReadingsConsumption>
         )}
       </DeviceReadingsInfoWrapper>

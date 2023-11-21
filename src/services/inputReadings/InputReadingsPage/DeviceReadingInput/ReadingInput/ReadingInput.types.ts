@@ -1,5 +1,5 @@
 export type Props = {
-  value: number | null;
+  value?: number | null;
   handleCange: (value: number | null) => void;
   placeholder: string;
   prevReadingValue?: number | null;

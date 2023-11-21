@@ -30,13 +30,15 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
     return getDevicesReadings(devices);
   })
   .on(setReadingPayloadField, (prev, data) => {
-    return {
+    const res = {
       ...prev,
       [data.id]: {
         ...(prev[data.id] || {}),
         ...data.values,
       },
     };
+
+    return res;
   });
 
 sample({
