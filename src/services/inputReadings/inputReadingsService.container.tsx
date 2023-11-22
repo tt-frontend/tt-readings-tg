@@ -24,9 +24,11 @@ export const InputReadingsContainer = () => {
     setReadingPayloadField,
     createReadingsPayload,
     handleSubmitReadings,
+    validationResult,
   } = useUnit({
-    setReadingPayloadField: inputs.setReadingPayloadField,
     createReadingsPayload: outputs.$createReadingsPayload,
+    validationResult: outputs.$readingsValidation,
+    setReadingPayloadField: inputs.setReadingPayloadField,
     handleSubmitReadings: inputs.handleSubmitReadings,
   });
 
@@ -40,6 +42,7 @@ export const InputReadingsContainer = () => {
         setReadingPayloadField={setReadingPayloadField}
         isCreateReadingsLoading={isCreateReadingsLoading}
         handleSubmitReadings={handleSubmitReadings}
+        validationResult={validationResult}
       />
     </>
   );

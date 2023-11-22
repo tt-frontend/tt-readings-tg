@@ -88,8 +88,6 @@ const $readingsValidation = combine(
   }, {});
 });
 
-$readingsValidation.watch(console.log);
-
 individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
   message.success("Показания успешно занесены")
 );

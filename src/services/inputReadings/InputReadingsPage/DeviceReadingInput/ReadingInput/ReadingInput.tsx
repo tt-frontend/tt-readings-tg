@@ -1,6 +1,7 @@
 import { FC } from "react";
 import {
   DeviceReadingsInfoWrapper,
+  ErrorMessage,
   Input,
   LastReading,
   ReadingsConsumption,
@@ -15,11 +16,13 @@ export const ReadingInput: FC<Props> = ({
   placeholder,
   prevReadingDate,
   prevReadingValue,
+  validationResult,
   unit,
 }) => {
   return (
     <Wrapper>
       <Input
+        isError={Boolean(validationResult)}
         value={value === null ? "" : String(value)}
         onChange={(e) => {
           const value = Number(e.target.value);
@@ -30,6 +33,9 @@ export const ReadingInput: FC<Props> = ({
         }}
         placeholder={placeholder}
       />
+      {validationResult && (
+        <ErrorMessage>{validationResult.message}</ErrorMessage>
+      )}
       <DeviceReadingsInfoWrapper>
         <LastReading>
           {dayjs(prevReadingDate).format("MMMM YYYY")}: {prevReadingValue}{" "}
