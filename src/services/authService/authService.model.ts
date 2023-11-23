@@ -19,8 +19,9 @@ const $authToken = createStore<null | string>(null).on(
 sample({
   source: $authToken,
   clock: handleSecretRecieved,
-  filter: (token, secret) => !token && Boolean(secret),
-  fn: (_, secret) => secret,
+  filter: (token, telegramUserInitData) =>
+    !token && Boolean(telegramUserInitData),
+  fn: (_, telegramUserInitData) => telegramUserInitData,
   target: fetchAuthTokenFx,
 });
 
