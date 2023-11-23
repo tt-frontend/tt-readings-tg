@@ -22,6 +22,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
   groupType,
   createReadingPayload,
   setReadingPayloadField,
+  validationResult,
 }) => {
   const unit = ResourceSummaryUnits[device.resource];
 
@@ -42,13 +43,14 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
       </Header>
 
       <ReadingInput
-        value={createReadingPayload?.value1 || null}
+        value={createReadingPayload?.value1}
         handleCange={(value) =>
           setReadingPayloadField({
             value1: value,
           })
         }
         placeholder="T1"
+        validationResult={validationResult?.[EIndividualDeviceRateType.OneZone]}
         unit={unit}
         prevReadingDate={device.previousReading?.readingDate}
         prevReadingValue={device.previousReading?.value1}
@@ -56,7 +58,10 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
 
       {device.rateType === EIndividualDeviceRateType.TwoZone && (
         <ReadingInput
-          value={createReadingPayload?.value2 || null}
+          value={createReadingPayload?.value2}
+          validationResult={
+            validationResult?.[EIndividualDeviceRateType.TwoZone]
+          }
           handleCange={(value) =>
             setReadingPayloadField({
               value2: value,

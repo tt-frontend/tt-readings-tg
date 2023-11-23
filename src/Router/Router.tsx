@@ -15,7 +15,7 @@ export const Router = () => {
   const [params] = useSearchParams();
 
   useEffect(() => {
-    if (!isAuth) navigate(`/limb?token=${params.get("token")}`);
+    if (!isAuth) navigate(`/limb`);
   }, [navigate, params, isAuth]);
 
   const routes = useMemo(() => getRoutes(), []);

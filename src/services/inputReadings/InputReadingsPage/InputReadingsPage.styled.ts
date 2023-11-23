@@ -10,7 +10,7 @@ export const Title = styled.div`
 `;
 
 export const ResourceSection = styled.div`
-  margin-top: 16px;
+  margin-top: 24px;
 `;
 
 export const SectionTitle = styled.div`

@@ -16,9 +16,9 @@ export const LimbContainer = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const secret = params.get("token");
+    const telegramUserInitData = Telegram.WebApp.initData;
 
-    if (secret && secret !== "null") handleSecretRecieved(secret);
+    if (telegramUserInitData) handleSecretRecieved(telegramUserInitData);
   }, [handleSecretRecieved, params]);
 
   useEffect(() => {

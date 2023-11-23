@@ -24,6 +24,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   setReadingPayloadField,
   handleSubmitReadings,
   isCreateReadingsLoading,
+  validationResult,
 }) => {
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
@@ -100,6 +101,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                 setReadingPayloadField={(values) =>
                   setReadingPayloadField({ id: device.id, values })
                 }
+                validationResult={validationResult[device.id]}
                 device={device}
                 groupType={groupType}
               />

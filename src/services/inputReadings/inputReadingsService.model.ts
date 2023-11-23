@@ -6,10 +6,16 @@ import {
 } from "./inputReadingsService.api";
 import {
   CreateReadingsRequestPayload,
+  ReadingsValidationData,
   SetReadingPayload,
 } from "./inputReadingsService.types";
 import { message } from "antd";
-import { getDevicesReadings } from "./inputReadingsService.utils";
+import {
+  getDeltaReadings,
+  getDevicesMap,
+  getDevicesReadings,
+  validateReadings,
+} from "./inputReadingsService.utils";
 
 const IndividualDevicesGate = createGate();
 
@@ -30,13 +36,15 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
     return getDevicesReadings(devices);
   })
   .on(setReadingPayloadField, (prev, data) => {
-    return {
+    const res = {
       ...prev,
       [data.id]: {
         ...(prev[data.id] || {}),
         ...data.values,
       },
     };
+
+    return res;
   });
 
 sample({
@@ -47,35 +55,37 @@ sample({
   target: individualDevicesQuery.start,
 });
 
+const $deltaReadingsPayload = combine(
+  $createReadingsPayload,
+  individualDevicesQuery.$data,
+  (payload, devicesResponse) => ({ payload, devicesResponse })
+).map(({ payload, devicesResponse }) =>
+  getDeltaReadings(payload, devicesResponse)
+);
+
 sample({
-  source: combine(
-    $createReadingsPayload,
-    individualDevicesQuery.$data,
-    (payload, devicesResponse) => ({ payload, devicesResponse })
-  ),
+  source: $deltaReadingsPayload,
   clock: handleSubmitReadings,
-  fn: ({ payload, devicesResponse }) => {
-    const devices = getDevicesReadings(devicesResponse?.devices || []);
-
-    const payloadsList = Object.entries(payload).map(([id, readings]) => ({
-      id: Number(id),
-      readings,
-    }));
-
-    if (!devices) return [];
-
-    return payloadsList.filter((readingPayloadItem) => {
-      const initialPayload = devices[readingPayloadItem.id];
-
-      if (!initialPayload) return false;
-
-      return (
-        JSON.stringify(initialPayload) !==
-        JSON.stringify(readingPayloadItem.readings)
-      );
-    });
-  },
+  filter: (data) => Boolean(data.length),
   target: individualDevicesCreateReadingsMutation.start,
+});
+
+const $readingsValidation = combine(
+  $deltaReadingsPayload,
+  individualDevicesQuery.$data,
+  (deltaReadings, devicesResponse) => ({ deltaReadings, devicesResponse })
+).map(({ deltaReadings, devicesResponse }): ReadingsValidationData => {
+  const devicesDataMap = getDevicesMap(devicesResponse);
+
+  return deltaReadings.reduce((acc, { id, readings }) => {
+    const deviceData = devicesDataMap[id];
+
+    const validationResult = validateReadings(readings, deviceData);
+
+    if (validationResult) return { ...acc, [id]: validationResult };
+
+    return acc;
+  }, {});
 });
 
 individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
@@ -84,6 +94,6 @@ individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
 
 export const inputReadingsService = {
   inputs: { setReadingPayloadField, handleSubmitReadings },
-  outputs: { $createReadingsPayload },
+  outputs: { $createReadingsPayload, $readingsValidation },
   gates: { IndividualDevicesGate },
 };
