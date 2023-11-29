@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 export const ReadingInput: FC<Props> = ({
   value,
-  handleCange,
+  handleChange,
   placeholder,
   prevReadingDate,
   prevReadingValue,
@@ -27,7 +27,7 @@ export const ReadingInput: FC<Props> = ({
         onChange={(e) => {
           const value = Number(e.target.value);
 
-          handleCange(
+          handleChange(
             Number.isNaN(value) || e.target.value === "" ? null : value
           );
         }}

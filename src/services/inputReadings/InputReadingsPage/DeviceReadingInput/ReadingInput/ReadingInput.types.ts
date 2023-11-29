@@ -2,7 +2,7 @@ import { ReadingValidation } from "@/services/inputReadings/inputReadingsService
 
 export type Props = {
   value?: number | null;
-  handleCange: (value: number | null) => void;
+  handleChange: (value: number | null) => void;
   placeholder: string;
   prevReadingValue?: number | null;
   prevReadingDate?: string;

@@ -44,7 +44,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
 
       <ReadingInput
         value={createReadingPayload?.value1}
-        handleCange={(value) =>
+        handleChange={(value) =>
           setReadingPayloadField({
             value1: value,
           })
@@ -62,7 +62,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
           validationResult={
             validationResult?.[EIndividualDeviceRateType.TwoZone]
           }
-          handleCange={(value) =>
+          handleChange={(value) =>
             setReadingPayloadField({
               value2: value,
             })
