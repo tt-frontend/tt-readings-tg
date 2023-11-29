@@ -17,8 +17,8 @@ export const getDevicesReadings = (
     (acc, elem) => ({
       ...acc,
       [elem.id]: {
-        value1: elem.currentReading?.value1,
-        value2: elem.currentReading?.value2,
+        value1: elem.currentReading?.value1 ?? null,
+        value2: elem.currentReading?.value2 ?? null,
       },
     }),
     {}

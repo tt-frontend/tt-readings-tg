@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   DeviceReadingsInfoWrapper,
   ErrorMessage,
@@ -19,17 +19,24 @@ export const ReadingInput: FC<Props> = ({
   validationResult,
   unit,
 }) => {
+  const [innerValue, setInnerValue] = useState(value);
+
   return (
     <Wrapper>
       <Input
         isError={Boolean(validationResult)}
-        value={value === null ? "" : String(value)}
+        value={innerValue === null ? "" : String(innerValue)}
         onChange={(e) => {
           const value = Number(e.target.value);
 
-          handleChange(
+          setInnerValue(
             Number.isNaN(value) || e.target.value === "" ? null : value
           );
+        }}
+        onBlur={() => {
+          if (typeof innerValue === "number" || innerValue === null) {
+            handleChange(innerValue);
+          }
         }}
         placeholder={placeholder}
       />
