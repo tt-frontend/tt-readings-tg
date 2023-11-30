@@ -76,11 +76,16 @@ const $readingsValidation = combine(
   (deltaReadings, devicesResponse) => ({ deltaReadings, devicesResponse })
 ).map(({ deltaReadings, devicesResponse }): ReadingsValidationData => {
   const devicesDataMap = getDevicesMap(devicesResponse);
+  const consumptionRates = devicesResponse?.consumptionRates;
 
   return deltaReadings.reduce((acc, { id, readings }) => {
     const deviceData = devicesDataMap[id];
 
-    const validationResult = validateReadings(readings, deviceData);
+    const validationResult = validateReadings(
+      readings,
+      deviceData,
+      consumptionRates
+    );
 
     if (validationResult) return { ...acc, [id]: validationResult };
 

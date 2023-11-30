@@ -52,6 +52,27 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   }, [handleSubmitReadings]);
 
   useEffect(() => {
+    const validationList = Object.entries(validationResult);
+
+    const isCritical = !!validationList.find(
+      ([, res]) =>
+        !![res.OneZone, res.TwoZone, res.ThreeZone].find(
+          (elem) => elem?.type === "critical"
+        )
+    );
+
+    const btn = Telegram.WebApp.MainButton;
+
+    if (isCritical) {
+      btn.disable();
+      btn.color = "#cfcfcf";
+    } else {
+      btn.enable();
+      btn.color = "#007AFF";
+    }
+  }, [validationResult]);
+
+  useEffect(() => {
     const btn = Telegram.WebApp.MainButton;
 
     if (isCreateReadingsLoading) {

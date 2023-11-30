@@ -4,6 +4,7 @@ import {
   ErrorMessage,
   Input,
   LastReading,
+  ReadingMonth,
   ReadingsConsumption,
   Wrapper,
 } from "./ReadingInput.styled";
@@ -24,14 +25,14 @@ export const ReadingInput: FC<Props> = ({
   return (
     <Wrapper>
       <Input
-        isError={Boolean(validationResult)}
+        error={validationResult?.type}
         value={innerValue === null ? "" : String(innerValue)}
         onChange={(e) => {
           const value = Number(e.target.value);
 
-          setInnerValue(
-            Number.isNaN(value) || e.target.value === "" ? null : value
-          );
+          if (Number.isNaN(value)) return;
+
+          setInnerValue(e.target.value === "" ? null : value);
         }}
         onBlur={() => {
           if (typeof innerValue === "number" || innerValue === null) {
@@ -41,12 +42,16 @@ export const ReadingInput: FC<Props> = ({
         placeholder={placeholder}
       />
       {validationResult && (
-        <ErrorMessage>{validationResult.message}</ErrorMessage>
+        <ErrorMessage errorType={validationResult.type}>
+          {validationResult.message}
+        </ErrorMessage>
       )}
       <DeviceReadingsInfoWrapper>
         <LastReading>
-          {dayjs(prevReadingDate).format("MMMM YYYY")}: {prevReadingValue}{" "}
-          {unit}
+          <ReadingMonth>
+            {dayjs(prevReadingDate).format("MMMM YYYY")}:
+          </ReadingMonth>
+          {prevReadingValue} {unit}
         </LastReading>
         {Boolean(value) && prevReadingValue && (
           <ReadingsConsumption>
