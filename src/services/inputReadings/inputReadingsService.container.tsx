@@ -5,6 +5,7 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
+import { useMemo } from "react";
 
 const {
   inputs,
@@ -25,12 +26,19 @@ export const InputReadingsContainer = () => {
     createReadingsPayload,
     handleSubmitReadings,
     validationResult,
+    deltaReadingsPayload,
   } = useUnit({
     createReadingsPayload: outputs.$createReadingsPayload,
     validationResult: outputs.$readingsValidation,
     setReadingPayloadField: inputs.setReadingPayloadField,
     handleSubmitReadings: inputs.handleSubmitReadings,
+    deltaReadingsPayload: outputs.$deltaReadingsPayload,
   });
+
+  const isExistDeltaReadings = useMemo(
+    () => Boolean(Object.entries(deltaReadingsPayload).length),
+    [deltaReadingsPayload]
+  );
 
   return (
     <>
@@ -43,6 +51,7 @@ export const InputReadingsContainer = () => {
         isCreateReadingsLoading={isCreateReadingsLoading}
         handleSubmitReadings={handleSubmitReadings}
         validationResult={validationResult}
+        isExistDeltaReadings={isExistDeltaReadings}
       />
     </>
   );

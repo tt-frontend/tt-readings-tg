@@ -89,7 +89,7 @@ const checkBitDepth = (
   if (isCorrect) return null;
 
   return {
-    message: "Показание превышает лимит счетчика",
+    message: `Показание должно иметь не более ${bitDepth} знаков до запятой`,
     type: "critical",
   };
 };
@@ -106,7 +106,7 @@ const checkConsumtion = (
   if (diff <= consumtionRate.maximumConsumptionRate) return null;
 
   return {
-    message: "Показание превышено",
+    message: "Расход значительно больше среднего",
     type: "warning",
   };
 };

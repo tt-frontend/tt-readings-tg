@@ -31,6 +31,7 @@ export const ReadingInput: FC<Props> = ({
     <Wrapper>
       <Input
         type="number"
+        pattern="[0-9]"
         error={validationResult?.type}
         value={innerValue === null ? "" : String(innerValue)}
         onChange={(e) => {

@@ -99,6 +99,10 @@ individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
 
 export const inputReadingsService = {
   inputs: { setReadingPayloadField, handleSubmitReadings },
-  outputs: { $createReadingsPayload, $readingsValidation },
+  outputs: {
+    $createReadingsPayload,
+    $readingsValidation,
+    $deltaReadingsPayload,
+  },
   gates: { IndividualDevicesGate },
 };

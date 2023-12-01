@@ -12,10 +12,11 @@ import { groupBy } from "lodash";
 import { EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
 import { Skeleton } from "antd";
 import { Button } from "@/components/Button";
+import { useInputReadingButton } from "./InputReadingsPage.hook";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -25,6 +26,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   handleSubmitReadings,
   isCreateReadingsLoading,
   validationResult,
+  isExistDeltaReadings,
 }) => {
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
@@ -38,51 +40,12 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
     [groupType, individualDevicesList]
   );
 
-  useEffect(() => {
-    const btn = Telegram.WebApp.MainButton;
-    btn.text = "Отправить";
-    btn.color = "#007AFF";
-    btn.show();
-    btn.onClick(handleSubmitReadings);
-
-    return () => {
-      btn.hide();
-      btn.offClick(handleSubmitReadings);
-    };
-  }, [handleSubmitReadings]);
-
-  useEffect(() => {
-    const validationList = Object.entries(validationResult);
-
-    const isCritical = !!validationList.find(
-      ([, res]) =>
-        !![res.OneZone, res.TwoZone, res.ThreeZone].find(
-          (elem) => elem?.type === "critical"
-        )
-    );
-
-    const btn = Telegram.WebApp.MainButton;
-
-    if (isCritical) {
-      btn.disable();
-      btn.color = "#cfcfcf";
-    } else {
-      btn.enable();
-      btn.color = "#007AFF";
-    }
-  }, [validationResult]);
-
-  useEffect(() => {
-    const btn = Telegram.WebApp.MainButton;
-
-    if (isCreateReadingsLoading) {
-      btn.showProgress(false);
-    } else {
-      btn.hideProgress();
-    }
-
-    return () => btn.hideProgress();
-  }, [isCreateReadingsLoading]);
+  useInputReadingButton(
+    handleSubmitReadings,
+    validationResult,
+    isCreateReadingsLoading,
+    isExistDeltaReadings
+  );
 
   if (isLoadingDevices) {
     return <Skeleton active />;
