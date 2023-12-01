@@ -17,6 +17,7 @@ import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
 import { Skeleton } from "antd";
 import { Button } from "@/components/Button";
 import { useInputReadingButton } from "./InputReadingsPage.hook";
+import { useNavigate } from "react-router-dom";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -28,6 +29,8 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   validationResult,
   isExistDeltaReadings,
 }) => {
+  const navigate = useNavigate();
+
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
   const groups = useMemo(
@@ -94,7 +97,11 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
         </ResourceSection>
       ))}
       <NoDeviceButton>
-        <Button type="default" block>
+        <Button
+          type="default"
+          block
+          onClick={() => navigate("/inputReadings/noDeviceHelp")}
+        >
           Моего прибора здесь нет
         </Button>
       </NoDeviceButton>
