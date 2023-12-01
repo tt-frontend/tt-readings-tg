@@ -5,7 +5,8 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const {
   inputs,
@@ -39,6 +40,14 @@ export const InputReadingsContainer = () => {
     () => Boolean(Object.entries(deltaReadingsPayload).length),
     [deltaReadingsPayload]
   );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
+      navigate("/inputReadings/successfulReadings")
+    ).unsubscribe;
+  }, [navigate]);
 
   return (
     <>

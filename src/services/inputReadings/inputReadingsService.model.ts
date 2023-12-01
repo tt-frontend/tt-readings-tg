@@ -9,13 +9,13 @@ import {
   ReadingsValidationData,
   SetReadingPayload,
 } from "./inputReadingsService.types";
-import { message } from "antd";
 import {
   getDeltaReadings,
   getDevicesMap,
   getDevicesReadings,
   validateReadings,
 } from "./inputReadingsService.utils";
+import { message } from "antd";
 
 const IndividualDevicesGate = createGate();
 
@@ -93,7 +93,7 @@ const $readingsValidation = combine(
   }, {});
 });
 
-individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
+individualDevicesCreateReadingsMutation.finished.success.watch(() =>
   message.success("Показания успешно занесены")
 );
 

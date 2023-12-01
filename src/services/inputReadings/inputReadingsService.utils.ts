@@ -67,7 +67,7 @@ const checkPrevMore = (
 ): ReadingValidation | null => {
   const diff = currentValue - prevValue;
 
-  if (diff > 0) return null;
+  if (diff >= 0) return null;
 
   return {
     message: "Показания меньше, чем за предыдущий месяц",

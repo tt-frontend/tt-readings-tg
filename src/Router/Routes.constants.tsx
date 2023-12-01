@@ -4,6 +4,7 @@ import { AddPersonalAccountNumberContainer } from "@/services/addPersonalAccount
 import { InputReadingsContainer } from "@/services/inputReadings";
 import { MainPageContainer } from "@/services/mainPage";
 import { LimbContainer } from "@/services/limb/limb.container";
+import { SuccessfulReadingsPage } from "@/services/inputReadings/SuccessfulReadingsPage";
 
 export const getRoutes = (): RouteObject[] => [
   {
@@ -16,7 +17,16 @@ export const getRoutes = (): RouteObject[] => [
       },
       {
         path: "/inputReadings",
-        element: <InputReadingsContainer />,
+        children: [
+          {
+            path: "/inputReadings",
+            element: <InputReadingsContainer />,
+          },
+          {
+            path: "/inputReadings/successfulReadings",
+            element: <SuccessfulReadingsPage />,
+          },
+        ],
       },
       {
         path: "/addPersonalAccountNumber",
