@@ -44,7 +44,7 @@ export const InputReadingsContainer = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
+    return individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
       navigate("/inputReadings/successfulReadings")
     ).unsubscribe;
   }, [navigate]);

@@ -93,7 +93,7 @@ const $readingsValidation = combine(
   }, {});
 });
 
-individualDevicesCreateReadingsMutation.finished.success.watch(() =>
+individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
   message.success("Показания успешно занесены")
 );
 
