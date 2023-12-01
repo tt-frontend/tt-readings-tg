@@ -10,6 +10,7 @@ import {
 } from "./ReadingInput.styled";
 import { Props } from "./ReadingInput.types";
 import dayjs from "dayjs";
+import { round } from "lodash";
 
 export const ReadingInput: FC<Props> = ({
   value,
@@ -22,9 +23,14 @@ export const ReadingInput: FC<Props> = ({
 }) => {
   const [innerValue, setInnerValue] = useState(value);
 
+  const consumption = (value || 0) - Number(prevReadingValue);
+
+  const consumptionString = round(consumption, 3);
+
   return (
     <Wrapper>
       <Input
+        type="number"
         error={validationResult?.type}
         value={innerValue === null ? "" : String(innerValue)}
         onChange={(e) => {
@@ -55,7 +61,7 @@ export const ReadingInput: FC<Props> = ({
         </LastReading>
         {Boolean(value) && prevReadingValue && (
           <ReadingsConsumption>
-            Расход: {(value || 0) - Number(prevReadingValue)} {unit}
+            Расход: {consumptionString} {unit}
           </ReadingsConsumption>
         )}
       </DeviceReadingsInfoWrapper>

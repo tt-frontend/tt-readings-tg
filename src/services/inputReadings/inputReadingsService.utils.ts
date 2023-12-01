@@ -81,7 +81,10 @@ const checkBitDepth = (
 ): ReadingValidation | null => {
   if (!bitDepth) return null;
 
-  const isCorrect = !Number.isNaN(value) && String(value).length <= bitDepth;
+  const isNumber = !Number.isNaN(value);
+  const wholePartLength = String(value.toFixed()).length;
+
+  const isCorrect = isNumber && wholePartLength <= bitDepth;
 
   if (isCorrect) return null;
 
