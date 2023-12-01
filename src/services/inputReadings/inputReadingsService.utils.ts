@@ -117,10 +117,10 @@ export const validateReading = (
   prevValue?: number | null,
   consumptionRates?: EResourceTypeConsumptionRateResponseDictionaryItem[] | null
 ): ReadingValidation | null => {
-  if (!currentValue || !prevValue) return null;
+  if (!(typeof currentValue === "number") || !prevValue) return null;
 
   const consumtionRate =
-    consumptionRates?.find((elem) => elem.key === deviceData.resource)?.value ||
+    consumptionRates?.find((elem) => elem.key === deviceData.resource)?.value ??
     null;
 
   const validationStack = [
