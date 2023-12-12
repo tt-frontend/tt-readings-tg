@@ -5,6 +5,8 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
+import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const {
   inputs,
@@ -25,12 +27,27 @@ export const InputReadingsContainer = () => {
     createReadingsPayload,
     handleSubmitReadings,
     validationResult,
+    deltaReadingsPayload,
   } = useUnit({
     createReadingsPayload: outputs.$createReadingsPayload,
     validationResult: outputs.$readingsValidation,
     setReadingPayloadField: inputs.setReadingPayloadField,
     handleSubmitReadings: inputs.handleSubmitReadings,
+    deltaReadingsPayload: outputs.$deltaReadingsPayload,
   });
+
+  const isExistDeltaReadings = useMemo(
+    () => Boolean(Object.entries(deltaReadingsPayload).length),
+    [deltaReadingsPayload]
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    return individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
+      navigate("/inputReadings/successfulReadings")
+    ).unsubscribe;
+  }, [navigate]);
 
   return (
     <>
@@ -43,6 +60,7 @@ export const InputReadingsContainer = () => {
         isCreateReadingsLoading={isCreateReadingsLoading}
         handleSubmitReadings={handleSubmitReadings}
         validationResult={validationResult}
+        isExistDeltaReadings={isExistDeltaReadings}
       />
     </>
   );

@@ -1,5 +1,7 @@
 import {
+  ConsumptionRateResponse,
   EIndividualDeviceRateType,
+  EResourceTypeConsumptionRateResponseDictionaryItem,
   GetAllForReadingAddedResponce,
   IndividualDeviceForReadingResponse,
 } from "@/api/types";
@@ -17,8 +19,8 @@ export const getDevicesReadings = (
     (acc, elem) => ({
       ...acc,
       [elem.id]: {
-        value1: elem.currentReading?.value1,
-        value2: elem.currentReading?.value2,
+        value1: elem.currentReading?.value1 ?? null,
+        value2: elem.currentReading?.value2 ?? null,
       },
     }),
     {}
@@ -59,35 +61,96 @@ export const getDevicesMap = (
   );
 };
 
-export const validateReading = (
-  currentValue?: number | null,
-  prevValue?: number | null
+const checkPrevMore = (
+  currentValue: number,
+  prevValue: number
 ): ReadingValidation | null => {
-  if (!currentValue || !prevValue) return null;
-
   const diff = currentValue - prevValue;
 
-  if (diff < 0)
-    return {
-      message: "Показания меньше, чем за предыдущий месяц",
-      type: "critical",
-    };
+  if (diff >= 0) return null;
 
-  return null;
+  return {
+    message: "Показания меньше, чем за предыдущий месяц",
+    type: "critical",
+  };
+};
+
+const checkBitDepth = (
+  value: number,
+  bitDepth: number | null
+): ReadingValidation | null => {
+  if (!bitDepth) return null;
+
+  const isNumber = !Number.isNaN(value);
+  const wholePartLength = String(value.toFixed()).length;
+
+  const isCorrect = isNumber && wholePartLength <= bitDepth;
+
+  if (isCorrect) return null;
+
+  return {
+    message: `Показание должно иметь не более ${bitDepth} знаков до запятой`,
+    type: "critical",
+  };
+};
+
+const checkConsumtion = (
+  currentValue: number,
+  prevValue: number,
+  consumtionRate: ConsumptionRateResponse | null
+): ReadingValidation | null => {
+  const diff = currentValue - prevValue;
+
+  if (!consumtionRate?.maximumConsumptionRate) return null;
+
+  if (diff <= consumtionRate.maximumConsumptionRate) return null;
+
+  return {
+    message: "Расход значительно больше среднего",
+    type: "warning",
+  };
+};
+
+export const validateReading = (
+  deviceData: IndividualDeviceForReadingResponse,
+  currentValue?: number | null,
+  prevValue?: number | null,
+  consumptionRates?: EResourceTypeConsumptionRateResponseDictionaryItem[] | null
+): ReadingValidation | null => {
+  if (!(typeof currentValue === "number") || !prevValue) return null;
+
+  const consumtionRate =
+    consumptionRates?.find((elem) => elem.key === deviceData.resource)?.value ??
+    null;
+
+  const validationStack = [
+    checkPrevMore(currentValue, prevValue),
+    checkBitDepth(currentValue, deviceData.bitDepth),
+    checkConsumtion(currentValue, prevValue, consumtionRate),
+  ];
+
+  const validation = validationStack.find(Boolean);
+
+  return validation || null;
 };
 
 export const validateReadings = (
   readings: ReadingValues,
-  deviceData: IndividualDeviceForReadingResponse
+  deviceData: IndividualDeviceForReadingResponse,
+  consumptionRates?: EResourceTypeConsumptionRateResponseDictionaryItem[] | null
 ): ReadingsValidationResult => {
   return {
     [EIndividualDeviceRateType.OneZone]: validateReading(
+      deviceData,
       readings.value1,
-      deviceData.previousReading?.value1
+      deviceData.previousReading?.value1,
+      consumptionRates
     ),
     [EIndividualDeviceRateType.TwoZone]: validateReading(
+      deviceData,
       readings.value2,
-      deviceData.previousReading?.value2
+      deviceData.previousReading?.value2,
+      consumptionRates
     ),
     [EIndividualDeviceRateType.ThreeZone]: null,
   };

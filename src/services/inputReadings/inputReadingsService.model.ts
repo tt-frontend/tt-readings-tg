@@ -9,13 +9,13 @@ import {
   ReadingsValidationData,
   SetReadingPayload,
 } from "./inputReadingsService.types";
-import { message } from "antd";
 import {
   getDeltaReadings,
   getDevicesMap,
   getDevicesReadings,
   validateReadings,
 } from "./inputReadingsService.utils";
+import { message } from "antd";
 
 const IndividualDevicesGate = createGate();
 
@@ -76,11 +76,16 @@ const $readingsValidation = combine(
   (deltaReadings, devicesResponse) => ({ deltaReadings, devicesResponse })
 ).map(({ deltaReadings, devicesResponse }): ReadingsValidationData => {
   const devicesDataMap = getDevicesMap(devicesResponse);
+  const consumptionRates = devicesResponse?.consumptionRates;
 
   return deltaReadings.reduce((acc, { id, readings }) => {
     const deviceData = devicesDataMap[id];
 
-    const validationResult = validateReadings(readings, deviceData);
+    const validationResult = validateReadings(
+      readings,
+      deviceData,
+      consumptionRates
+    );
 
     if (validationResult) return { ...acc, [id]: validationResult };
 
@@ -94,6 +99,10 @@ individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
 
 export const inputReadingsService = {
   inputs: { setReadingPayloadField, handleSubmitReadings },
-  outputs: { $createReadingsPayload, $readingsValidation },
+  outputs: {
+    $createReadingsPayload,
+    $readingsValidation,
+    $deltaReadingsPayload,
+  },
   gates: { IndividualDevicesGate },
 };

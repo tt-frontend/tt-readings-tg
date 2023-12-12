@@ -12,7 +12,12 @@ const inputErrorStyles = css`
   background-color: #fff2f3;
 `;
 
-export const Input = styled.input<{ isError?: boolean }>`
+const inputWarningStyles = css`
+  border-color: #fca452;
+  background-color: #fff0e3;
+`;
+
+export const Input = styled.input<{ error?: "critical" | "warning" }>`
   outline: none;
   width: calc(100% - 20px);
   border-radius: 8px;
@@ -23,7 +28,8 @@ export const Input = styled.input<{ isError?: boolean }>`
   font-size: 16px;
   transition: 0.2s;
 
-  ${({ isError }) => isError && inputErrorStyles}
+  ${({ error }) => error === "critical" && inputErrorStyles}
+  ${({ error }) => error === "warning" && inputWarningStyles}
 `;
 
 export const LastReading = styled.div`
@@ -49,10 +55,16 @@ export const ReadingsConsumption = styled.div`
   white-space: nowrap;
 `;
 
-export const ErrorMessage = styled.div`
-  color: #fc525b;
+export const ErrorMessage = styled.div<{ errorType: "critical" | "warning" }>`
+  color: ${({ errorType }) =>
+    errorType === "warning" ? "#fca452" : "#fc525b"};
   font-size: 12px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 16px;
+`;
+
+export const ReadingMonth = styled.span`
+  opacity: 0.5;
+  margin-right: 8px;
 `;

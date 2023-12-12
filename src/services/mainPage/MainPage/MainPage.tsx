@@ -49,13 +49,13 @@ export const MainPage: FC<MainPageProps> = ({
               title="Ввести показания счетчиков"
               path="/inputReadings"
             />
-            <ActionLink title="Отправить заявку на опломбировку" path="" />
+            {/* <ActionLink title="Отправить заявку на опломбировку" path="" />
             <ActionLink title="Отправить заявку на проверку" path="" />
             <ActionLink
               title="Заявить о проблеме"
               description="Если прорвало трубу, перегорела лампочка или нет электричества"
               path=""
-            />
+            /> */}
           </ActionsWrapper>
         </>
       )}

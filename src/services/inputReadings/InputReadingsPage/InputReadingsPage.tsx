@@ -12,10 +12,12 @@ import { groupBy } from "lodash";
 import { EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { EGroupType, InputReadingsPageProps } from "./InputReadingsPage.types";
 import { Skeleton } from "antd";
 import { Button } from "@/components/Button";
+import { useInputReadingButton } from "./InputReadingsPage.hook";
+import { useNavigate } from "react-router-dom";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -25,7 +27,10 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   handleSubmitReadings,
   isCreateReadingsLoading,
   validationResult,
+  isExistDeltaReadings,
 }) => {
+  const navigate = useNavigate();
+
   const [groupType, setGroupType] = useState(EGroupType.ByResource);
 
   const groups = useMemo(
@@ -38,30 +43,12 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
     [groupType, individualDevicesList]
   );
 
-  useEffect(() => {
-    const btn = Telegram.WebApp.MainButton;
-    btn.text = "Отправить";
-    btn.color = "#007AFF";
-    btn.show();
-    btn.onClick(handleSubmitReadings);
-
-    return () => {
-      btn.hide();
-      btn.offClick(handleSubmitReadings);
-    };
-  }, [handleSubmitReadings]);
-
-  useEffect(() => {
-    const btn = Telegram.WebApp.MainButton;
-
-    if (isCreateReadingsLoading) {
-      btn.showProgress(false);
-    } else {
-      btn.hideProgress();
-    }
-
-    return () => btn.hideProgress();
-  }, [isCreateReadingsLoading]);
+  useInputReadingButton(
+    handleSubmitReadings,
+    validationResult,
+    isCreateReadingsLoading,
+    isExistDeltaReadings
+  );
 
   if (isLoadingDevices) {
     return <Skeleton active />;
@@ -110,7 +97,11 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
         </ResourceSection>
       ))}
       <NoDeviceButton>
-        <Button type="default" block>
+        <Button
+          type="default"
+          block
+          onClick={() => navigate("/inputReadings/noDeviceHelp")}
+        >
           Моего прибора здесь нет
         </Button>
       </NoDeviceButton>

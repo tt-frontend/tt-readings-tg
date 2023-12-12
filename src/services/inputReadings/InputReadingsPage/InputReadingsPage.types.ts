@@ -13,6 +13,7 @@ export type InputReadingsPageProps = {
   isCreateReadingsLoading: boolean;
   handleSubmitReadings: () => void;
   validationResult: ReadingsValidationData;
+  isExistDeltaReadings: boolean;
 };
 
 export enum EGroupType {
