@@ -20,7 +20,7 @@ import { message } from "antd";
 const IndividualDevicesGate = createGate();
 
 const setReadingPayloadField = createEvent<SetReadingPayload>();
-
+const clearReadingsPayload = createEvent();
 const handleSubmitReadings = createEvent();
 
 const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
@@ -33,7 +33,7 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
 
     if (!devices) return prev;
 
-    return getDevicesReadings(devices);
+    return { ...getDevicesReadings(devices), ...prev };
   })
   .on(setReadingPayloadField, (prev, data) => {
     const res = {
@@ -45,17 +45,14 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
     };
 
     return res;
-  });
+  })
+  .reset(clearReadingsPayload);
 
 sample({
-  source: individualDevicesQuery.$data,
-  clock: IndividualDevicesGate.open,
-  filter: (data) => !data,
-  target: individualDevicesQuery.start,
-});
-
-sample({
-  clock: individualDevicesCreateReadingsMutation.finished.finally,
+  clock: [
+    IndividualDevicesGate.open,
+    individualDevicesCreateReadingsMutation.finished.finally,
+  ],
   target: individualDevicesQuery.start,
 });
 
@@ -102,7 +99,11 @@ individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
 );
 
 export const inputReadingsService = {
-  inputs: { setReadingPayloadField, handleSubmitReadings },
+  inputs: {
+    setReadingPayloadField,
+    handleSubmitReadings,
+    clearReadingsPayload,
+  },
   outputs: {
     $createReadingsPayload,
     $readingsValidation,
