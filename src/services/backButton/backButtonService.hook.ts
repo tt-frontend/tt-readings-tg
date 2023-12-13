@@ -4,12 +4,11 @@ import { excludedRoutes } from "./backButtonService.constants";
 import { backButtonService } from "./backButtonService.model";
 import { useUnit } from "effector-react";
 
-const { inputs, outputs } = backButtonService;
+const { inputs } = backButtonService;
 
 export function useBackButton() {
-  const { handleBack, confirmMessage } = useUnit({
+  const { handleBack } = useUnit({
     handleBack: inputs.handleBack,
-    confirmMessage: outputs.$confirmMessage,
   });
 
   const location = useLocation();
@@ -26,22 +25,22 @@ export function useBackButton() {
   }, [location.pathname, backButton]);
 
   useEffect(() => {
-    const cb = () => {
-      console.log("go - back");
-      navigate(-1);
-    };
-
-    return inputs.goBack.watch(cb).unsubscribe;
-  }, [confirmMessage, navigate]);
+    return inputs.goBack.watch(() => navigate(-1)).unsubscribe;
+  }, [navigate]);
 
   useEffect(() => {
     backButton.onClick(handleBack);
   }, [backButton, handleBack]);
 }
 
-// handleSubmitReadings.watch(() =>
-//   Telegram.WebApp.showConfirm(
-//     "Показания не сохранены. Вы хотите покинуть страничку?",
-//     console.log
-//   )
-// );
+export function useHandleBackButton(callback: VoidFunction | null) {
+  const { setGoBackHandler } = useUnit({
+    setGoBackHandler: inputs.setGoBackHandler,
+  });
+
+  useEffect(() => {
+    setGoBackHandler(callback);
+
+    return () => void setGoBackHandler(null);
+  }, [callback, setGoBackHandler]);
+}

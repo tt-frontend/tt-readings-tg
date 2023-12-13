@@ -1,35 +1,25 @@
-import { Modal } from "antd";
 import { createEvent, createStore, sample } from "effector";
 
-const unregister = createEvent();
-const registerMessage = createEvent<string>();
 const handleBack = createEvent();
 const goBack = createEvent();
 
-const $confirmMessage = createStore<string | null>("Показания не сохранены!")
-  .on(registerMessage, (_, message) => message)
-  .reset(unregister);
+const setGoBackHandler = createEvent<VoidFunction | null>();
+
+const $goBackHandler = createStore<null | VoidFunction>(null).on(
+  setGoBackHandler,
+  (_, callback) => callback
+);
 
 sample({
-  source: $confirmMessage,
+  source: $goBackHandler,
   clock: handleBack,
-  fn: (message) => {
-    if (!message) return goBack();
+  fn: (callback) => {
+    if (callback) return callback();
 
-    Modal.confirm({
-      title: "Вы хотите покинуть страничку?",
-      content: message,
-      okText: "Да",
-      cancelText: "Отмена",
-      onOk: () => {
-        goBack();
-      },
-      centered: true,
-    });
+    goBack();
   },
 });
 
 export const backButtonService = {
-  inputs: { registerMessage, unregister, handleBack, goBack },
-  outputs: { $confirmMessage },
+  inputs: { handleBack, goBack, setGoBackHandler },
 };

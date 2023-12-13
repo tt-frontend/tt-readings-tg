@@ -31,6 +31,10 @@ export const getRoutes = (): RouteObject[] => [
             path: "/inputReadings/noDeviceHelp",
             element: <NoDeviceHelpPage />,
           },
+          {
+            path: "/inputReadings/confirmExit",
+            element: <>Вы хотите уйти</>,
+          },
         ],
       },
       {
