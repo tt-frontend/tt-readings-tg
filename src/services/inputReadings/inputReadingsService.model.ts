@@ -48,10 +48,14 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   });
 
 sample({
-  clock: [
-    IndividualDevicesGate.open,
-    individualDevicesCreateReadingsMutation.finished.finally,
-  ],
+  source: individualDevicesQuery.$data,
+  clock: IndividualDevicesGate.open,
+  filter: (data) => !data,
+  target: individualDevicesQuery.start,
+});
+
+sample({
+  clock: individualDevicesCreateReadingsMutation.finished.finally,
   target: individualDevicesQuery.start,
 });
 
