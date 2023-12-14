@@ -43,6 +43,10 @@ export const getRoutes = (): RouteObject[] => [
         element: <AddPersonalAccountNumberContainer />,
       },
       {
+        path: "/addPersonalAccountNumberInitial",
+        element: <AddPersonalAccountNumberContainer />,
+      },
+      {
         path: "/limb",
         element: <LimbContainer />,
       },

@@ -36,6 +36,10 @@ export const AddPersonalAccountNumberContainer = () => {
     return inputs.handleSuccessLink.watch(() => navigate("/")).unsubscribe;
   }, [navigate]);
 
+  useEffect(() => {
+    Telegram.WebApp.expand();
+  }, []);
+
   return (
     <>
       <AddPersonalAccountNumberGate />
