@@ -82,7 +82,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                   </SectionTitle>
                )}
                <DevicesWrapper>
-                  {devices.map((device) => (
+                  {devices.map((device, index) => (
                      <DeviceReadingInput
                         createReadingPayload={
                            createReadingsPayload[device.id] || null
@@ -93,6 +93,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                         validationResult={validationResult[device.id]}
                         device={device}
                         groupType={groupType}
+                        numberInList={index}
                      />
                   ))}
                </DevicesWrapper>

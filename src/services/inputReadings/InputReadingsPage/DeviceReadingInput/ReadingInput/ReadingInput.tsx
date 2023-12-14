@@ -11,6 +11,7 @@ import {
 import { Props } from "./ReadingInput.types";
 import dayjs from "dayjs";
 import { round } from "lodash";
+import { useSwitchInputOnEnter } from "@/utils/useSwitchInputOnEnter";
 
 export const ReadingInput: FC<Props> = ({
    value,
@@ -20,7 +21,10 @@ export const ReadingInput: FC<Props> = ({
    prevReadingValue,
    validationResult,
    unit,
+   // deviceHash,
 }) => {
+   const next = useSwitchInputOnEnter("bot-readings", false, false);
+
    const consumption = (value || 0) - Number(prevReadingValue);
 
    const consumptionString = round(consumption, 3);
@@ -39,6 +43,12 @@ export const ReadingInput: FC<Props> = ({
                handleChange(e.target.value === "" ? null : value);
             }}
             placeholder={placeholder}
+            onKeyDown={(key) => {
+               if (key.code === "Enter") {
+                  next(1);
+               }
+            }}
+            data-reading-input="bot-readings"
          />
          {validationResult && (
             <ErrorMessage errorType={validationResult.type}>
