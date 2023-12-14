@@ -1,9 +1,8 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
    ButtonsWrapper,
    Description,
    PageWrapper,
-   SelectSc,
    Title,
    WindowWrapper,
 } from "./AddPersonalNumberPage.styled";
@@ -16,6 +15,7 @@ import { Building } from "@/components/icons/Building";
 import { AddPersonalNumberPageProps } from "./AddPersonalNumnerPage.types";
 import { useFormik } from "formik";
 import { getAddressString } from "@/utils/getAddressString";
+import type { InputRef } from "antd";
 
 export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
    existingCities,
@@ -25,6 +25,8 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
    handleLinkAccount,
 }) => {
    const [currentTab, setCurrentTab] = useState(0);
+
+   const apartNumberInputRef = useRef<InputRef>(null);
 
    const { values, setFieldValue, handleChange, handleSubmit } = useFormik({
       initialValues: {
@@ -84,13 +86,20 @@ export const AddPersonalNumberPage: FC<AddPersonalNumberPageProps> = ({
                      value={values.accountNumber}
                      onChange={handleChange}
                      name="accountNumber"
+                     onPressEnter={() =>
+                        apartNumberInputRef.current?.focus({
+                           cursor: "end",
+                        })
+                     }
                   />
                </FormItem>
                <FormItem label="Номер квартиры">
                   <Input
+                     ref={apartNumberInputRef}
                      value={values.apartmentNumber}
                      onChange={handleChange}
                      name="apartmentNumber"
+                     onPressEnter={() => apartNumberInputRef.current?.blur()}
                   />
                </FormItem>
                <ButtonsWrapper>

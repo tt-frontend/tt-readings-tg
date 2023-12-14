@@ -1,4 +1,3 @@
-import { Select } from "antd";
 import { styled } from "styled-components";
 
 export const PageWrapper = styled.div`
@@ -39,7 +38,4 @@ export const Description = styled.div`
    font-weight: 400;
    line-height: 20px;
    margin-top: 4px;
-`;
-
-export const SelectSc = styled(Select)`
 `;

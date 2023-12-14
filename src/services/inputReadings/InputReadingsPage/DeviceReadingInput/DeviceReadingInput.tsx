@@ -54,6 +54,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
         unit={unit}
         prevReadingDate={device.previousReading?.readingDate}
         prevReadingValue={device.previousReading?.value1}
+        
       />
 
       {device.rateType === EIndividualDeviceRateType.TwoZone && (
