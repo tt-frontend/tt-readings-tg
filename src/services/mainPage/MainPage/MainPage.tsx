@@ -41,6 +41,7 @@ export const MainPage: FC<MainPageProps> = ({
               title={
                 currentHomeownerAccount.managementFirmTitle || "Нет данных"
               }
+              link="/managementFirm"
             />
           </InfoLinksWrapper>
           <ActionsTitle>Что вы хотите сделать?</ActionsTitle>

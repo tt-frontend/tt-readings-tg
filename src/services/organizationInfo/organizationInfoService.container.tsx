@@ -1,8 +1,7 @@
 import { useUnit } from "effector-react";
 import { organizationInfoService } from "./organizationInfoService.models";
 import { managementFirmDataQuery } from "./organizationInfoService.api";
-import { getAddressString } from "@/utils/getAddressString";
-import { Skeleton } from "antd";
+import { ManagementInfoPage } from "./ManagementInfoPage";
 
 const {
   gates: { ManagementFirmGate },
@@ -17,10 +16,11 @@ export const OrganizationInfoContainer = () => {
   return (
     <>
       <ManagementFirmGate />
-      {isLoading && <Skeleton active />}
-      {!isLoading && managementFirmInfo && (
-        <>{getAddressString(managementFirmInfo.address)}</>
-      )}
+
+      <ManagementInfoPage
+        managementFirmInfo={managementFirmInfo}
+        isLoading={isLoading}
+      />
     </>
   );
 };
