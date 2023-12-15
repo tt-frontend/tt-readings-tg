@@ -21,9 +21,9 @@ export const ReadingInput: FC<Props> = ({
    prevReadingValue,
    validationResult,
    unit,
-   // deviceHash,
+   inputNumber,
 }) => {
-   const next = useSwitchInputOnEnter("bot-readings", false, false);
+   const next = useSwitchInputOnEnter("bot-readings", false);
 
    const consumption = (value || 0) - Number(prevReadingValue);
 
@@ -45,7 +45,7 @@ export const ReadingInput: FC<Props> = ({
             placeholder={placeholder}
             onKeyDown={(key) => {
                if (key.code === "Enter") {
-                  next(1);
+                  next(inputNumber);
                }
             }}
             data-reading-input="bot-readings"

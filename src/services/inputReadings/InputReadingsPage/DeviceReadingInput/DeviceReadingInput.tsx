@@ -23,8 +23,12 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
    createReadingPayload,
    setReadingPayloadField,
    validationResult,
+   numberOfFirstInputInBlockOfList,
 }) => {
    const unit = ResourceSummaryUnits[device.resource];
+
+   const inputNumberForOneZone = numberOfFirstInputInBlockOfList;
+   const inputNumberForTwoZone = numberOfFirstInputInBlockOfList + 1;
 
    return (
       <DeviceCard>
@@ -56,7 +60,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
             unit={unit}
             prevReadingDate={device.previousReading?.readingDate}
             prevReadingValue={device.previousReading?.value1}
-            deviceHash={`${device.id}_T1`}
+            inputNumber={inputNumberForOneZone}
          />
 
          {device.rateType === EIndividualDeviceRateType.TwoZone && (
@@ -74,7 +78,7 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
                unit={unit}
                prevReadingDate={device.previousReading?.readingDate}
                prevReadingValue={device.previousReading?.value2}
-               deviceHash={`${device.id}_T2`}
+               inputNumber={inputNumberForTwoZone}
             />
          )}
       </DeviceCard>

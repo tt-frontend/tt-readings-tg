@@ -8,4 +8,5 @@ export type Props = {
    prevReadingDate?: string;
    unit: string;
    validationResult: ReadingValidation | null;
+   inputNumber: number;
 };

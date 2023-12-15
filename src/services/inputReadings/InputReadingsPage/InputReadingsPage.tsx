@@ -8,8 +8,8 @@ import {
    SegmentedWrapper,
    Title,
 } from "./InputReadingsPage.styled";
-import { groupBy } from "lodash";
-import { EResourceType } from "@/api/types";
+import { flatten, groupBy } from "lodash";
+import { EIndividualDeviceRateType, EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
 import { FC, useMemo, useState } from "react";
@@ -18,6 +18,7 @@ import { Skeleton } from "antd";
 import { Button } from "@/components/Button";
 import { useInputReadingButton } from "./InputReadingsPage.hook";
 import { useNavigate } from "react-router-dom";
+import { getNumberOfFirstInputInBlockOfList } from "./InputReadingsPage.utils";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
    individualDevicesList,
@@ -41,6 +42,11 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                : device.mountPlace
          ),
       [groupType, individualDevicesList]
+   );
+
+   const devicesFlatList = useMemo(
+      () => flatten(Object.values(groups)),
+      [groups]
    );
 
    useInputReadingButton(
@@ -82,20 +88,39 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                   </SectionTitle>
                )}
                <DevicesWrapper>
-                  {devices.map((device, index) => (
-                     <DeviceReadingInput
-                        createReadingPayload={
-                           createReadingsPayload[device.id] || null
-                        }
-                        setReadingPayloadField={(values) =>
-                           setReadingPayloadField({ id: device.id, values })
-                        }
-                        validationResult={validationResult[device.id]}
-                        device={device}
-                        groupType={groupType}
-                        numberInList={index}
-                     />
-                  ))}
+                  {devices.map((device) => {
+                     const currentIndex = devicesFlatList.findIndex(
+                        (deviceInList) => deviceInList.id === device.id
+                     );
+
+                     const devicesArrSplitted = devicesFlatList.slice(
+                        0,
+                        currentIndex
+                     );
+
+                     const numberOfFirstInputInBlockOfList =
+                        getNumberOfFirstInputInBlockOfList(devicesArrSplitted);
+
+                     return (
+                        <DeviceReadingInput
+                           createReadingPayload={
+                              createReadingsPayload[device.id] || null
+                           }
+                           setReadingPayloadField={(values) =>
+                              setReadingPayloadField({
+                                 id: device.id,
+                                 values,
+                              })
+                           }
+                           validationResult={validationResult[device.id]}
+                           device={device}
+                           groupType={groupType}
+                           numberOfFirstInputInBlockOfList={
+                              numberOfFirstInputInBlockOfList
+                           }
+                        />
+                     );
+                  })}
                </DevicesWrapper>
             </ResourceSection>
          ))}

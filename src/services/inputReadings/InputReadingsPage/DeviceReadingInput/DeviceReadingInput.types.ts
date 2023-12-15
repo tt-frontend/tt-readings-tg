@@ -11,5 +11,5 @@ export type DeviceReadingInputProps = {
    createReadingPayload: ReadingValues | null;
    setReadingPayloadField: (values: ReadingValues) => void;
    validationResult: ReadingsValidationResult;
-   numberInList: number;
+   numberOfFirstInputInBlockOfList: number;
 };
