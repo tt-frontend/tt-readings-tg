@@ -52,6 +52,8 @@ findHomeownerAccountFx.failData.watch((e) => {
   message.error(e.response.data.error.Message);
 });
 
+linkHomeownerAccountFx.failData.watch((e) => message.warning(e.message));
+
 const handleSuccessLink = linkHomeownerAccountFx.doneData;
 
 handleSuccessLink.watch(() => message.success("Лицевой счет добавлен!"));

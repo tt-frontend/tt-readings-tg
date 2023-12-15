@@ -12,6 +12,7 @@ export const SuccessfulReadingsPage: FC = () => {
     const btn = Telegram.WebApp.MainButton;
 
     btn.text = "Вернуться в главное меню";
+    btn.color = "#007AFF";
     btn.show();
     btn.onClick(goBack);
 

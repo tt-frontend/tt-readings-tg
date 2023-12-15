@@ -1,0 +1,1 @@
+export { ManagementInfoPage } from './ManagementInfoPage';

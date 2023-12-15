@@ -1,1 +1,6 @@
-export const excludedRoutes = ["/", "/limb", "/inputReadings/confirmExit"];
+export const excludedRoutes = [
+  "/",
+  "/limb",
+  "/inputReadings/confirmExit",
+  "/addPersonalAccountNumberInitial",
+];

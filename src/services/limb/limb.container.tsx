@@ -25,7 +25,7 @@ export const LimbContainer = () => {
     if (!personalNumbers) return;
 
     if (personalNumbers.length === 0) {
-      navigate("/addPersonalAccountNumber");
+      navigate("/addPersonalAccountNumberInitial");
 
       return;
     }
