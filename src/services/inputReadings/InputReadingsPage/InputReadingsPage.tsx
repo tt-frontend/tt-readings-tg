@@ -9,7 +9,7 @@ import {
    Title,
 } from "./InputReadingsPage.styled";
 import { flatten, groupBy } from "lodash";
-import { EIndividualDeviceRateType, EResourceType } from "@/api/types";
+import {  EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
 import { FC, useMemo, useState } from "react";
