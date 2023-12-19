@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 
+
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  height: 40px;
 `;
 
 export const IconWrapper = styled.div`
