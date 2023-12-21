@@ -5,17 +5,21 @@ import { ChevronRightSmall } from "../icons/ChevronRightSmall";
 import { useNavigate } from "react-router-dom";
 
 export const LinkInfoPanel: FC<LinkInfoPanelProps> = ({
-  icon,
-  title,
-  link,
+   icon,
+   title,
+   link,
+   loader,
 }) => {
-  const navigate = useNavigate();
 
-  return (
-    <Wrapper onClick={() => link && navigate(link)}>
-      <IconWrapper>{icon}</IconWrapper>
-      <Title>{title}</Title>
-      {link && <ChevronRightSmall />}
-    </Wrapper>
-  );
+   const navigate = useNavigate();
+  
+   return (
+      <Wrapper onClick={() => link && navigate(link)}>
+         <IconWrapper>{icon}</IconWrapper>
+
+         {!loader?.state ? <Title>{title}</Title> : loader.view}
+         {link && <ChevronRightSmall />}
+      </Wrapper>
+   );
+
 };

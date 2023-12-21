@@ -1,6 +1,8 @@
 import { ResourceIcon } from "@/components/ResourceIcon";
 import {
+   Block,
    DevicesWrapper,
+   LoaderInput,
    NoDeviceButton,
    ResourceSection,
    SectionTitle,
@@ -9,7 +11,7 @@ import {
    Title,
 } from "./InputReadingsPage.styled";
 import { flatten, groupBy } from "lodash";
-import {  EResourceType } from "@/api/types";
+import { EResourceType } from "@/api/types";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DeviceReadingInput } from "./DeviceReadingInput";
 import { FC, useMemo, useState } from "react";
@@ -56,9 +58,20 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
       isExistDeltaReadings
    );
 
-   if (isLoadingDevices) {
-      return <Skeleton active />;
-   }
+   const ReadingLoader = () => {
+      return (
+         <>
+            <SectionTitle>
+               <Skeleton.Avatar active size="small" />
+               <Skeleton.Input active />
+            </SectionTitle>
+
+            <Block>
+               <LoaderInput active />
+            </Block>
+         </>
+      );
+   };
 
    return (
       <div>
@@ -74,65 +87,73 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
                ]}
             />
          </SegmentedWrapper>
-         {Object.entries(groups).map(([dataKey, devices]) => (
-            <ResourceSection>
-               {groupType === EGroupType.ByResource && (
-                  <SectionTitle>
-                     <ResourceIcon resource={dataKey as EResourceType} />
-                     <div>{ResourceNamesLookup[dataKey as EResourceType]}</div>
-                  </SectionTitle>
-               )}
-               {groupType === EGroupType.ByMountPlace && (
-                  <SectionTitle>
-                     {dataKey !== "null" ? dataKey : "Не указано"}
-                  </SectionTitle>
-               )}
-               <DevicesWrapper>
-                  {devices.map((device) => {
-                     const currentIndex = devicesFlatList.findIndex(
-                        (deviceInList) => deviceInList.id === device.id
-                     );
+         {isLoadingDevices && <ReadingLoader />}
+         {!isLoadingDevices &&
+            Object.entries(groups).map(([dataKey, devices]) => (
+               <ResourceSection>
+                  {groupType === EGroupType.ByResource && (
+                     <SectionTitle>
+                        <ResourceIcon resource={dataKey as EResourceType} />
+                        <div>
+                           {ResourceNamesLookup[dataKey as EResourceType]}
+                        </div>
+                     </SectionTitle>
+                  )}
+                  {groupType === EGroupType.ByMountPlace && (
+                     <SectionTitle>
+                        {dataKey !== "null" ? dataKey : "Не указано"}
+                     </SectionTitle>
+                  )}
+                  <DevicesWrapper>
+                     {devices.map((device) => {
+                        const currentIndex = devicesFlatList.findIndex(
+                           (deviceInList) => deviceInList.id === device.id
+                        );
 
-                     const devicesArrSplitted = devicesFlatList.slice(
-                        0,
-                        currentIndex
-                     );
+                        const devicesArrSplitted = devicesFlatList.slice(
+                           0,
+                           currentIndex
+                        );
 
-                     const numberOfFirstInputInBlockOfList =
-                        getNumberOfFirstInputInBlockOfList(devicesArrSplitted);
+                        const numberOfFirstInputInBlockOfList =
+                           getNumberOfFirstInputInBlockOfList(
+                              devicesArrSplitted
+                           );
 
-                     return (
-                        <DeviceReadingInput
-                           createReadingPayload={
-                              createReadingsPayload[device.id] || null
-                           }
-                           setReadingPayloadField={(values) =>
-                              setReadingPayloadField({
-                                 id: device.id,
-                                 values,
-                              })
-                           }
-                           validationResult={validationResult[device.id]}
-                           device={device}
-                           groupType={groupType}
-                           numberOfFirstInputInBlockOfList={
-                              numberOfFirstInputInBlockOfList
-                           }
-                        />
-                     );
-                  })}
-               </DevicesWrapper>
-            </ResourceSection>
-         ))}
-         <NoDeviceButton>
-            <Button
-               type="default"
-               block
-               onClick={() => navigate("/inputReadings/noDeviceHelp")}
-            >
-               Моего прибора здесь нет
-            </Button>
-         </NoDeviceButton>
+                        return (
+                           <DeviceReadingInput
+                              createReadingPayload={
+                                 createReadingsPayload[device.id] || null
+                              }
+                              setReadingPayloadField={(values) =>
+                                 setReadingPayloadField({
+                                    id: device.id,
+                                    values,
+                                 })
+                              }
+                              validationResult={validationResult[device.id]}
+                              device={device}
+                              groupType={groupType}
+                              numberOfFirstInputInBlockOfList={
+                                 numberOfFirstInputInBlockOfList
+                              }
+                           />
+                        );
+                     })}
+                  </DevicesWrapper>
+               </ResourceSection>
+            ))}
+         {!isLoadingDevices && (
+            <NoDeviceButton>
+               <Button
+                  type="default"
+                  block
+                  onClick={() => navigate("/inputReadings/noDeviceHelp")}
+               >
+                  Моего прибора здесь нет
+               </Button>
+            </NoDeviceButton>
+         )}
       </div>
    );
 };

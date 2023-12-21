@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Skeleton } from "antd";
 
 export const Wrapper = styled.div`
    display: flex;
@@ -25,4 +26,8 @@ export const ActionsWrapper = styled.div`
    display: flex;
    flex-direction: column;
    gap: 8px;
+`;
+
+export const LongSkeleton = styled(Skeleton.Input)`
+   width: 300px !important;
 `;

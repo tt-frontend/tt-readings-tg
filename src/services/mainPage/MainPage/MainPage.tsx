@@ -2,10 +2,11 @@ import { LinkInfoPanel } from "@/components/LinkInfoPanel";
 import { Building } from "@/components/icons/Building";
 import { Bag } from "@/components/icons/Bag";
 import {
-  ActionsTitle,
-  ActionsWrapper,
-  InfoLinksWrapper,
-  Wrapper,
+   ActionsTitle,
+   ActionsWrapper,
+   InfoLinksWrapper,
+   LongSkeleton,
+   Wrapper,
 } from "./MainPage.styled";
 import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPanel";
 import { ActionLink } from "@/components/ActionLink";
@@ -15,12 +16,13 @@ import { getAddressString } from "@/utils/getAddressString";
 import { Skeleton } from "antd";
 
 export const MainPage: FC<MainPageProps> = ({
-  selectedPersonalNumber,
-  setSelectedPersonalNumber,
-  homeownerAccounts,
-  currentHomeownerAccount,
-  isLoadingHomeownerAccount,
+   selectedPersonalNumber,
+   setSelectedPersonalNumber,
+   homeownerAccounts,
+   currentHomeownerAccount,
+   isLoadingHomeownerAccount,
 }) => {
+
   return (
     <Wrapper>
       <PersonalNumbersPanel
@@ -28,13 +30,16 @@ export const MainPage: FC<MainPageProps> = ({
         handleSelect={setSelectedPersonalNumber}
         personalNumbers={homeownerAccounts || []}
       />
-      {isLoadingHomeownerAccount && <Skeleton active />}
-      {currentHomeownerAccount && !isLoadingHomeownerAccount && (
+      {currentHomeownerAccount && (
         <>
           <InfoLinksWrapper>
             <LinkInfoPanel
               icon={<Building />}
               title={getAddressString(currentHomeownerAccount.address)}
+               loader={{
+                        state: isLoadingHomeownerAccount,
+                        view: <LongSkeleton active />,
+                     }}
             />
             <LinkInfoPanel
               icon={<Bag />}
@@ -42,6 +47,10 @@ export const MainPage: FC<MainPageProps> = ({
                 currentHomeownerAccount.managementFirmTitle || "Нет данных"
               }
               link="/managementFirm"
+              loader={{
+                        state: isLoadingHomeownerAccount,
+                        view: <Skeleton.Input active />,
+                     }}
             />
           </InfoLinksWrapper>
           <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
