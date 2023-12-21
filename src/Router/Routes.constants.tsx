@@ -7,6 +7,7 @@ import { LimbContainer } from "@/services/limb/limb.container";
 import { SuccessfulReadingsPage } from "@/services/inputReadings/SuccessfulReadingsPage";
 import { NoDeviceHelpPage } from "@/services/inputReadings/NoDeviceHelpPage";
 import { ConfirmExitFromReadingsPage } from "@/services/inputReadings/ConfirmExitFromReadingsPage";
+import { OrganizationInfoContainer } from "@/services/organizationInfo/organizationInfoService.container";
 
 export const getRoutes = (): RouteObject[] => [
   {
@@ -45,6 +46,10 @@ export const getRoutes = (): RouteObject[] => [
       {
         path: "/addPersonalAccountNumberInitial",
         element: <AddPersonalAccountNumberContainer />,
+      },
+      {
+        path: "/managementFirm",
+        element: <OrganizationInfoContainer />,
       },
       {
         path: "/limb",
