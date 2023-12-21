@@ -71,6 +71,11 @@ sample({
   target: individualDevicesCreateReadingsMutation.start,
 });
 
+sample({
+  clock: individualDevicesCreateReadingsMutation.finished.success,
+  target: clearReadingsPayload,
+});
+
 const $readingsValidation = combine(
   $deltaReadingsPayload,
   individualDevicesQuery.$data,
