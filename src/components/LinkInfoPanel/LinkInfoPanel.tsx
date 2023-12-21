@@ -13,7 +13,7 @@ export const LinkInfoPanel: FC<LinkInfoPanelProps> = ({
       <Wrapper>
          <IconWrapper>{icon}</IconWrapper>
 
-         {!loader.state ? <Title>{title}</Title> : loader.view}
+         {!loader?.state ? <Title>{title}</Title> : loader.view}
          {link && <ChevronRightSmall />}
       </Wrapper>
    );
