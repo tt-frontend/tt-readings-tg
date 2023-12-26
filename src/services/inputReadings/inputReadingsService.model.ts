@@ -103,6 +103,10 @@ individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
   message.success("Показания успешно занесены")
 );
 
+individualDevicesCreateReadingsMutation.finished.failure.watch(console.log);
+
+individualDevicesCreateReadingsMutation.$error.watch(console.log);
+
 export const inputReadingsService = {
   inputs: {
     setReadingPayloadField,
