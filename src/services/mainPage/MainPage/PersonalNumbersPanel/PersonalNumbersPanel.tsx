@@ -20,13 +20,13 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
 
    const [onMouseDownTime, setOnMouseDownTime] = useState<number | null>(null);
 
-   // let longPressTimer: NodeJS.Timeout | null = null;
-
    const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(
       null
    );
 
    const [open, setOpen] = useState<boolean>(false);
+
+   const timeout = 500;
 
    return (
       <Wrapper>
@@ -34,7 +34,6 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
             <Popconfirm
                key={elem.accountId}
                title="Вы хотите удалить лицевой счёт?"
-               // description="ВЫ хотите удалить лицевой счёт"
                open={open}
                onConfirm={() => {
                   setOpen(false);
@@ -50,8 +49,6 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                      const startTime = event.timeStamp;
                      setOnMouseDownTime(event.timeStamp);
 
-                     const timeout = 1000;
-
                      setLongPressTimer(
                         setTimeout(() => {
                            if (Date.now() - startTime > timeout) {
@@ -65,11 +62,34 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                   onMouseUp={(event) => {
                      longPressTimer && clearTimeout(longPressTimer);
 
-                     if (event.timeStamp - onMouseDownTime! < 1000) {
+                     if (event.timeStamp - onMouseDownTime! < timeout) {
                         console.log("single shot");
                         handleSelect(elem.accountId);
                      }
                   }}
+                  onTouchStart={(event) => {
+                     const startTime = event.timeStamp;
+                     setOnMouseDownTime(event.timeStamp);
+
+                     setLongPressTimer(
+                        setTimeout(() => {
+                           if (Date.now() - startTime > timeout) {
+                              console.log("long");
+                              setOpen(true);
+                              return;
+                           }
+                        }, timeout)
+                     );
+                  }}
+                  onTouchEnd={(event) => {
+                     longPressTimer && clearTimeout(longPressTimer);
+
+                     if (event.timeStamp - onMouseDownTime! < timeout) {
+                        console.log("single shot");
+                        handleSelect(elem.accountId);
+                     }
+                  }}
+                  onTouchCancel={() => setOpen(false)}
                >
                   {elem.accountNumber}
                   {elem.accountId === selectedNumber && (
