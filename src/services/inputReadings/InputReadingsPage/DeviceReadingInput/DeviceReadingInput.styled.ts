@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const DeviceCard = styled.div`
+export const DeviceCard = styled.div<{ isError?: boolean }>`
   border-radius: 16px;
   background: #fff;
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
@@ -8,8 +8,9 @@ export const DeviceCard = styled.div`
   padding: 16px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  border: ${({ isError }) => (isError ? "1px solid #fc525b" : "")};
 `;
 
 export const Header = styled.div`
@@ -73,4 +74,15 @@ export const ReadingsConsumption = styled.div`
   font-weight: 500;
   font-size: 14px;
   white-space: nowrap;
+`;
+
+export const ErrorMessage = styled.div`
+  color: #fc525b;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: #fc525a20;
 `;
