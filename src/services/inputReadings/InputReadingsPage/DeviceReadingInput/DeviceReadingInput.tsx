@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import {
   DeviceCard,
   DeviceSerialNumber,
@@ -27,15 +27,23 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
   numberOfFirstInputInBlockOfList,
   serverValidation,
 }) => {
+  const ref = useRef<null | HTMLDivElement>(null);
+
   const unit = ResourceSummaryUnits[device.resource];
 
   const inputNumberForOneZone = numberOfFirstInputInBlockOfList;
   const inputNumberForTwoZone = numberOfFirstInputInBlockOfList + 1;
 
-  const errorMessage = serverValidation?.response.data.error.Message;
+  const errorMessage = serverValidation?.response.data.error.Text;
+
+  useEffect(() => {
+    if (!ref.current || !errorMessage) return;
+
+    ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [errorMessage]);
 
   return (
-    <DeviceCard isError={Boolean(errorMessage)}>
+    <DeviceCard isError={Boolean(errorMessage)} ref={ref}>
       <Header>
         <DeviceSerialNumber>
           {groupType === EGroupType.ByMountPlace && (

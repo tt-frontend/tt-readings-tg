@@ -49,7 +49,7 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   .reset(clearReadingsPayload);
 
 sample({
-  clock: clearReadingsPayload,
+  clock: individualDevicesQuery.finished.success,
   target: individualDevicesCreateReadingsMutation.reset,
 });
 
