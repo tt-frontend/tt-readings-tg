@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
    AddPersonalNumberButton,
    CheckCircle,
@@ -16,6 +16,8 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
    selectedNumber,
    handleSelect,
    handleDeleteHomeownerAccount,
+   isDeletingHomeownerAccount,
+   handleSuccessDelete,
 }) => {
    const navigate = useNavigate();
 
@@ -25,26 +27,28 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
       null
    );
 
+   const [id, setId] = useState<string | null>();
+
    const timeout = 500;
+
+   useEffect(() => {
+      handleSuccessDelete.watch(() => setId(null)).unsubscribe;
+   }, [handleSuccessDelete]);
 
    return (
       <Wrapper>
          {personalNumbers.map((elem) => {
-            const [open, setOpen] = useState<boolean>(false);
+            const isOpen = id === elem.accountId;
             return (
                <Popconfirm
                   key={elem.accountId}
                   title="Вы хотите удалить лицевой счёт?"
-                  open={open}
-                  onConfirm={() => {
-                     console.log(elem.accountId);
-                     handleDeleteHomeownerAccount(elem.accountId);
-                     setOpen(false);
-                  }}
-                  // okButtonProps={{ loading: confirmLoading }}
-                  onCancel={() => setOpen(false)}
+                  open={isOpen}
+                  onConfirm={() => handleDeleteHomeownerAccount(elem.accountId)}
+                  okButtonProps={{ loading: isDeletingHomeownerAccount }}
+                  onCancel={() => setId(null)}
                   cancelText="Отмена"
-                  okText="ЛетсФакинГо"
+                  okText="Удалить"
                >
                   <PersonalNumber
                      key={elem.accountId}
@@ -56,8 +60,7 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         setLongPressTimer(
                            setTimeout(() => {
                               if (Date.now() - startTime > timeout) {
-                                 console.log("long");
-                                 setOpen(true);
+                                 setId(elem.accountId);
                                  return;
                               }
                            }, timeout)
@@ -67,7 +70,6 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         longPressTimer && clearTimeout(longPressTimer);
 
                         if (event.timeStamp - onMouseDownTime! < timeout) {
-                           console.log("single shot");
                            handleSelect(elem.accountId);
                         }
                      }}
@@ -78,8 +80,7 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         setLongPressTimer(
                            setTimeout(() => {
                               if (Date.now() - startTime > timeout) {
-                                 console.log("long");
-                                 setOpen(true);
+                                 setId(elem.accountId);
                                  return;
                               }
                            }, timeout)
@@ -89,11 +90,10 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         longPressTimer && clearTimeout(longPressTimer);
 
                         if (event.timeStamp - onMouseDownTime! < timeout) {
-                           console.log("single shot");
                            handleSelect(elem.accountId);
                         }
                      }}
-                     onTouchCancel={() => setOpen(false)}
+                     onTouchCancel={() => setId(null)}
                   >
                      {elem.accountNumber}
                      {elem.accountId === selectedNumber && (

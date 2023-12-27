@@ -1,3 +1,4 @@
+import { Event } from "effector";
 import {
    HomeownerAccountListResponse,
    HomeownerAccountResponse,
@@ -10,4 +11,7 @@ export type MainPageProps = {
    currentHomeownerAccount: HomeownerAccountResponse | null;
    isLoadingHomeownerAccount: boolean;
    handleDeleteHomeownerAccount: (id: string) => void;
+   isDeletingHomeownerAccount: boolean;
+   handleSuccessDelete: Event<void>;
+   handleRedirectToInitialRoute: Event<void>;
 };

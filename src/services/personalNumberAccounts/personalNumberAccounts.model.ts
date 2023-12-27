@@ -29,6 +29,8 @@ const handleSelectHomeownerAccount = createEvent<string>();
 
 const handleDeleteHomeownerAccount = createEvent<string>();
 
+const handleRedirectToInitialRoute = createEvent();
+
 const $personalNumbers = createStore<HomeownerAccountListResponse[] | null>(
    null
 ).on(fetchPersonalNumbersFx.doneData, (_, data) => data);
@@ -60,7 +62,10 @@ sample({
 });
 
 sample({
-   clock: addPersonalAccountNumberService.inputs.handleSuccessLink,
+   clock: [
+      addPersonalAccountNumberService.inputs.handleSuccessLink,
+      deleteHomeownerAccountFx.doneData,
+   ],
    target: fetchPersonalNumbersFx,
 });
 
@@ -75,15 +80,32 @@ sample({
    target: deleteHomeownerAccountFx,
 });
 
+sample({
+   clock: deleteHomeownerAccountFx.doneData,
+   source: $personalNumbers,
+   filter: (value) => value?.length === 1,
+   target: handleRedirectToInitialRoute,
+});
+
 const $isLoadingHomeownerAccount = fetchHomeownerAccountFx.pending;
 
+const $isDeletingHomeownerAccount = deleteHomeownerAccountFx.pending;
+
+const handleSuccessDelete = deleteHomeownerAccountFx.doneData;
+
 export const personalNumbersAcccountsService = {
-   inputs: { handleSelectHomeownerAccount, handleDeleteHomeownerAccount },
+   inputs: {
+      handleSelectHomeownerAccount,
+      handleDeleteHomeownerAccount,
+      handleSuccessDelete,
+      handleRedirectToInitialRoute,
+   },
    outputs: {
       $personalNumbers,
       $isLoading,
       $selectedHomeownerAccountId,
       $currentHomeownerAccount,
       $isLoadingHomeownerAccount,
+      $isDeletingHomeownerAccount,
    },
 };

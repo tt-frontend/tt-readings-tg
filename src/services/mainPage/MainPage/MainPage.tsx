@@ -10,10 +10,11 @@ import {
 } from "./MainPage.styled";
 import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPanel";
 import { ActionLink } from "@/components/ActionLink";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { MainPageProps } from "./MainPage.types";
 import { getAddressString } from "@/utils/getAddressString";
 import { Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export const MainPage: FC<MainPageProps> = ({
    selectedPersonalNumber,
@@ -22,7 +23,18 @@ export const MainPage: FC<MainPageProps> = ({
    currentHomeownerAccount,
    isLoadingHomeownerAccount,
    handleDeleteHomeownerAccount,
+   isDeletingHomeownerAccount,
+   handleSuccessDelete,
+   handleRedirectToInitialRoute,
 }) => {
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      handleRedirectToInitialRoute.watch(() => {
+         navigate("/addPersonalAccountNumberInitial");
+      }).unsubscribe;
+   }, [handleRedirectToInitialRoute]);
+
    return (
       <Wrapper>
          <PersonalNumbersPanel
@@ -30,6 +42,8 @@ export const MainPage: FC<MainPageProps> = ({
             handleSelect={setSelectedPersonalNumber}
             personalNumbers={homeownerAccounts || []}
             handleDeleteHomeownerAccount={handleDeleteHomeownerAccount}
+            isDeletingHomeownerAccount={isDeletingHomeownerAccount}
+            handleSuccessDelete={handleSuccessDelete}
          />
          {currentHomeownerAccount && (
             <>

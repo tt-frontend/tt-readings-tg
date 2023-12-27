@@ -1,3 +1,4 @@
+import { Event } from "effector";
 import { HomeownerAccountListResponse } from "@/api/types";
 
 export type PersonalNumbersPanelProps = {
@@ -5,4 +6,6 @@ export type PersonalNumbersPanelProps = {
    selectedNumber: string | null;
    handleSelect: (id: string) => void;
    handleDeleteHomeownerAccount: (id: string) => void;
+   isDeletingHomeownerAccount: boolean;
+   handleSuccessDelete: Event<void>;
 };

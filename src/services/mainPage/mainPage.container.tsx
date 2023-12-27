@@ -10,6 +10,7 @@ export const MainPageContainer = () => {
       currentHomeownerAccount,
       isLoadingHomeownerAccount,
       handleDeleteHomeownerAccount,
+      isDeletingHomeownerAccount,
    } = useUnit({
       homeownerAccounts:
          personalNumbersAcccountsService.outputs.$personalNumbers,
@@ -23,6 +24,8 @@ export const MainPageContainer = () => {
          personalNumbersAcccountsService.outputs.$isLoadingHomeownerAccount,
       handleDeleteHomeownerAccount:
          personalNumbersAcccountsService.inputs.handleDeleteHomeownerAccount,
+      isDeletingHomeownerAccount:
+         personalNumbersAcccountsService.outputs.$isDeletingHomeownerAccount,
    });
 
    return (
@@ -33,6 +36,13 @@ export const MainPageContainer = () => {
          currentHomeownerAccount={currentHomeownerAccount}
          isLoadingHomeownerAccount={isLoadingHomeownerAccount}
          handleDeleteHomeownerAccount={handleDeleteHomeownerAccount}
+         isDeletingHomeownerAccount={isDeletingHomeownerAccount}
+         handleSuccessDelete={
+            personalNumbersAcccountsService.inputs.handleSuccessDelete
+         }
+         handleRedirectToInitialRoute={
+            personalNumbersAcccountsService.inputs.handleRedirectToInitialRoute
+         }
       />
    );
 };
