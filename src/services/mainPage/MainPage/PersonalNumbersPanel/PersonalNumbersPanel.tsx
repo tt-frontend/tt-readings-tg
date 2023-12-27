@@ -15,6 +15,7 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
    personalNumbers,
    selectedNumber,
    handleSelect,
+   handleDeleteHomeownerAccount,
 }) => {
    const navigate = useNavigate();
 
@@ -24,82 +25,86 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
       null
    );
 
-   const [open, setOpen] = useState<boolean>(false);
-
    const timeout = 500;
 
    return (
       <Wrapper>
-         {personalNumbers.map((elem) => (
-            <Popconfirm
-               key={elem.accountId}
-               title="Вы хотите удалить лицевой счёт?"
-               open={open}
-               onConfirm={() => {
-                  setOpen(false);
-                  console.log({ accountId: elem.accountId });
-               }}
-               // okButtonProps={{ loading: confirmLoading }}
-               onCancel={() => setOpen(false)}
-            >
-               <PersonalNumber
+         {personalNumbers.map((elem) => {
+            const [open, setOpen] = useState<boolean>(false);
+            return (
+               <Popconfirm
                   key={elem.accountId}
-                  isActive={elem.accountId === selectedNumber}
-                  onMouseDown={(event) => {
-                     const startTime = event.timeStamp;
-                     setOnMouseDownTime(event.timeStamp);
-
-                     setLongPressTimer(
-                        setTimeout(() => {
-                           if (Date.now() - startTime > timeout) {
-                              console.log("long");
-                              setOpen(true);
-                              return;
-                           }
-                        }, timeout)
-                     );
+                  title="Вы хотите удалить лицевой счёт?"
+                  open={open}
+                  onConfirm={() => {
+                     console.log(elem.accountId);
+                     handleDeleteHomeownerAccount(elem.accountId);
+                     setOpen(false);
                   }}
-                  onMouseUp={(event) => {
-                     longPressTimer && clearTimeout(longPressTimer);
-
-                     if (event.timeStamp - onMouseDownTime! < timeout) {
-                        console.log("single shot");
-                        handleSelect(elem.accountId);
-                     }
-                  }}
-                  onTouchStart={(event) => {
-                     const startTime = event.timeStamp;
-                     setOnMouseDownTime(event.timeStamp);
-
-                     setLongPressTimer(
-                        setTimeout(() => {
-                           if (Date.now() - startTime > timeout) {
-                              console.log("long");
-                              setOpen(true);
-                              return;
-                           }
-                        }, timeout)
-                     );
-                  }}
-                  onTouchEnd={(event) => {
-                     longPressTimer && clearTimeout(longPressTimer);
-
-                     if (event.timeStamp - onMouseDownTime! < timeout) {
-                        console.log("single shot");
-                        handleSelect(elem.accountId);
-                     }
-                  }}
-                  onTouchCancel={() => setOpen(false)}
+                  // okButtonProps={{ loading: confirmLoading }}
+                  onCancel={() => setOpen(false)}
+                  cancelText="Отмена"
+                  okText="ЛетсФакинГо"
                >
-                  {elem.accountNumber}
-                  {elem.accountId === selectedNumber && (
-                     <CheckCircle>
-                        <Check />
-                     </CheckCircle>
-                  )}
-               </PersonalNumber>
-            </Popconfirm>
-         ))}
+                  <PersonalNumber
+                     key={elem.accountId}
+                     isActive={elem.accountId === selectedNumber}
+                     onMouseDown={(event) => {
+                        const startTime = event.timeStamp;
+                        setOnMouseDownTime(event.timeStamp);
+
+                        setLongPressTimer(
+                           setTimeout(() => {
+                              if (Date.now() - startTime > timeout) {
+                                 console.log("long");
+                                 setOpen(true);
+                                 return;
+                              }
+                           }, timeout)
+                        );
+                     }}
+                     onMouseUp={(event) => {
+                        longPressTimer && clearTimeout(longPressTimer);
+
+                        if (event.timeStamp - onMouseDownTime! < timeout) {
+                           console.log("single shot");
+                           handleSelect(elem.accountId);
+                        }
+                     }}
+                     onTouchStart={(event) => {
+                        const startTime = event.timeStamp;
+                        setOnMouseDownTime(event.timeStamp);
+
+                        setLongPressTimer(
+                           setTimeout(() => {
+                              if (Date.now() - startTime > timeout) {
+                                 console.log("long");
+                                 setOpen(true);
+                                 return;
+                              }
+                           }, timeout)
+                        );
+                     }}
+                     onTouchEnd={(event) => {
+                        longPressTimer && clearTimeout(longPressTimer);
+
+                        if (event.timeStamp - onMouseDownTime! < timeout) {
+                           console.log("single shot");
+                           handleSelect(elem.accountId);
+                        }
+                     }}
+                     onTouchCancel={() => setOpen(false)}
+                  >
+                     {elem.accountNumber}
+                     {elem.accountId === selectedNumber && (
+                        <CheckCircle>
+                           <Check />
+                        </CheckCircle>
+                     )}
+                  </PersonalNumber>
+               </Popconfirm>
+            );
+         })}
          <AddPersonalNumberButton
             onClick={() => navigate("/addPersonalAccountNumber")}
          >

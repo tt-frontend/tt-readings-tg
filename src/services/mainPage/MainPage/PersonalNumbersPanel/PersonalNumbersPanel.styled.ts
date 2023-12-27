@@ -1,4 +1,3 @@
-import { Popconfirm } from "antd";
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`

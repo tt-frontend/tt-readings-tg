@@ -11,8 +11,8 @@ axios.interceptors.request.use((req) => {
   req.headers.Authorization = `Bearer ${authService.outputs.$authToken.getState()}`;
   req.headers["x-user-path"] = window.location.pathname || "none";
   req.params = {
-    ...(req.params || {}),
     accId,
+    ...(req.params || {}),
   };
   return req;
 });

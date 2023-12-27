@@ -21,6 +21,7 @@ export const MainPage: FC<MainPageProps> = ({
    homeownerAccounts,
    currentHomeownerAccount,
    isLoadingHomeownerAccount,
+   handleDeleteHomeownerAccount,
 }) => {
    return (
       <Wrapper>
@@ -28,6 +29,7 @@ export const MainPage: FC<MainPageProps> = ({
             selectedNumber={selectedPersonalNumber}
             handleSelect={setSelectedPersonalNumber}
             personalNumbers={homeownerAccounts || []}
+            handleDeleteHomeownerAccount={handleDeleteHomeownerAccount}
          />
          {currentHomeownerAccount && (
             <>
