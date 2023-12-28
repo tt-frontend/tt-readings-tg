@@ -49,9 +49,14 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   .reset(clearReadingsPayload);
 
 sample({
+  clock: individualDevicesQuery.finished.success,
+  target: individualDevicesCreateReadingsMutation.reset,
+});
+
+sample({
   clock: [
     IndividualDevicesGate.open,
-    individualDevicesCreateReadingsMutation.finished.finally,
+    individualDevicesCreateReadingsMutation.finished.success,
   ],
   target: individualDevicesQuery.start,
 });
@@ -99,7 +104,7 @@ const $readingsValidation = combine(
   }, {});
 });
 
-individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
+individualDevicesCreateReadingsMutation.finished.success.watch(() =>
   message.success("Показания успешно занесены")
 );
 

@@ -1,4 +1,5 @@
 import { EIndividualDeviceRateType } from "@/api/types";
+import { EffectFailDataAxiosError } from "@/types";
 
 export type ReadingValues = { value1?: number | null; value2?: number | null };
 
@@ -22,4 +23,9 @@ export type ReadingsValidationResult = {
 
 export type ReadingsValidationData = {
   [deviceId: number]: ReadingsValidationResult;
+};
+
+export type SaveReadingError = {
+  deviceId: number;
+  error: EffectFailDataAxiosError;
 };

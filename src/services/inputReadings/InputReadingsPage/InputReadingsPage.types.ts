@@ -2,6 +2,7 @@ import { IndividualDeviceForReadingResponse } from "@/api/types";
 import {
   CreateReadingsRequestPayload,
   ReadingsValidationData,
+  SaveReadingError,
   SetReadingPayload,
 } from "../inputReadingsService.types";
 
@@ -14,6 +15,7 @@ export type InputReadingsPageProps = {
   handleSubmitReadings: () => void;
   validationResult: ReadingsValidationData;
   isExistDeltaReadings: boolean;
+  saveReadingError: SaveReadingError | null;
 };
 
 export enum EGroupType {

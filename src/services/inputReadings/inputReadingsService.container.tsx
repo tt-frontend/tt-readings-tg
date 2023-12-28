@@ -19,7 +19,7 @@ export const InputReadingsContainer = () => {
   const { data: individualDevicesReadingsData, pending: isLoadingDevices } =
     useUnit(individualDevicesQuery);
 
-  const { pending: isCreateReadingsLoading } = useUnit(
+  const { pending: isCreateReadingsLoading, error: saveReadingError } = useUnit(
     individualDevicesCreateReadingsMutation
   );
 
@@ -56,7 +56,7 @@ export const InputReadingsContainer = () => {
   useHandleBackButton(isDeltaExist ? handleBack : null);
 
   useEffect(() => {
-    return individualDevicesCreateReadingsMutation.finished.finally.watch(() =>
+    return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
       navigate("/inputReadings/successfulReadings")
     ).unsubscribe;
   }, [navigate]);
@@ -73,6 +73,7 @@ export const InputReadingsContainer = () => {
         handleSubmitReadings={handleSubmitReadings}
         validationResult={validationResult}
         isExistDeltaReadings={isExistDeltaReadings}
+        saveReadingError={saveReadingError}
       />
     </>
   );
