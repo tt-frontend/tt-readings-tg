@@ -10,10 +10,11 @@ import {
 } from "./MainPage.styled";
 import { PersonalNumbersPanel } from "./PersonalNumbersPanel/PersonalNumbersPanel";
 import { ActionLink } from "@/components/ActionLink";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { MainPageProps } from "./MainPage.types";
 import { getAddressString } from "@/utils/getAddressString";
 import { Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export const MainPage: FC<MainPageProps> = ({
    selectedPersonalNumber,
@@ -21,60 +22,75 @@ export const MainPage: FC<MainPageProps> = ({
    homeownerAccounts,
    currentHomeownerAccount,
    isLoadingHomeownerAccount,
+   handleDeleteHomeownerAccount,
+   isDeletingHomeownerAccount,
+   handleSuccessDelete,
+   handleRedirectToInitialRoute,
 }) => {
+   const navigate = useNavigate();
 
-  return (
-    <Wrapper>
-      <PersonalNumbersPanel
-        selectedNumber={selectedPersonalNumber}
-        handleSelect={setSelectedPersonalNumber}
-        personalNumbers={homeownerAccounts || []}
-      />
-      {currentHomeownerAccount && (
-        <>
-          <InfoLinksWrapper>
-            <LinkInfoPanel
-              icon={<Building />}
-              title={getAddressString(currentHomeownerAccount.address)}
-               loader={{
+   useEffect(() => {
+      handleRedirectToInitialRoute.watch(() => {
+         navigate("/addPersonalAccountNumberInitial");
+      }).unsubscribe;
+   }, [handleRedirectToInitialRoute]);
+
+   return (
+      <Wrapper>
+         <PersonalNumbersPanel
+            selectedNumber={selectedPersonalNumber}
+            handleSelect={setSelectedPersonalNumber}
+            personalNumbers={homeownerAccounts || []}
+            handleDeleteHomeownerAccount={handleDeleteHomeownerAccount}
+            isDeletingHomeownerAccount={isDeletingHomeownerAccount}
+            handleSuccessDelete={handleSuccessDelete}
+         />
+         {currentHomeownerAccount && (
+            <>
+               <InfoLinksWrapper>
+                  <LinkInfoPanel
+                     icon={<Building />}
+                     title={getAddressString(currentHomeownerAccount.address)}
+                     loader={{
                         state: isLoadingHomeownerAccount,
                         view: <LongSkeleton active />,
                      }}
-            />
-            <LinkInfoPanel
-              icon={<Bag />}
-              title={
-                currentHomeownerAccount.managementFirmTitle || "Нет данных"
-              }
-              link="/managementFirm"
-              loader={{
+                  />
+                  <LinkInfoPanel
+                     icon={<Bag />}
+                     title={
+                        currentHomeownerAccount.managementFirmTitle ||
+                        "Нет данных"
+                     }
+                     link="/managementFirm"
+                     loader={{
                         state: isLoadingHomeownerAccount,
                         view: <Skeleton.Input active />,
                      }}
-            />
-          </InfoLinksWrapper>
-          <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
-          <ActionsWrapper>
-            <ActionLink
-              title="Ввести показания счетчиков"
-              path="/inputReadings"
-            />
-            <ActionLink
-              title="Отправить заявку на опломбировку"
-              path="/managementFirm"
-            />
-            <ActionLink
-              title="Отправить заявку на проверку"
-              path="/managementFirm"
-            />
-            <ActionLink
-              title="Заявить о проблеме"
-              description="Если прорвало трубу, перегорела лампочка или нет электричества"
-              path="/managementFirm"
-            />
-          </ActionsWrapper>
-        </>
-      )}
-    </Wrapper>
-  );
+                  />
+               </InfoLinksWrapper>
+               <ActionsTitle>Что вы хотите сделать?</ActionsTitle>
+               <ActionsWrapper>
+                  <ActionLink
+                     title="Ввести показания счетчиков"
+                     path="/inputReadings"
+                  />
+                  <ActionLink
+                     title="Отправить заявку на опломбировку"
+                     path="/managementFirm"
+                  />
+                  <ActionLink
+                     title="Отправить заявку на проверку"
+                     path="/managementFirm"
+                  />
+                  <ActionLink
+                     title="Заявить о проблеме"
+                     description="Если прорвало трубу, перегорела лампочка или нет электричества"
+                     path="/managementFirm"
+                  />
+               </ActionsWrapper>
+            </>
+         )}
+      </Wrapper>
+   );
 };
