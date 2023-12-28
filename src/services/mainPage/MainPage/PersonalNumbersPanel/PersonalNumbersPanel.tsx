@@ -70,6 +70,7 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         longPressTimer && clearTimeout(longPressTimer);
 
                         if (event.timeStamp - onMouseDownTime! < timeout) {
+                           setId(null);
                            handleSelect(elem.accountId);
                         }
                      }}
@@ -90,6 +91,7 @@ export const PersonalNumbersPanel: FC<PersonalNumbersPanelProps> = ({
                         longPressTimer && clearTimeout(longPressTimer);
 
                         if (event.timeStamp - onMouseDownTime! < timeout) {
+                           setId(null);
                            handleSelect(elem.accountId);
                         }
                      }}
