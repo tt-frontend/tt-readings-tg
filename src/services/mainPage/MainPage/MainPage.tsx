@@ -75,7 +75,7 @@ export const MainPage: FC<MainPageProps> = ({
                      title="Ввести показания счетчиков"
                      path="/inputReadings"
                   />
-                  <ActionLink
+                  {/* <ActionLink
                      title="Отправить заявку на опломбировку"
                      path="/managementFirm"
                   />
@@ -87,7 +87,7 @@ export const MainPage: FC<MainPageProps> = ({
                      title="Заявить о проблеме"
                      description="Если прорвало трубу, перегорела лампочка или нет электричества"
                      path="/managementFirm"
-                  />
+                  /> */}
                </ActionsWrapper>
             </>
          )}
