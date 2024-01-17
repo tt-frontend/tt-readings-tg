@@ -12,6 +12,7 @@ import { Props } from "./ReadingInput.types";
 import dayjs from "dayjs";
 import { round } from "lodash";
 import { useSwitchInputOnEnter } from "@/utils/useSwitchInputOnEnter";
+import { changeCommas } from "./ReadingInput.utils";
 
 export const ReadingInput: FC<Props> = ({
   value,
@@ -23,18 +24,27 @@ export const ReadingInput: FC<Props> = ({
   unit,
   inputNumber,
 }) => {
-  const [innerValue, setInnerValue] = useState("");
+  const [innerValue, setInnerValue] = useState(value ?? "");
+
+  useEffect(() => {
+    value && setInnerValue(String(value));
+  }, [value]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     if (/^\d*[\\.,]?\d{0,3}$/.test(inputValue)) {
-      setInnerValue(inputValue);
+      setInnerValue(changeCommas(inputValue));
     }
   };
 
   useEffect(() => {
     handleChange(innerValue ? Number(innerValue) : null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [innerValue]);
+
+  useEffect(() => {
+    console.log({ value, innerValue });
+  }, [value, innerValue]);
 
   const next = useSwitchInputOnEnter("bot-readings", false);
 
