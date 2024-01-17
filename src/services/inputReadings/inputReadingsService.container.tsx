@@ -5,9 +5,8 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useHandleBackButton } from "../backButton/backButtonService.hook";
 import { ConfirmExitFromReadingsPage } from "./ConfirmExitFromReadingsPage";
 
 const {
@@ -31,8 +30,6 @@ export const InputReadingsContainer = () => {
     validationResult,
     deltaReadingsPayload,
     isShowConfirmPage,
-    setIsShowConfirmPage,
-    clearReadingsPayload,
   } = useUnit({
     createReadingsPayload: outputs.$createReadingsPayload,
     validationResult: outputs.$readingsValidation,
@@ -51,23 +48,23 @@ export const InputReadingsContainer = () => {
 
   const navigate = useNavigate();
 
-  const handleBack = useCallback(() => {
-    setIsShowConfirmPage(true);
-  }, [setIsShowConfirmPage]);
+  // const handleBack = useCallback(() => {
+  //   setIsShowConfirmPage(true);
+  // }, [setIsShowConfirmPage]);
 
-  useEffect(() => {
-    return () => {
-      clearReadingsPayload();
-      setIsShowConfirmPage(false);
-    };
-  }, [clearReadingsPayload, setIsShowConfirmPage]);
+  // useEffect(() => {
+  //   return () => {
+  //     clearReadingsPayload();
+  //     setIsShowConfirmPage(false);
+  //   };
+  // }, [clearReadingsPayload, setIsShowConfirmPage]);
 
-  const isDeltaExist = useMemo(
-    () => Boolean(Object.entries(deltaReadingsPayload).length),
-    [deltaReadingsPayload]
-  );
+  // const isDeltaExist = useMemo(
+  //   () => Boolean(Object.entries(deltaReadingsPayload).length),
+  //   [deltaReadingsPayload]
+  // );
 
-  useHandleBackButton(isDeltaExist ? handleBack : null);
+  // useHandleBackButton(isDeltaExist ? handleBack : null);
 
   useEffect(() => {
     return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
