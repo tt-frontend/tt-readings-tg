@@ -5,9 +5,9 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useHandleBackButton } from "../backButton/backButtonService.hook";
+import { ConfirmExitFromReadingsPage } from "./ConfirmExitFromReadingsPage";
 
 const {
   inputs,
@@ -29,12 +29,16 @@ export const InputReadingsContainer = () => {
     handleSubmitReadings,
     validationResult,
     deltaReadingsPayload,
+    isShowConfirmPage,
   } = useUnit({
     createReadingsPayload: outputs.$createReadingsPayload,
     validationResult: outputs.$readingsValidation,
     setReadingPayloadField: inputs.setReadingPayloadField,
     handleSubmitReadings: inputs.handleSubmitReadings,
     deltaReadingsPayload: outputs.$deltaReadingsPayload,
+    isShowConfirmPage: outputs.$isShowConfirmPage,
+    setIsShowConfirmPage: inputs.setIsShowConfirmPage,
+    clearReadingsPayload: inputs.clearReadingsPayload,
   });
 
   const isExistDeltaReadings = useMemo(
@@ -44,16 +48,23 @@ export const InputReadingsContainer = () => {
 
   const navigate = useNavigate();
 
-  const handleBack = useCallback(() => {
-    navigate("/inputReadings/confirmExit");
-  }, [navigate]);
+  // const handleBack = useCallback(() => {
+  //   setIsShowConfirmPage(true);
+  // }, [setIsShowConfirmPage]);
 
-  const isDeltaExist = useMemo(
-    () => Boolean(Object.entries(deltaReadingsPayload).length),
-    [deltaReadingsPayload]
-  );
+  // useEffect(() => {
+  //   return () => {
+  //     clearReadingsPayload();
+  //     setIsShowConfirmPage(false);
+  //   };
+  // }, [clearReadingsPayload, setIsShowConfirmPage]);
 
-  useHandleBackButton(isDeltaExist ? handleBack : null);
+  // const isDeltaExist = useMemo(
+  //   () => Boolean(Object.entries(deltaReadingsPayload).length),
+  //   [deltaReadingsPayload]
+  // );
+
+  // useHandleBackButton(isDeltaExist ? handleBack : null);
 
   useEffect(() => {
     return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
@@ -64,17 +75,20 @@ export const InputReadingsContainer = () => {
   return (
     <>
       <IndividualDevicesGate />
-      <InputReadingsPage
-        individualDevicesList={individualDevicesReadingsData?.devices || []}
-        isLoadingDevices={isLoadingDevices}
-        createReadingsPayload={createReadingsPayload}
-        setReadingPayloadField={setReadingPayloadField}
-        isCreateReadingsLoading={isCreateReadingsLoading}
-        handleSubmitReadings={handleSubmitReadings}
-        validationResult={validationResult}
-        isExistDeltaReadings={isExistDeltaReadings}
-        saveReadingError={saveReadingError}
-      />
+      {isShowConfirmPage && <ConfirmExitFromReadingsPage />}
+      {!isShowConfirmPage && (
+        <InputReadingsPage
+          individualDevicesList={individualDevicesReadingsData?.devices || []}
+          isLoadingDevices={isLoadingDevices}
+          createReadingsPayload={createReadingsPayload}
+          setReadingPayloadField={setReadingPayloadField}
+          isCreateReadingsLoading={isCreateReadingsLoading}
+          handleSubmitReadings={handleSubmitReadings}
+          validationResult={validationResult}
+          isExistDeltaReadings={isExistDeltaReadings}
+          saveReadingError={saveReadingError}
+        />
+      )}
     </>
   );
 };

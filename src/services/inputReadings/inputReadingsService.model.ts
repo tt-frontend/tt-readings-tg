@@ -23,6 +23,8 @@ const setReadingPayloadField = createEvent<SetReadingPayload>();
 const clearReadingsPayload = createEvent();
 const handleSubmitReadings = createEvent();
 
+const setIsShowConfirmPage = createEvent<boolean>();
+
 const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
   .on(individualDevicesQuery.finished.success, (prev, data) => {
     if (!data) return prev;
@@ -47,6 +49,8 @@ const $createReadingsPayload = createStore<CreateReadingsRequestPayload>({})
     return res;
   })
   .reset(clearReadingsPayload);
+
+const $isShowConfirmPage = createStore(false);
 
 sample({
   clock: individualDevicesQuery.finished.success,
@@ -117,11 +121,13 @@ export const inputReadingsService = {
     setReadingPayloadField,
     handleSubmitReadings,
     clearReadingsPayload,
+    setIsShowConfirmPage,
   },
   outputs: {
     $createReadingsPayload,
     $readingsValidation,
     $deltaReadingsPayload,
+    $isShowConfirmPage,
   },
   gates: { IndividualDevicesGate },
 };
