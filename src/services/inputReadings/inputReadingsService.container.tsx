@@ -5,9 +5,8 @@ import {
   individualDevicesQuery,
 } from "./inputReadingsService.api";
 import { inputReadingsService } from "./inputReadingsService.model";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useHandleBackButton } from "../backButton/backButtonService.hook";
 
 const {
   inputs,
@@ -44,16 +43,16 @@ export const InputReadingsContainer = () => {
 
   const navigate = useNavigate();
 
-  const handleBack = useCallback(() => {
-    navigate("/inputReadings/confirmExit");
-  }, [navigate]);
+  // const handleBack = useCallback(() => {
+  //   navigate("/inputReadings/confirmExit");
+  // }, [navigate]);
 
-  const isDeltaExist = useMemo(
-    () => Boolean(Object.entries(deltaReadingsPayload).length),
-    [deltaReadingsPayload]
-  );
+  // const isDeltaExist = useMemo(
+  //   () => Boolean(Object.entries(deltaReadingsPayload).length),
+  //   [deltaReadingsPayload]
+  // );
 
-  useHandleBackButton(isDeltaExist ? handleBack : null);
+  // useHandleBackButton(isDeltaExist ? handleBack : null);
 
   useEffect(() => {
     return individualDevicesCreateReadingsMutation.finished.success.watch(() =>
