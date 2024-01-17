@@ -15,9 +15,10 @@ import { inputReadingsService } from "../inputReadingsService.model";
 
 export const ConfirmExitFromReadingsPage: FC<Props> = () => {
   const navigate = useNavigate();
-  const clearReadingsPayload = useUnit(
-    inputReadingsService.inputs.clearReadingsPayload
-  );
+
+  const { setIsShowConfirmPage } = useUnit({
+    setIsShowConfirmPage: inputReadingsService.inputs.setIsShowConfirmPage,
+  });
 
   return (
     <Wrapper>
@@ -29,13 +30,16 @@ export const ConfirmExitFromReadingsPage: FC<Props> = () => {
         В этом случае показания по приборам не будут сохранены.
       </Description>
       <ButtonsWrapper>
-        <Button onClick={() => navigate(-1)} type="primary" block>
+        <Button
+          onClick={() => setIsShowConfirmPage(false)}
+          type="primary"
+          block
+        >
           Вернуться к вводу показаний
         </Button>
         <Button
           onClick={() => {
             navigate("/");
-            clearReadingsPayload();
           }}
           type="default"
           block
