@@ -30,10 +30,10 @@ export const MainPage: FC<MainPageProps> = ({
    const navigate = useNavigate();
 
    useEffect(() => {
-      handleRedirectToInitialRoute.watch(() => {
+      return handleRedirectToInitialRoute.watch(() => {
          navigate("/addPersonalAccountNumberInitial");
       }).unsubscribe;
-   }, [handleRedirectToInitialRoute]);
+   }, [handleRedirectToInitialRoute, navigate]);
 
    return (
       <Wrapper>
