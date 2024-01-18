@@ -2,7 +2,7 @@ import { authService } from "@/services/authService";
 import { personalNumbersAcccountsService } from "@/services/personalNumberAccounts/personalNumberAccounts.model";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://stage.k8s.transparent-technology.ru/api/tg";
+axios.defaults.baseURL = "https://prod.k8s.transparent-technology.ru/api/tg";
 
 axios.interceptors.request.use((req) => {
   const accId =
