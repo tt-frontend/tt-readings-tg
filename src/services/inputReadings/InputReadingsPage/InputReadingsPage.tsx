@@ -2,6 +2,9 @@ import { ResourceIcon } from "@/components/ResourceIcon";
 import {
   Block,
   DevicesWrapper,
+  ErrorMessage,
+  ErrorMessageWrapper,
+  InputIcon,
   LoaderInput,
   NoDeviceButton,
   ResourceSection,
@@ -32,6 +35,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   validationResult,
   isExistDeltaReadings,
   saveReadingError,
+  isIndividualDevicesError,
 }) => {
   const navigate = useNavigate();
 
@@ -73,6 +77,17 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
       </>
     );
   };
+
+  if (isIndividualDevicesError) {
+    return (
+      <ErrorMessageWrapper>
+        <InputIcon />
+        <ErrorMessage>
+          Приём показаний закрыт в период c 27 по 8 число
+        </ErrorMessage>
+      </ErrorMessageWrapper>
+    );
+  }
 
   return (
     <div>

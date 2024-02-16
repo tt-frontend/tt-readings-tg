@@ -15,12 +15,17 @@ const {
 } = inputReadingsService;
 
 export const InputReadingsContainer = () => {
-  const { data: individualDevicesReadingsData, pending: isLoadingDevices } =
-    useUnit(individualDevicesQuery);
+  const {
+    data: individualDevicesReadingsData,
+    pending: isLoadingDevices,
+    error: individualDevicesError,
+  } = useUnit(individualDevicesQuery);
 
   const { pending: isCreateReadingsLoading, error: saveReadingError } = useUnit(
     individualDevicesCreateReadingsMutation
   );
+
+  const isIndividualDevicesError = Boolean(individualDevicesError);
 
   const {
     setReadingPayloadField,
@@ -73,6 +78,7 @@ export const InputReadingsContainer = () => {
         validationResult={validationResult}
         isExistDeltaReadings={isExistDeltaReadings}
         saveReadingError={saveReadingError}
+        isIndividualDevicesError={isIndividualDevicesError}
       />
     </>
   );
