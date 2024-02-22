@@ -16,6 +16,7 @@ export type InputReadingsPageProps = {
   validationResult: ReadingsValidationData;
   isExistDeltaReadings: boolean;
   saveReadingError: SaveReadingError | null;
+  isIndividualDevicesError: boolean;
 };
 
 export enum EGroupType {

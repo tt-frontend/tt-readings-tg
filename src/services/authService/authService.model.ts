@@ -9,12 +9,15 @@ const fetchAuthTokenFx = createEffect<string, LoginResponse, AxiosError>(
   loginUser
 );
 
-const $authToken = createStore<null | string>(null).on(
-  fetchAuthTokenFx.doneData,
-  (_, data) => {
+const setAuthToken = createEvent<string>();
+
+export const DEFAULT_TOKEN = null;
+
+const $authToken = createStore<null | string>(null)
+  .on(fetchAuthTokenFx.doneData, (_, data) => {
     return data.token;
-  }
-);
+  })
+  .on(setAuthToken, (_, token) => token);
 
 sample({
   source: $authToken,
@@ -34,6 +37,6 @@ fetchAuthTokenFx.failData.watch((e) => {
 const $isAuth = $authToken.map(Boolean);
 
 export const authService = {
-  inputs: { handleSecretRecieved },
+  inputs: { handleSecretRecieved, setAuthToken },
   outputs: { $authToken, $isAuth },
 };
