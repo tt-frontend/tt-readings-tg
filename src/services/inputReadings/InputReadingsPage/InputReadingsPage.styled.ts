@@ -86,18 +86,23 @@ export const ErrorMessageWrapper = styled.div`
   height: 90vh;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
   justify-content: center;
   align-items: center;
 `;
 
 export const ErrorMessage = styled.div`
-  font-weight: bold;
-  font-size: 16px;
-  width: 300px;
+  font-weight: 400;
+  font-size: 14px;
+  width: 343px;
   text-align: center;
   line-height: 28px;
-  color: #000000b9;
+  color: #000000;
+`;
+
+export const ErrorTitle = styled.div`
+  font-weight: 500;
+  font-size: 20px;
 `;
 
 export const InputIcon = styled(InputCursorText)`
