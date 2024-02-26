@@ -4,7 +4,7 @@ import {
   DevicesWrapper,
   ErrorMessage,
   ErrorMessageWrapper,
-  InputIcon,
+  ErrorTitle,
   LoaderInput,
   NoDeviceButton,
   ResourceSection,
@@ -24,6 +24,8 @@ import { Button } from "@/components/Button";
 import { useInputReadingButton } from "./InputReadingsPage.hook";
 import { useNavigate } from "react-router-dom";
 import { getNumberOfFirstInputInBlockOfList } from "./InputReadingsPage.utils";
+import { NoDeviceIcon } from "@/components/icons/NoDevice";
+import { ChevronWrapper } from "../SuccessfulReadingsPage/SuccessfulReadingsPage.styled";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -81,9 +83,13 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   if (isIndividualDevicesError) {
     return (
       <ErrorMessageWrapper>
-        <InputIcon />
+        <ChevronWrapper>
+          <NoDeviceIcon />
+        </ChevronWrapper>
+        <ErrorTitle>Неприемные дни</ErrorTitle>
         <ErrorMessage>
-          Приём показаний закрыт в период c 27 по 8 число
+          В период с 26 по 7 число показания не принимаются. Пожалуйста,
+          вернитесь 8 числа
         </ErrorMessage>
       </ErrorMessageWrapper>
     );
