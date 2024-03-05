@@ -2,6 +2,9 @@ import { ResourceIcon } from "@/components/ResourceIcon";
 import {
   Block,
   DevicesWrapper,
+  ErrorMessage,
+  ErrorMessageWrapper,
+  ErrorTitle,
   LoaderInput,
   NoDeviceButton,
   ResourceSection,
@@ -21,6 +24,8 @@ import { Button } from "@/components/Button";
 import { useInputReadingButton } from "./InputReadingsPage.hook";
 import { useNavigate } from "react-router-dom";
 import { getNumberOfFirstInputInBlockOfList } from "./InputReadingsPage.utils";
+import { NoDeviceIcon } from "@/components/icons/NoDevice";
+import { ChevronWrapper } from "../SuccessfulReadingsPage/SuccessfulReadingsPage.styled";
 
 export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   individualDevicesList,
@@ -32,6 +37,7 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
   validationResult,
   isExistDeltaReadings,
   saveReadingError,
+  isIndividualDevicesError,
 }) => {
   const navigate = useNavigate();
 
@@ -73,6 +79,21 @@ export const InputReadingsPage: FC<InputReadingsPageProps> = ({
       </>
     );
   };
+
+  if (isIndividualDevicesError) {
+    return (
+      <ErrorMessageWrapper>
+        <ChevronWrapper>
+          <NoDeviceIcon />
+        </ChevronWrapper>
+        <ErrorTitle>Неприемные дни</ErrorTitle>
+        <ErrorMessage>
+          В период с 26 по 7 число показания не принимаются. Пожалуйста,
+          вернитесь 8 числа
+        </ErrorMessage>
+      </ErrorMessageWrapper>
+    );
+  }
 
   return (
     <div>
