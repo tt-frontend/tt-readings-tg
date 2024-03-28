@@ -123,7 +123,7 @@ export interface IndividualDeviceResponse {
 }
 
 export interface LoginRequest {
-  secret: string;
+  telegramUserInitData: string;
 }
 
 export interface LoginResponse {
