@@ -1,0 +1,1 @@
+export { DeletePersonalAccountPage } from './DeletePersonalAccountPage';

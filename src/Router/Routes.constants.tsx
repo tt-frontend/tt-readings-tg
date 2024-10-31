@@ -8,6 +8,7 @@ import { SuccessfulReadingsPage } from "@/services/inputReadings/SuccessfulReadi
 import { NoDeviceHelpPage } from "@/services/inputReadings/NoDeviceHelpPage";
 import { ConfirmExitFromReadingsPage } from "@/services/inputReadings/ConfirmExitFromReadingsPage";
 import { OrganizationInfoContainer } from "@/services/organizationInfo/organizationInfoService.container";
+import { DeletePersonalAccountPage } from "@/services/mainPage/DeletePersonalAccountPage";
 
 export const getRoutes = (): RouteObject[] => [
   {
@@ -39,6 +40,7 @@ export const getRoutes = (): RouteObject[] => [
           },
         ],
       },
+      { path: "/deleteAccount", element: <DeletePersonalAccountPage /> },
       {
         path: "/addPersonalAccountNumber",
         element: <AddPersonalAccountNumberContainer />,
