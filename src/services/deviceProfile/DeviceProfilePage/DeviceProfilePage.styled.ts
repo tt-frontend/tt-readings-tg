@@ -29,3 +29,30 @@ export const Title = styled.div`
 export const SubTitle = styled(Title)`
   font-size: 15px;
 `;
+
+export const YearsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  overflow: scroll;
+`;
+
+export const YearItem = styled.div<{ isActive: boolean }>`
+  height: 40px;
+  min-width: 80px;
+  gap: 4px;
+  border-radius: 8px;
+  border-width: 1px;
+
+  border: 1px solid ${({ isActive }) => (isActive ? `#189ee9` : "#DCDEE4")};
+  transition: 0.2s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: ${({ isActive }) => (isActive ? 600 : 400)};
+  font-size: 14px;
+`;

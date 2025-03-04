@@ -12,7 +12,7 @@ const fetchAuthTokenFx = createEffect<string, LoginResponse, AxiosError>(
 const setAuthToken = createEvent<string>();
 
 export const DEFAULT_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZ1VzZXJJZCI6IjE3NjcyNDIwNzMiLCJUZ1VzZXJJZEludGVybmFsIjoiMGYzNmY5ZjctNzlmOC00ZTRiLTlhYzQtMThmNGI1MGIxMjYzIiwiVGdBdXRoRmxhZyI6InRydWUiLCJuYmYiOjE3NDEwOTE1NzYsImV4cCI6MTc0MTEwNTk3NiwiaWF0IjoxNzQxMDkxNTc2fQ.WSVD4JRMnPCK3gPAk-QPIc21z-2SxY9UO0bpu-OPkUs";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZ1VzZXJJZCI6IjE3NjcyNDIwNzMiLCJUZ1VzZXJJZEludGVybmFsIjoiMGYzNmY5ZjctNzlmOC00ZTRiLTlhYzQtMThmNGI1MGIxMjYzIiwiVGdBdXRoRmxhZyI6InRydWUiLCJuYmYiOjE3NDExMDc3MDYsImV4cCI6MTc0MTEyMjEwNiwiaWF0IjoxNzQxMTA3NzA2fQ.EQ90vz7YffxXcbbnDfkgcEp1YALcPHEbjRqgqIu2DDc";
 
 const $authToken = createStore<null | string>(null)
   .on(fetchAuthTokenFx.doneData, (_, data) => {

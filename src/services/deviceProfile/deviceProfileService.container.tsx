@@ -17,11 +17,7 @@ export const DeviceProfileContainer = () => {
     isLoading: deviceQuery.$pending,
   });
 
-  console.log(id);
-
   if (!id) return null;
-
-  console.log(device);
 
   return (
     <>
