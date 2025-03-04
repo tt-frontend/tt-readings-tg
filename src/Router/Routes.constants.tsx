@@ -10,6 +10,7 @@ import { ConfirmExitFromReadingsPage } from "@/services/inputReadings/ConfirmExi
 import { OrganizationInfoContainer } from "@/services/organizationInfo/organizationInfoService.container";
 import { DeletePersonalAccountPage } from "@/services/mainPage/DeletePersonalAccountPage";
 import { ApartmentProfileContainer } from "@/services/apartmentProfile";
+import { DeviceProfileContainer } from "@/services/deviceProfile";
 
 export const getRoutes = (personalAcc: string | null): RouteObject[] => [
   {
@@ -59,6 +60,10 @@ export const getRoutes = (personalAcc: string | null): RouteObject[] => [
             {
               path: "/apartment",
               element: <ApartmentProfileContainer />,
+            },
+            {
+              path: "/device/:id",
+              element: <DeviceProfileContainer />,
             },
           ]
         : []),

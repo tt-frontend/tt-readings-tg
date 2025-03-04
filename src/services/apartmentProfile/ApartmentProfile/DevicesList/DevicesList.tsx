@@ -7,7 +7,7 @@ export const DevicesList: FC<Props> = ({ devices }) => {
     <Wrapper>
       {devices.map((device) => (
         <DeviceWrapper
-          path=""
+          path={`/device/${device.id}`}
           title={<strong>{device.serialNumber}</strong>}
           description={device.mountPlace}
           key={device.id}
