@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export type ActionLinkProps = {
-  title: string;
-  description?: string;
+  title: string | ReactNode;
+  description?: string | null | ReactNode;
   path: string;
 };

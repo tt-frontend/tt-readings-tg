@@ -1,5 +1,16 @@
 # React + TypeScript + Vite
 
+# Инструкция для разработки
+
+1. перейти в stage bot:
+   https://t.me/Transparent_staging_bot
+
+2. добавить токен в константу DEFAULT_TOKEN токен после логина в боте
+
+3. развернуть локально и работать пока не истечет токен
+
+4. удалить токен перед залитием ветки/комита `!important`
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

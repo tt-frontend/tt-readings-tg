@@ -9,8 +9,9 @@ import { NoDeviceHelpPage } from "@/services/inputReadings/NoDeviceHelpPage";
 import { ConfirmExitFromReadingsPage } from "@/services/inputReadings/ConfirmExitFromReadingsPage";
 import { OrganizationInfoContainer } from "@/services/organizationInfo/organizationInfoService.container";
 import { DeletePersonalAccountPage } from "@/services/mainPage/DeletePersonalAccountPage";
+import { ApartmentProfileContainer } from "@/services/apartmentProfile";
 
-export const getRoutes = (): RouteObject[] => [
+export const getRoutes = (personalAcc: string | null): RouteObject[] => [
   {
     path: "/",
     element: <Layout />,
@@ -19,40 +20,48 @@ export const getRoutes = (): RouteObject[] => [
         path: "/",
         element: <MainPageContainer />,
       },
-      {
-        path: "/inputReadings",
-        children: [
-          {
-            path: "/inputReadings",
-            element: <InputReadingsContainer />,
-          },
-          {
-            path: "/inputReadings/successfulReadings",
-            element: <SuccessfulReadingsPage />,
-          },
-          {
-            path: "/inputReadings/noDeviceHelp",
-            element: <NoDeviceHelpPage />,
-          },
-          {
-            path: "/inputReadings/confirmExit",
-            element: <ConfirmExitFromReadingsPage />,
-          },
-        ],
-      },
-      { path: "/deleteAccount", element: <DeletePersonalAccountPage /> },
-      {
-        path: "/addPersonalAccountNumber",
-        element: <AddPersonalAccountNumberContainer />,
-      },
-      {
-        path: "/addPersonalAccountNumberInitial",
-        element: <AddPersonalAccountNumberContainer />,
-      },
-      {
-        path: "/managementFirm",
-        element: <OrganizationInfoContainer />,
-      },
+      ...(personalAcc
+        ? [
+            {
+              path: "/inputReadings",
+              children: [
+                {
+                  path: "/inputReadings",
+                  element: <InputReadingsContainer />,
+                },
+                {
+                  path: "/inputReadings/successfulReadings",
+                  element: <SuccessfulReadingsPage />,
+                },
+                {
+                  path: "/inputReadings/noDeviceHelp",
+                  element: <NoDeviceHelpPage />,
+                },
+                {
+                  path: "/inputReadings/confirmExit",
+                  element: <ConfirmExitFromReadingsPage />,
+                },
+              ],
+            },
+            { path: "/deleteAccount", element: <DeletePersonalAccountPage /> },
+            {
+              path: "/addPersonalAccountNumber",
+              element: <AddPersonalAccountNumberContainer />,
+            },
+            {
+              path: "/addPersonalAccountNumberInitial",
+              element: <AddPersonalAccountNumberContainer />,
+            },
+            {
+              path: "/managementFirm",
+              element: <OrganizationInfoContainer />,
+            },
+            {
+              path: "/apartment",
+              element: <ApartmentProfileContainer />,
+            },
+          ]
+        : []),
       {
         path: "/limb",
         element: <LimbContainer />,
