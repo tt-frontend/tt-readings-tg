@@ -42,10 +42,6 @@ export const ReadingInput: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [innerValue]);
 
-  useEffect(() => {
-    console.log({ value, innerValue });
-  }, [value, innerValue]);
-
   const next = useSwitchInputOnEnter("bot-readings", false);
 
   const consumption = (value || 0) - Number(prevReadingValue);

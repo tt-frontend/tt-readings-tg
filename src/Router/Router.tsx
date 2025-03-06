@@ -5,13 +5,16 @@ import { useUnit } from "effector-react";
 import { authService } from "@/services/authService";
 import { useBackButton } from "@/services/backButton/backButtonService.hook";
 import { DEFAULT_TOKEN } from "@/services/authService/authService.model";
+import { personalNumbersAcccountsService } from "@/services/personalNumberAccounts/personalNumberAccounts.model";
 
 export const Router = () => {
   useBackButton();
 
-  const { isAuth, setAuthToken } = useUnit({
+  const { isAuth, setAuthToken, personalAcc } = useUnit({
     isAuth: authService.outputs.$isAuth,
     setAuthToken: authService.inputs.setAuthToken,
+    personalAcc:
+      personalNumbersAcccountsService.outputs.$selectedHomeownerAccountId,
   });
 
   const navigate = useNavigate();
@@ -28,7 +31,7 @@ export const Router = () => {
     if (!isAuth) navigate(`/limb`);
   }, [navigate, params, isAuth, setAuthToken]);
 
-  const routes = useMemo(() => getRoutes(), []);
+  const routes = useMemo(() => getRoutes(personalAcc), [personalAcc]);
 
   const router = useRoutes(routes);
 

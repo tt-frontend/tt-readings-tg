@@ -11,3 +11,15 @@ export const getAddressString = (address: Address | null) => {
     corpusString || ""
   } кв. ${address.roomNumber}`;
 };
+
+export const getFullAddressString = (address: Address | null) => {
+  if (!address) return "";
+
+  const corpusString = address.houseCorpus
+    ? `корпус ${address.houseCorpus},`
+    : null;
+
+  return `${address.city}, улица ${address.street}, дом ${address.houseNumber}, ${
+    corpusString || ""
+  } квартира ${address.roomNumber}`;
+};
