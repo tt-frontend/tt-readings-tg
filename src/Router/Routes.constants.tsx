@@ -21,6 +21,14 @@ export const getRoutes = (personalAcc: string | null): RouteObject[] => [
         path: "/",
         element: <MainPageContainer />,
       },
+      {
+        path: "/addPersonalAccountNumber",
+        element: <AddPersonalAccountNumberContainer />,
+      },
+      {
+        path: "/addPersonalAccountNumberInitial",
+        element: <AddPersonalAccountNumberContainer />,
+      },
       ...(personalAcc
         ? [
             {
@@ -45,14 +53,6 @@ export const getRoutes = (personalAcc: string | null): RouteObject[] => [
               ],
             },
             { path: "/deleteAccount", element: <DeletePersonalAccountPage /> },
-            {
-              path: "/addPersonalAccountNumber",
-              element: <AddPersonalAccountNumberContainer />,
-            },
-            {
-              path: "/addPersonalAccountNumberInitial",
-              element: <AddPersonalAccountNumberContainer />,
-            },
             {
               path: "/managementFirm",
               element: <OrganizationInfoContainer />,
