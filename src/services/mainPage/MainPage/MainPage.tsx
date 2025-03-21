@@ -16,6 +16,7 @@ import { MainPageProps } from "./MainPage.types";
 import { getAddressString } from "@/utils/getAddressString";
 import { Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
+import { NotificationBadges } from "./NotificationBadges";
 
 export const MainPage: FC<MainPageProps> = ({
   selectedPersonalNumber,
@@ -27,6 +28,7 @@ export const MainPage: FC<MainPageProps> = ({
   isDeletingHomeownerAccount,
   handleSuccessDelete,
   handleRedirectToInitialRoute,
+  individualDevices,
 }) => {
   const navigate = useNavigate();
 
@@ -46,6 +48,7 @@ export const MainPage: FC<MainPageProps> = ({
         isDeletingHomeownerAccount={isDeletingHomeownerAccount}
         handleSuccessDelete={handleSuccessDelete}
       />
+      <NotificationBadges individualDevices={individualDevices} />
       {currentHomeownerAccount && (
         <>
           <InfoLinksWrapper>

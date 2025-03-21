@@ -54,7 +54,7 @@ export interface EResourceTypeConsumptionRateResponseDictionaryItem {
 }
 
 export interface ErrorApiResponse {
-  errorResponse: ErrorResponse | null;
+  error: ErrorResponse | null;
 }
 
 export interface ErrorResponse {
@@ -107,6 +107,8 @@ export interface IndividualDeviceListItemResponse {
   serialNumber: string | null;
   mountPlace: string | null;
   resource: EResourceType;
+  /** @format date-time */
+  futureCheckingDate: string;
 }
 
 export interface IndividualDeviceResponse {
@@ -123,6 +125,7 @@ export interface IndividualDeviceResponse {
 }
 
 export interface LoginRequest {
+  /** @minLength 1 */
   telegramUserInitData: string;
 }
 

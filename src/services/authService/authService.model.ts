@@ -11,7 +11,8 @@ const fetchAuthTokenFx = createEffect<string, LoginResponse, AxiosError>(
 
 const setAuthToken = createEvent<string>();
 
-export const DEFAULT_TOKEN = null;
+export const DEFAULT_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJUZ1VzZXJJZCI6IjE3NjcyNDIwNzMiLCJUZ1VzZXJJZEludGVybmFsIjoiMGYzNmY5ZjctNzlmOC00ZTRiLTlhYzQtMThmNGI1MGIxMjYzIiwiVGdBdXRoRmxhZyI6InRydWUiLCJuYmYiOjE3NDI1NDYwOTYsImV4cCI6MTc0MjU2MDQ5NiwiaWF0IjoxNzQyNTQ2MDk2fQ.74lusb5d28rd3l0GEctqkiPPpwm6FAFXHtBV8tGtTyc";
 
 const $authToken = createStore<null | string>(null)
   .on(fetchAuthTokenFx.doneData, (_, data) => {
