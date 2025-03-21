@@ -61,3 +61,12 @@ export const CheckingDateAlert: FC<{
     </AlertWrapper>
   );
 };
+
+export const DeviceDate: FC<{ date: string }> = ({ date }) => {
+  return (
+    <DeviceInfo>
+      <DateIcon />
+      {dayjs(date).format("DD.MM.YYYY")}
+    </DeviceInfo>
+  );
+};

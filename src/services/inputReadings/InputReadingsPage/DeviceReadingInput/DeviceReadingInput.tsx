@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import {
   DeviceCard,
   DeviceSerialNumber,
@@ -15,6 +15,9 @@ import { ResourceSummaryUnits } from "@/components/ResourceIcon/ResourceIcon.con
 import { EIndividualDeviceRateType } from "@/api/types";
 import { DeviceReadingInputProps } from "./DeviceReadingInput.types";
 import { ReadingInput } from "./ReadingInput";
+import { useUnit } from "effector-react";
+import { individualDevicesQuery } from "@/services/apartmentProfile/apartmentProfileService.api";
+import { DeviceDate } from "@/services/mainPage/MainPage/NotificationBadges/NotificationBadges";
 
 dayjs.locale("ru");
 
@@ -29,10 +32,34 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
 }) => {
   const ref = useRef<null | HTMLDivElement>(null);
 
+  const individualDevices = useUnit(individualDevicesQuery.$data);
+
   const unit = ResourceSummaryUnits[device.resource];
 
   const inputNumberForOneZone = numberOfFirstInputInBlockOfList;
   const inputNumberForTwoZone = numberOfFirstInputInBlockOfList + 1;
+
+  const lightDevice = useMemo(() => {
+    if (!individualDevices) return null;
+
+    const lightDevice = individualDevices?.find(
+      (elem) => elem.id === device.id
+    );
+
+    return lightDevice || null;
+  }, [device.id, individualDevices]);
+
+  const isCheckingDateExpired = useMemo(() => {
+    if (!lightDevice) return false;
+
+    const nextMonthDate = dayjs().add(1, "month");
+
+    const diffOfNextMonth = dayjs(lightDevice.futureCheckingDate).diff(
+      nextMonthDate
+    );
+
+    return diffOfNextMonth < 0;
+  }, [lightDevice]);
 
   const errorMessage = serverValidation?.response.data.error.Text;
 
@@ -43,7 +70,10 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
   }, [errorMessage]);
 
   return (
-    <DeviceCard isError={Boolean(errorMessage)} ref={ref}>
+    <DeviceCard
+      isError={Boolean(errorMessage) || isCheckingDateExpired}
+      ref={ref}
+    >
       <Header>
         <DeviceSerialNumber>
           {groupType === EGroupType.ByMountPlace && (
@@ -52,6 +82,9 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
             </ResourceWrapper>
           )}
           {device.serialNumber}
+          {isCheckingDateExpired && lightDevice && (
+            <DeviceDate date={lightDevice?.futureCheckingDate} />
+          )}
         </DeviceSerialNumber>
         {groupType === EGroupType.ByResource && (
           <MountPlace>{device.mountPlace}</MountPlace>
@@ -90,6 +123,12 @@ export const DeviceReadingInput: FC<DeviceReadingInputProps> = ({
         />
       )}
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {!errorMessage && isCheckingDateExpired && (
+        <ErrorMessage>
+          Истекает срок поверки прибора. Обратитесь в УК или отправьте заявку
+          через приложение.
+        </ErrorMessage>
+      )}
     </DeviceCard>
   );
 };
