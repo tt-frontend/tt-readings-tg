@@ -56,6 +56,7 @@ export const MainPage: FC<MainPageProps> = ({
                 state: isLoadingHomeownerAccount,
                 view: <LongSkeleton active />,
               }}
+              link="/apartment"
             />
             <LinkInfoPanel
               icon={<Bag />}
@@ -75,19 +76,6 @@ export const MainPage: FC<MainPageProps> = ({
               title="Ввести показания счетчиков"
               path="/inputReadings"
             />
-            {/* <ActionLink
-                     title="Отправить заявку на опломбировку"
-                     path="/managementFirm"
-                  />
-                  <ActionLink
-                     title="Отправить заявку на проверку"
-                     path="/managementFirm"
-                  />
-                  <ActionLink
-                     title="Заявить о проблеме"
-                     description="Если прорвало трубу, перегорела лампочка или нет электричества"
-                     path="/managementFirm"
-                  /> */}
             <DividerSC />
             <ActionLink
               title="Удалить лицевой счет"
