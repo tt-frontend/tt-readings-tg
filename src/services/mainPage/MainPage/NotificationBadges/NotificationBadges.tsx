@@ -62,6 +62,22 @@ export const CheckingDateAlert: FC<{
   );
 };
 
+export const ResourceDisconnectAlert: FC<object> = () => {
+  return (
+    <AlertWrapper to={`/`}>
+      <AlertText>Проводится плановое отключение водоснабжения</AlertText>
+
+      <AlertInfo>
+        <DeviceInfo>
+          <DateIcon />
+          {dayjs().format("DD.MM.YYYY")}-
+          {dayjs().add(1, "M").format("DD.MM.YYYY")}
+        </DeviceInfo>
+      </AlertInfo>
+    </AlertWrapper>
+  );
+};
+
 export const DeviceDate: FC<{ date: string }> = ({ date }) => {
   return (
     <DeviceInfo>

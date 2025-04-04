@@ -17,6 +17,7 @@ import { getAddressString } from "@/utils/getAddressString";
 import { Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
 import { NotificationBadges } from "./NotificationBadges";
+import { ResourceDisconnectAlert } from "./NotificationBadges/NotificationBadges";
 
 export const MainPage: FC<MainPageProps> = ({
   selectedPersonalNumber,
@@ -49,6 +50,7 @@ export const MainPage: FC<MainPageProps> = ({
         handleSuccessDelete={handleSuccessDelete}
       />
       <NotificationBadges individualDevices={individualDevices} />
+      <ResourceDisconnectAlert />
       {currentHomeownerAccount && (
         <>
           <InfoLinksWrapper>
