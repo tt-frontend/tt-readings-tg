@@ -41,6 +41,15 @@ export enum EIndividualDeviceRateType {
   ThreeZone = "ThreeZone",
 }
 
+export enum EResourceDisconnectingType {
+  Other = "Other",
+  Planned = "Planned",
+  Emergency = "Emergency",
+  Preventive = "Preventive",
+  Repair = "Repair",
+  InterHeatingSeason = "InterHeatingSeason",
+}
+
 export enum EResourceType {
   Heat = "Heat",
   HotWaterSupply = "HotWaterSupply",
@@ -54,7 +63,7 @@ export interface EResourceTypeConsumptionRateResponseDictionaryItem {
 }
 
 export interface ErrorApiResponse {
-  errorResponse: ErrorResponse | null;
+  error: ErrorResponse | null;
 }
 
 export interface ErrorResponse {
@@ -107,6 +116,8 @@ export interface IndividualDeviceListItemResponse {
   serialNumber: string | null;
   mountPlace: string | null;
   resource: EResourceType;
+  /** @format date-time */
+  futureCheckingDate: string;
 }
 
 export interface IndividualDeviceResponse {
@@ -123,6 +134,7 @@ export interface IndividualDeviceResponse {
 }
 
 export interface LoginRequest {
+  /** @minLength 1 */
   telegramUserInitData: string;
 }
 
@@ -138,6 +150,10 @@ export interface ManagementFirmInfoResponse {
   phoneNumber: string | null;
   email: string | null;
   workingTime: string | null;
+}
+
+export interface NotificationsResponse {
+  resourceDisconnectingList: ResourceDisconnecting[] | null;
 }
 
 export interface ProblemDetails {
@@ -170,6 +186,16 @@ export interface ReadingResponseWithConsumption {
   consumtion1?: number | null;
   /** @format double */
   consumtion2?: number | null;
+}
+
+export interface ResourceDisconnecting {
+  resource?: EResourceType;
+  disconnectingType?: EResourceDisconnectingType;
+  description?: string | null;
+  /** @format date-time */
+  startDate?: string;
+  /** @format date-time */
+  endDate?: string | null;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -540,6 +566,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     tgHomeownerAccountsManagementFirmInfoDetail: (accId: string, params: RequestParams = {}) =>
       this.request<ManagementFirmInfoResponse, ErrorApiResponse>({
         path: `/api/tg/HomeownerAccounts/${accId}/ManagementFirmInfo`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags HomeownerAccounts
+     * @name TgHomeownerAccountsNotificationsDetail
+     * @request GET:/api/tg/HomeownerAccounts/{accId}/Notifications
+     * @secure
+     */
+    tgHomeownerAccountsNotificationsDetail: (accId: string, params: RequestParams = {}) =>
+      this.request<NotificationsResponse, ErrorApiResponse>({
+        path: `/api/tg/HomeownerAccounts/${accId}/Notifications`,
         method: "GET",
         secure: true,
         format: "json",
