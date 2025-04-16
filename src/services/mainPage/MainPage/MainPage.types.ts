@@ -3,6 +3,7 @@ import {
   HomeownerAccountListResponse,
   HomeownerAccountResponse,
   IndividualDeviceListItemResponse,
+  NotificationsResponse,
 } from "@/api/types";
 
 export type MainPageProps = {
@@ -16,4 +17,5 @@ export type MainPageProps = {
   handleSuccessDelete: Event<void>;
   handleRedirectToInitialRoute: Event<void>;
   individualDevices: IndividualDeviceListItemResponse[] | null;
+  notifications: NotificationsResponse | null;
 };
