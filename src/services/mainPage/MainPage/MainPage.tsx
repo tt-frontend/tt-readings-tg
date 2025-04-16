@@ -30,6 +30,7 @@ export const MainPage: FC<MainPageProps> = ({
   handleSuccessDelete,
   handleRedirectToInitialRoute,
   individualDevices,
+  notifications,
 }) => {
   const navigate = useNavigate();
 
@@ -50,7 +51,9 @@ export const MainPage: FC<MainPageProps> = ({
         handleSuccessDelete={handleSuccessDelete}
       />
       <NotificationBadges individualDevices={individualDevices} />
-      <ResourceDisconnectAlert />
+      {notifications?.resourceDisconnectingList?.map((notification) => (
+        <ResourceDisconnectAlert notification={notification} />
+      ))}
       {currentHomeownerAccount && (
         <>
           <InfoLinksWrapper>

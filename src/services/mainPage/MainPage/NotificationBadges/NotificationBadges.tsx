@@ -7,7 +7,10 @@ import {
 } from "./NotificationBadges.styled";
 import { Props } from "./NotificationBadges.types";
 import dayjs from "dayjs";
-import { IndividualDeviceListItemResponse } from "@/api/types";
+import {
+  IndividualDeviceListItemResponse,
+  ResourceDisconnecting,
+} from "@/api/types";
 import { ResourceIcon } from "@/components/ResourceIcon";
 import { ResourceNamesLookup } from "@/components/ResourceIcon/ResourceIcon.constants";
 import { DateIcon } from "@/components/icons/Date";
@@ -45,7 +48,7 @@ export const CheckingDateAlert: FC<{
     <AlertWrapper to={`/device/${device.id}`}>
       <AlertText>
         {isExpired ? "Истек" : "Истекает"} срок поверки прибора. Обратитесь в УК
-        или отправьте заявку через приложение.
+        {/* или отправьте заявку через приложение. */}
       </AlertText>
 
       <AlertInfo>
@@ -62,16 +65,21 @@ export const CheckingDateAlert: FC<{
   );
 };
 
-export const ResourceDisconnectAlert: FC<object> = () => {
+export const ResourceDisconnectAlert: FC<{
+  notification: ResourceDisconnecting;
+}> = ({ notification }) => {
   return (
     <AlertWrapper to={`/`}>
-      <AlertText>Проводится плановое отключение водоснабжения</AlertText>
+      <AlertText>
+        Проводится плановое отключение ресурса:{" "}
+        {notification.resource && ResourceNamesLookup[notification.resource]}
+      </AlertText>
 
       <AlertInfo>
         <DeviceInfo>
           <DateIcon />
-          {dayjs().format("DD.MM.YYYY")}-
-          {dayjs().add(1, "M").format("DD.MM.YYYY")}
+          {dayjs(notification.startDate).format("DD.MM.YYYY")} —{" "}
+          {dayjs(notification.endDate).format("DD.MM.YYYY")}
         </DeviceInfo>
       </AlertInfo>
     </AlertWrapper>

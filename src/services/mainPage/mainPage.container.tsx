@@ -3,6 +3,7 @@ import { MainPage } from "./MainPage";
 import { personalNumbersAcccountsService } from "../personalNumberAccounts/personalNumberAccounts.model";
 import { individualDevicesQuery } from "../apartmentProfile/apartmentProfileService.api";
 import { mainPageService } from "./mainPage.model";
+import { notificationsQuery } from "./mainPage.api";
 
 const {
   gates: { MainPageGate },
@@ -19,6 +20,7 @@ export const MainPageContainer = () => {
     isDeletingHomeownerAccount,
     individualDevices,
     personalAcc,
+    notifications,
   } = useUnit({
     homeownerAccounts: personalNumbersAcccountsService.outputs.$personalNumbers,
     handleSelectHomeownerAccount:
@@ -36,6 +38,7 @@ export const MainPageContainer = () => {
     individualDevices: individualDevicesQuery.$data,
     personalAcc:
       personalNumbersAcccountsService.outputs.$selectedHomeownerAccountId,
+    notifications: notificationsQuery.$data,
   });
 
   return (
@@ -56,6 +59,7 @@ export const MainPageContainer = () => {
           personalNumbersAcccountsService.inputs.handleRedirectToInitialRoute
         }
         individualDevices={individualDevices}
+        notifications={notifications}
       />
     </>
   );
