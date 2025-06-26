@@ -39,3 +39,9 @@ export const Description = styled.div`
    line-height: 20px;
    margin-top: 4px;
 `;
+
+export const SwitchWrapper = styled.div`
+   display: flex;
+   align-items: center;
+   gap: 8px;
+`;
