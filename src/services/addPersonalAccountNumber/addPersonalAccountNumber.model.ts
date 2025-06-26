@@ -13,10 +13,13 @@ import {
    findHomeownerAccount,
    linkHomeownerAccount,
 } from "./addPersonalAccountNumber.api";
-import { FindHomeownerAccountRequest } from "./addPersonalAccountNumber.types";
+import {
+   AddAccRequest,
+   FindHomeownerAccountRequest,
+} from "./addPersonalAccountNumber.types";
 
 const handleFindAccount = createEvent<FindHomeownerAccountRequest>();
-const handleLinkAccount = createEvent<string>();
+const handleLinkAccount = createEvent<AddAccRequest>();
 
 const AddPersonalAccountNumberGate = createGate();
 
