@@ -3,3 +3,8 @@ export type FindHomeownerAccountRequest = {
   AccountNumber: string;
   ApartmentNumber: string;
 };
+
+export type AddAccRequest = {
+  accId: string;
+  enableNotifications?: boolean;
+}
